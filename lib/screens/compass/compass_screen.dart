@@ -12,66 +12,71 @@ class CompassScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final compass = ref.watch(compassProvider);
 
-    return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(height: 24),
+    return Stack(
+      children: [
+        SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
 
-          // ── "Face East" Banner ──
-          _DirectionBanner(compass: compass),
+              _DirectionBanner(compass: compass),
 
-          // ── Compass Rose ──
-          Expanded(
-            child: Center(
-              child: compass.heading != null
-                  ? _CompassRose(heading: compass.heading!)
-                  : _CompassPlaceholder(),
-            ),
-          ),
-
-          // ── Heading Info ──
-          if (compass.heading != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                '${compass.heading!.toStringAsFixed(0)}° ${compass.cardinalDirectionFull}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+              Expanded(
+                child: Center(
+                  child: compass.heading != null
+                      ? _CompassRose(heading: compass.heading!)
+                      : _CompassPlaceholder(),
                 ),
               ),
-            ),
 
-          // ── Calibration Hint ──
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.tealLight,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.info_outline_rounded, size: 18, color: AppColors.teal),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Wave your phone in a figure-8 pattern to calibrate the compass.',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.teal,
-                        fontWeight: FontWeight.w500,
-                      ),
+              if (compass.heading != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    '${compass.heading!.toStringAsFixed(0)}° ${compass.cardinalDirectionFull}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                ],
+                ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: AppColors.tealLight,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.info_outline_rounded, size: 18, color: AppColors.teal),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Wave your phone in a figure-8 pattern to calibrate the compass.',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppColors.teal,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+
+        if (compass.needsCalibration)
+          _CalibrationOverlay(
+            onDismiss: () => compass.dismissCalibration(),
+          ),
+      ],
     );
   }
 }
@@ -320,4 +325,167 @@ class _CompassPlaceholder extends StatelessWidget {
       ],
     );
   }
+}
+
+// ── Calibration Overlay with animated figure-8 ──
+
+class _CalibrationOverlay extends StatelessWidget {
+  final VoidCallback onDismiss;
+  const _CalibrationOverlay({required this.onDismiss});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black.withValues(alpha: 0.75),
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              size: 48,
+              color: AppColors.gold,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Compass Needs Calibration',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Text(
+                'Move your phone slowly in a figure-8 / infinity pattern until the compass stabilises.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
+                  height: 1.5,
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+            const SizedBox(
+              width: 180,
+              height: 100,
+              child: _Figure8Animation(),
+            ),
+            const SizedBox(height: 40),
+            OutlinedButton(
+              onPressed: onDismiss,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.white,
+                side: const BorderSide(color: Colors.white54),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text(
+                'Dismiss',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Figure8Animation extends StatefulWidget {
+  const _Figure8Animation();
+
+  @override
+  State<_Figure8Animation> createState() => _Figure8AnimationState();
+}
+
+class _Figure8AnimationState extends State<_Figure8Animation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2500),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: _Figure8Painter(progress: _controller.value),
+          size: const Size(180, 100),
+        );
+      },
+    );
+  }
+}
+
+class _Figure8Painter extends CustomPainter {
+  _Figure8Painter({required this.progress});
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height / 2;
+    final rx = size.width * 0.38;
+    final ry = size.height * 0.38;
+
+    // Draw the infinity path
+    final pathPaint = Paint()
+      ..color = Colors.white24
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5;
+
+    final path = Path();
+    const steps = 200;
+    for (var i = 0; i <= steps; i++) {
+      final t = i / steps * 2 * pi;
+      final x = cx + rx * cos(t) / (1 + sin(t) * sin(t));
+      final y = cy + ry * sin(t) * cos(t) / (1 + sin(t) * sin(t));
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    canvas.drawPath(path, pathPaint);
+
+    // Draw the moving dot
+    final t = progress * 2 * pi;
+    final dotX = cx + rx * cos(t) / (1 + sin(t) * sin(t));
+    final dotY = cy + ry * sin(t) * cos(t) / (1 + sin(t) * sin(t));
+
+    canvas.drawCircle(
+      Offset(dotX, dotY),
+      7,
+      Paint()..color = AppColors.gold,
+    );
+    canvas.drawCircle(
+      Offset(dotX, dotY),
+      4,
+      Paint()..color = Colors.white,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _Figure8Painter oldDelegate) =>
+      oldDelegate.progress != progress;
 }

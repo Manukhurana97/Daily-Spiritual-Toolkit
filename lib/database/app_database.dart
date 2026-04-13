@@ -94,6 +94,12 @@ class AppDatabase {
     return (result.first['total'] as int?) ?? 0;
   }
 
+  static Future<void> resetAll() async {
+    final db = await instance;
+    await db.delete('japa_sessions');
+    await db.delete('mantras');
+  }
+
   static Future<Map<String, dynamic>?> getLastSession(int mantraId) async {
     final db = await instance;
     final rows = await db.query(

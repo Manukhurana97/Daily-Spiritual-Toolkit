@@ -129,6 +129,17 @@ class JapaNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> resetAll() async {
+    await AppDatabase.resetAll();
+    _mantras.clear();
+    _activeMantra = null;
+    _currentCount = 0;
+    _sessionStart = null;
+    _lastTapTime = null;
+    _stats = JapaStats.empty;
+    await initialize();
+  }
+
   Future<void> renameMantra(Mantra mantra, String newName) async {
     await AppDatabase.updateMantra(mantra.id!, newName);
     final idx = _mantras.indexWhere((m) => m.id == mantra.id);

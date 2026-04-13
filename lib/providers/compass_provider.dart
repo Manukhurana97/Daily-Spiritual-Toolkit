@@ -11,11 +11,13 @@ class CompassNotifier extends ChangeNotifier {
   double? _heading;
   bool _hasPermission = false;
   bool _isAvailable = false;
+  bool _needsCalibration = false;
   StreamSubscription<CompassEvent>? _subscription;
 
   double? get heading => _heading;
   bool get hasPermission => _hasPermission;
   bool get isAvailable => _isAvailable;
+  bool get needsCalibration => _needsCalibration;
 
   String get cardinalDirection {
     if (_heading == null) return '—';
@@ -67,14 +69,21 @@ class CompassNotifier extends ChangeNotifier {
     _subscription = FlutterCompass.events?.listen((event) {
       if (event.heading != null) {
         _heading = event.heading;
-        notifyListeners();
+        final accuracy = event.accuracy;
+        final wasNeeding = _needsCalibration;
+        _needsCalibration = accuracy != null && accuracy < 0;
+        if (_needsCalibration != wasNeeding || !_needsCalibration) {
+          notifyListeners();
+        } else {
+          notifyListeners();
+        }
       }
     });
   }
 
-  void requestCalibration() {
-    // On most devices, waving in a figure-8 pattern calibrates the magnetometer.
-    // This is a no-op; the UI shows an instruction to the user.
+  void dismissCalibration() {
+    _needsCalibration = false;
+    notifyListeners();
   }
 
   @override

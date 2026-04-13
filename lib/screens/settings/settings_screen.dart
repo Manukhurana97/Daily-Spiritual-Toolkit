@@ -86,6 +86,14 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
 
+          // ── Reset ──
+          SectionCard(
+            title: 'Data',
+            child: _ResetAllButton(
+              onTap: () => _confirmResetAll(context, ref),
+            ),
+          ),
+
           // ── About ──
           SectionCard(
             title: 'About',
@@ -140,6 +148,42 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _confirmResetAll(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reset All Data'),
+        content: const Text(
+          'Are you sure you want to reset everything?\n\n'
+          'This will delete all mantras, sessions, and stats. '
+          'Default mantras will be restored. This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(ctx);
+              await ref.read(japaProvider).resetAll();
+              await ref.read(settingsProvider).setDefaultMantraId(null);
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('All data has been reset.'),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+              }
+            },
+            child: const Text('Reset', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -328,6 +372,45 @@ class _MantraTile extends StatelessWidget {
               icon: const Icon(Icons.more_vert, size: 20),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ResetAllButton extends StatelessWidget {
+  final VoidCallback onTap;
+  const _ResetAllButton({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          decoration: BoxDecoration(
+            color: Colors.red.withValues(alpha: 0.06),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.red.withValues(alpha: 0.2)),
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.delete_forever_rounded, size: 20, color: Colors.red),
+              SizedBox(width: 8),
+              Text(
+                'Reset All Data',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
