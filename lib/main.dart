@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'app.dart';
 import 'providers/japa_provider.dart';
@@ -26,6 +29,15 @@ final appInitializedProvider = FutureProvider<bool>((ref) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // TODO: Replace with your actual RevenueCat API keys from https://app.revenuecat.com
+  await Purchases.configure(
+    PurchasesConfiguration(
+      Platform.isIOS
+          ? 'appl_YOUR_IOS_REVENUECAT_API_KEY'
+          : 'goog_YOUR_ANDROID_REVENUECAT_API_KEY',
+    ),
+  );
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
