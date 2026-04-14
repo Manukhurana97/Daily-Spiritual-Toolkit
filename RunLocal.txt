@@ -1,0 +1,8 @@
+flutter build ios --release
+xcrun devicectl device install app --device 00008140-00020CEC3C8A801C build/ios/iphoneos/Runner.app
+xcrun devicectl device process launch --device 00008140-00020CEC3C8A801C com.mk.naamJap.app
+
+xcrun devicectl device process launch --device 00008140-00020CEC3C8A801C com.mk.naamJap.app
+
+
+flutter run

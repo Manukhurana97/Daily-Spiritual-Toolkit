@@ -12,6 +12,14 @@ final japaProvider = ChangeNotifierProvider<JapaNotifier>((ref) {
   return JapaNotifier();
 });
 
+class _MantraSessionState {
+  int count;
+  DateTime? sessionStart;
+  DateTime? lastTapTime;
+
+  _MantraSessionState({this.count = 0, this.sessionStart, this.lastTapTime});
+}
+
 class JapaNotifier extends ChangeNotifier {
   List<Mantra> _mantras = [];
   Mantra? _activeMantra;
@@ -20,6 +28,8 @@ class JapaNotifier extends ChangeNotifier {
   DateTime? _lastTapTime;
   JapaStats _stats = JapaStats.empty;
   bool _isLoading = true;
+
+  final Map<int, _MantraSessionState> _suspendedSessions = {};
 
   List<Mantra> get mantras => _mantras;
   Mantra? get activeMantra => _activeMantra;
@@ -54,14 +64,27 @@ class JapaNotifier extends ChangeNotifier {
   void selectMantra(Mantra mantra) {
     if (_activeMantra == mantra) return;
 
-    if (hasSession) {
-      _saveCurrentSession();
+    if (_activeMantra != null && hasSession) {
+      _suspendedSessions[_activeMantra!.id!] = _MantraSessionState(
+        count: _currentCount,
+        sessionStart: _sessionStart,
+        lastTapTime: _lastTapTime,
+      );
     }
 
     _activeMantra = mantra;
-    _currentCount = 0;
-    _sessionStart = null;
-    _lastTapTime = null;
+
+    final restored = _suspendedSessions.remove(mantra.id!);
+    if (restored != null) {
+      _currentCount = restored.count;
+      _sessionStart = restored.sessionStart;
+      _lastTapTime = restored.lastTapTime;
+    } else {
+      _currentCount = 0;
+      _sessionStart = null;
+      _lastTapTime = null;
+    }
+
     _refreshStats();
     notifyListeners();
   }
@@ -82,17 +105,10 @@ class JapaNotifier extends ChangeNotifier {
     _currentCount++;
     notifyListeners();
 
-    if (_currentCount % AppConstants.malaSize == 0) {
-      _saveCurrentSession();
-    }
-
     return true;
   }
 
   Future<void> resetCounter() async {
-    if (hasSession) {
-      await _saveCurrentSession();
-    }
     _currentCount = 0;
     _sessionStart = null;
     _lastTapTime = null;
@@ -105,6 +121,7 @@ class JapaNotifier extends ChangeNotifier {
       _currentCount = 0;
       _sessionStart = null;
       _lastTapTime = null;
+      await _refreshStats();
       notifyListeners();
     }
   }
@@ -120,6 +137,7 @@ class JapaNotifier extends ChangeNotifier {
     if (_mantras.length <= 1) return;
     await AppDatabase.deleteMantra(mantra.id!);
     _mantras.remove(mantra);
+    _suspendedSessions.remove(mantra.id!);
     if (_activeMantra == mantra) {
       _activeMantra = _mantras.first;
       _currentCount = 0;
@@ -136,6 +154,7 @@ class JapaNotifier extends ChangeNotifier {
     _currentCount = 0;
     _sessionStart = null;
     _lastTapTime = null;
+    _suspendedSessions.clear();
     _stats = JapaStats.empty;
     await initialize();
   }
