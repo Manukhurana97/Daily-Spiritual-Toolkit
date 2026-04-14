@@ -56,6 +56,10 @@ class PanchangNotifier extends ChangeNotifier {
       _days = List.generate(7, (i) {
         final date = DateTime(now.year, now.month, now.day).add(Duration(days: i));
         final result = PanchangCalculator.calculate(date, lat, lng);
+        if (i == 0) {
+          _todaySunrise = result.sunrise;
+          _todaySunset = result.sunset;
+        }
         return _resultToData(result, date, timeFormat, locationLabel);
       });
       _error = null;
@@ -73,12 +77,23 @@ class PanchangNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  DateTime? get todaySunrise => _todaySunrise;
+  DateTime? get todaySunset => _todaySunset;
+  DateTime? _todaySunrise;
+  DateTime? _todaySunset;
+
   PanchangData _resultToData(
     PanchangResult result,
     DateTime date,
     DateFormat timeFormat,
     String? locationLabel,
   ) {
+    String? brahmaMuhurta;
+    if (result.sunrise != null) {
+      final bm = result.sunrise!.subtract(const Duration(hours: 1, minutes: 36));
+      brahmaMuhurta = timeFormat.format(bm);
+    }
+
     return PanchangData(
       date: DateFormat('yyyy-MM-dd').format(date),
       tithi: result.tithi.name,
@@ -103,8 +118,9 @@ class PanchangNotifier extends ChangeNotifier {
       moonSign: result.moonSign,
       rahuKaalStart: result.rahuKaal != null ? timeFormat.format(result.rahuKaal!.start) : null,
       rahuKaalEnd: result.rahuKaal != null ? timeFormat.format(result.rahuKaal!.end) : null,
-      auspiciousNote: _generateNote(result),
+      auspiciousNote: _generateNote(result, brahmaMuhurta: brahmaMuhurta),
       locationLabel: locationLabel,
+      brahmaMuhurta: brahmaMuhurta,
     );
   }
 
@@ -132,8 +148,12 @@ class PanchangNotifier extends ChangeNotifier {
     }
   }
 
-  String _generateNote(PanchangResult result) {
+  String _generateNote(PanchangResult result, {String? brahmaMuhurta}) {
     final notes = <String>[];
+
+    if (brahmaMuhurta != null) {
+      notes.add('Best time for japa: $brahmaMuhurta (Brahma Muhurta).');
+    }
 
     if (result.tithi.name == 'Purnima') {
       notes.add('Full Moon — highly auspicious for all spiritual practices.');
@@ -160,6 +180,6 @@ class PanchangNotifier extends ChangeNotifier {
       notes.add('Continue your daily sadhana with devotion.');
     }
 
-    return notes.first;
+    return notes.join(' ');
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,9 +8,15 @@ import 'providers/japa_provider.dart';
 import 'providers/panchang_provider.dart';
 import 'providers/compass_provider.dart';
 import 'providers/settings_provider.dart';
+import 'services/auth_service.dart';
+import 'services/notification_service.dart';
+import 'services/purchase_service.dart';
 
 final appInitializedProvider = FutureProvider<bool>((ref) async {
   await ref.read(settingsProvider).initialize();
+  ref.read(authProvider).initialize();
+  await ref.read(purchaseProvider).init();
+  await NotificationService.init();
   await ref.read(japaProvider).initialize();
   await ref.read(panchangProvider).initialize();
   ref.read(compassProvider).initialize();
@@ -18,6 +25,7 @@ final appInitializedProvider = FutureProvider<bool>((ref) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

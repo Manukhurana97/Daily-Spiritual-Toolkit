@@ -126,10 +126,23 @@ class JapaNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> addMantra(String name) async {
-    if (_mantras.length >= AppConstants.maxMantras) return;
+  Future<void> addMantra(String name, {bool isPro = false}) async {
+    final max = isPro ? 50 : AppConstants.maxMantras;
+    if (_mantras.length >= max) return;
     final mantra = await AppDatabase.insertMantra(name);
     _mantras.add(mantra);
+    notifyListeners();
+  }
+
+  Future<void> updateMantraDetails(Mantra mantra) async {
+    await AppDatabase.updateMantraFull(mantra);
+    final idx = _mantras.indexWhere((m) => m.id == mantra.id);
+    if (idx != -1) {
+      _mantras[idx] = mantra;
+      if (_activeMantra?.id == mantra.id) {
+        _activeMantra = mantra;
+      }
+    }
     notifyListeners();
   }
 

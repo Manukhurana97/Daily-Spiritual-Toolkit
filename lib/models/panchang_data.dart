@@ -24,6 +24,7 @@ class PanchangData {
   final String? rahuKaalEnd;
   final String auspiciousNote;
   final String? locationLabel;
+  final String? brahmaMuhurta;
 
   const PanchangData({
     required this.date,
@@ -51,6 +52,7 @@ class PanchangData {
     this.rahuKaalEnd,
     required this.auspiciousNote,
     this.locationLabel,
+    this.brahmaMuhurta,
   });
 
   static PanchangData placeholder(String date, {String? locationLabel}) =>

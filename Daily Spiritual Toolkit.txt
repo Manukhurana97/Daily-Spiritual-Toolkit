@@ -48,12 +48,10 @@ Pro (Paid) – v1.5 (enhanced)
 		Local export (Pro‑only)
 			Export japa history as CSV (mantra, count, date, session duration).
 		Panchang 2.0
-			“Today, tomorrow, next 3 days” view.
+			for pro we will show 7 days for non pro show only one day.
 			Simple “best time for japa today” note (static or light logic tied to tithi/nakshatra).
-			Instead of just showing the time, allow users to set an alarm specifically for Brahma Muhurta (approx. 1.5 hours before sunrise), which is the ideal time for Japa.
-			A JSON file for 3 years of Panchang data can get large. Consider using a highly compressed format or a very small SQLite table to keep the app size under 20–30 MB.
+			Instead of just showing the time, allow users to set an alarm specifically for Brahma Muhurta (approx. 1.5 hours before sunrise), which is the ideal time for Japa or rahu kaal alaram.
 			Sandhya Kaal Notifications: Beyond Brahma Muhurta, add alerts for Sandhya Kaal (twilight/sunset periods), which are traditionally significant for prayers and Japa.
-			Tie the Panchang to the Counter. For example, if it's an auspicious day for Lord Shiva (like Mahashivratri or a Monday), the app could subtly suggest switching to an "Om Namah Shivaya" theme or mantra.
 		Compass 2.0
 			“Ritual modes”:
 				“Face East for Surya‑naam.”
@@ -62,13 +60,11 @@ Pro (Paid) – v1.5 (enhanced)
 				the compass could dynamically highlight the "Ishan Kon" (North-East), which is considered the most auspicious direction for a home temple or prayer.
 			Allow the compass to point toward significant pilgrimage sites (e.g., Kashi, Vrindavan, or Kedarnath) based on the user's GPS, rather than just cardinal directions.
 		Dark mode / themes (Pro‑only)
-			Light / dark mode.
+			Light / dark mode / custom mode themes and in future custom paid paground also.
 			One “spiritual‑themed” UI variant (softer colors, subtle backgrounds).
 		No ads, no trackers (Pro philosophy)
 			As part of Pro unlock: “You’re paying; no ads, no banners, no third‑party tracking.”
-		Eclipse bases on user location: 
-			show eclipse with sun, moon and earth animation and is possible some animation of live eclipse (if internet required that is also ok)
-		The "Volume Button" Tap (V1.5): Many users prefer clicking a physical button while their phone is in their pocket. Allowing the Volume Up button to count as a tap is a great Pro feature.
+		The "Volume Button" Tap (V1.5): Many users prefer clicking a physical button while their phone is in their pocket or travelling or they dont want to show to someone. Allowing the Volume Up button to count as a tap is a great Pro feature.
 		Instead of just showing the time, allow users to set an alarm specifically for Brahma Muhurta (approx. 1.5 hours before sunrise), which is the ideal time for Japa.
 		**Make sure your code normalizes this so a user doesn't get different directions on an iPhone vs. a Samsung.
 
@@ -170,3 +166,7 @@ Possible future updates:
 	(PRO)For people who want to do Jap in public (office, bus, or park) without attracting attention. This mode turns the screen black or displays a subtle, non-religious pattern while still responding to taps and providing haptic feedback.
 	(PRO)When a user completes a major milestone (like 1 Lakh or a 40-day Sankalp), unlock a unique digital wallpaper or a short, inspiring quote from a saint.
 	(PRO) A "Tribe" feature where a group of users (anonymous or friends) works together toward a massive shared goal (e.g., "Let's reach 1 Crore Ram-Naam together this month"). This creates a sense of community without needing individual profiles.
+	(PRO)Tie the Panchang to the Counter. For example, if it's an auspicious day for Lord Shiva (like Mahashivratri or a Monday), the app could subtly suggest switching to an "Om Namah Shivaya" theme or mantra.
+	Eclipse bases on user location: 
+		show eclipse with sun, moon and earth animation and is possible some animation of live eclipse (if internet required that is also ok)
+		

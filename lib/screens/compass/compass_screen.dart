@@ -11,21 +11,74 @@ class CompassScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final compass = ref.watch(compassProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Stack(
       children: [
         SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
 
-              _DirectionBanner(compass: compass),
+              // Mode toggle
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    Expanded(child: _DirectionBanner(compass: compass, isDark: isDark)),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      onPressed: () => compass.toggleSpiritualMode(),
+                      icon: Icon(
+                        compass.spiritualMode ? Icons.temple_hindu : Icons.explore_rounded,
+                        color: compass.spiritualMode ? AppColors.gold : AppColors.textSecondary,
+                      ),
+                      tooltip: compass.spiritualMode ? 'Basic Mode' : 'Spiritual Mode',
+                    ),
+                  ],
+                ),
+              ),
+
+              // Ishan Kon banner
+              if (compass.spiritualMode && compass.isFacingNorthEast)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.gold.withValues(alpha: isDark ? 0.2 : 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.star_rounded, size: 18, color: AppColors.gold),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Ishan Kon (NE) — most auspicious direction for puja room',
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.gold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
 
               Expanded(
                 child: Center(
                   child: compass.heading != null
-                      ? _CompassRose(heading: compass.heading!)
-                      : _CompassPlaceholder(),
+                      ? _CompassRose(
+                          heading: compass.heading!,
+                          isDark: isDark,
+                          showIshan: compass.spiritualMode,
+                          pilgrimBearings: compass.spiritualMode
+                              ? CompassNotifier.pilgrimages
+                                  .map((p) => _PilgrimLabel(p.name, compass.bearingTo(p)))
+                                  .where((p) => p.bearing != null)
+                                  .toList()
+                              : [],
+                        )
+                      : _CompassPlaceholder(isDark: isDark),
                 ),
               ),
 
@@ -34,10 +87,10 @@ class CompassScreen extends ConsumerWidget {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
                     '${compass.heading!.toStringAsFixed(0)}° ${compass.cardinalDirectionFull}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -47,21 +100,19 @@ class CompassScreen extends ConsumerWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: AppColors.tealLight,
+                    color: isDark ? AppColors.teal.withValues(alpha: 0.15) : AppColors.tealLight,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.info_outline_rounded, size: 18, color: AppColors.teal),
-                      SizedBox(width: 10),
+                      const Icon(Icons.info_outline_rounded, size: 18, color: AppColors.teal),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Wave your phone in a figure-8 pattern to calibrate the compass.',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: AppColors.teal,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          compass.spiritualMode
+                              ? 'Spiritual mode active — pilgrimage sites and Ishan Kon visible.'
+                              : 'Wave your phone in a figure-8 pattern to calibrate the compass.',
+                          style: const TextStyle(fontSize: 12, color: AppColors.teal, fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
@@ -73,25 +124,29 @@ class CompassScreen extends ConsumerWidget {
         ),
 
         if (compass.needsCalibration)
-          _CalibrationOverlay(
-            onDismiss: () => compass.dismissCalibration(),
-          ),
+          _CalibrationOverlay(onDismiss: () => compass.dismissCalibration()),
       ],
     );
   }
 }
 
+class _PilgrimLabel {
+  final String name;
+  final double? bearing;
+  _PilgrimLabel(this.name, this.bearing);
+}
+
 class _DirectionBanner extends StatelessWidget {
   final CompassNotifier compass;
-  const _DirectionBanner({required this.compass});
+  final bool isDark;
+  const _DirectionBanner({required this.compass, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
     final isFacingEast = compass.isFacingEast;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isFacingEast
@@ -107,31 +162,22 @@ class _DirectionBanner extends StatelessWidget {
           Icon(
             isFacingEast ? Icons.check_circle_rounded : Icons.east_rounded,
             color: Colors.white,
-            size: 24,
+            size: 22,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isFacingEast ? 'You are facing East' : 'Face East for Puja',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  isFacingEast ? 'Facing East' : 'Face East for Puja',
+                  style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   isFacingEast
-                      ? 'Ideal direction for Sun worship & general puja.'
-                      : 'Rotate to face East for Sun worship & general puja.',
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+                      ? 'Ideal for Sun worship & puja.'
+                      : 'Rotate to face East.',
+                  style: const TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -144,17 +190,30 @@ class _DirectionBanner extends StatelessWidget {
 
 class _CompassRose extends StatelessWidget {
   final double heading;
-  const _CompassRose({required this.heading});
+  final bool isDark;
+  final bool showIshan;
+  final List<_PilgrimLabel> pilgrimBearings;
+
+  const _CompassRose({
+    required this.heading,
+    required this.isDark,
+    this.showIshan = false,
+    this.pilgrimBearings = const [],
+  });
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size.width * 0.7;
-
     return SizedBox(
       width: size,
       height: size,
       child: CustomPaint(
-        painter: _CompassPainter(heading: heading),
+        painter: _CompassPainter(
+          heading: heading,
+          isDark: isDark,
+          showIshan: showIshan,
+          pilgrimBearings: pilgrimBearings,
+        ),
       ),
     );
   }
@@ -162,7 +221,16 @@ class _CompassRose extends StatelessWidget {
 
 class _CompassPainter extends CustomPainter {
   final double heading;
-  const _CompassPainter({required this.heading});
+  final bool isDark;
+  final bool showIshan;
+  final List<_PilgrimLabel> pilgrimBearings;
+
+  const _CompassPainter({
+    required this.heading,
+    required this.isDark,
+    required this.showIshan,
+    this.pilgrimBearings = const [],
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -170,164 +238,128 @@ class _CompassPainter extends CustomPainter {
     final radius = size.width / 2 - 16;
     final angle = -heading * pi / 180;
 
+    final bgColor = isDark ? AppColors.darkCard : AppColors.saffronLight;
+    final borderColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+
+    // Ishan Kon wedge (NE highlight)
+    if (showIshan) {
+      final ishanAngle = angle + pi / 4;
+      final wedgePath = Path()
+        ..moveTo(center.dx, center.dy)
+        ..arcTo(
+          Rect.fromCircle(center: center, radius: radius - 8),
+          ishanAngle - pi / 12 - pi / 2,
+          pi / 6,
+          false,
+        )
+        ..close();
+      canvas.drawPath(wedgePath, Paint()..color = AppColors.gold.withValues(alpha: 0.15));
+    }
+
     // Outer ring
-    final outerPaint = Paint()
-      ..color = AppColors.divider
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-    canvas.drawCircle(center, radius, outerPaint);
+    canvas.drawCircle(center, radius, Paint()..color = borderColor..style = PaintingStyle.stroke..strokeWidth = 2);
 
-    // Inner subtle ring
-    final innerPaint = Paint()
-      ..color = AppColors.saffronLight
-      ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, radius - 8, innerPaint);
-
-    final innerBorderPaint = Paint()
-      ..color = AppColors.divider
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
-    canvas.drawCircle(center, radius - 8, innerBorderPaint);
+    // Inner ring
+    canvas.drawCircle(center, radius - 8, Paint()..color = bgColor..style = PaintingStyle.fill);
+    canvas.drawCircle(center, radius - 8, Paint()..color = borderColor..style = PaintingStyle.stroke..strokeWidth = 1);
 
     // Tick marks
     for (int i = 0; i < 72; i++) {
       final tickAngle = angle + i * (2 * pi / 72);
       final isMajor = i % 18 == 0;
       final isMinor = i % 9 == 0;
-
       final startR = isMajor ? radius - 24 : (isMinor ? radius - 18 : radius - 14);
       final endR = radius - 8;
 
-      final start = Offset(
-        center.dx + startR * sin(tickAngle),
-        center.dy - startR * cos(tickAngle),
-      );
-      final end = Offset(
-        center.dx + endR * sin(tickAngle),
-        center.dy - endR * cos(tickAngle),
-      );
+      final startOff = Offset(center.dx + startR * sin(tickAngle), center.dy - startR * cos(tickAngle));
+      final endOff = Offset(center.dx + endR * sin(tickAngle), center.dy - endR * cos(tickAngle));
 
-      final tickPaint = Paint()
-        ..color = isMajor ? AppColors.textPrimary : AppColors.textSecondary.withValues(alpha: 0.4)
-        ..strokeWidth = isMajor ? 2.5 : 1;
-
-      canvas.drawLine(start, end, tickPaint);
+      canvas.drawLine(startOff, endOff, Paint()
+        ..color = isMajor ? textPrimary : textSecondary.withValues(alpha: 0.4)
+        ..strokeWidth = isMajor ? 2.5 : 1);
     }
 
     // Cardinal labels
     final directions = ['N', 'E', 'S', 'W'];
     final dirAngles = [0.0, pi / 2, pi, 3 * pi / 2];
-    final dirColors = [
-      const Color(0xFFD32F2F), // N = red
-      AppColors.saffron,       // E = saffron (puja direction)
-      AppColors.textSecondary,
-      AppColors.textSecondary,
-    ];
+    final dirColors = [const Color(0xFFD32F2F), AppColors.saffron, textSecondary, textSecondary];
 
     for (int i = 0; i < 4; i++) {
       final dirAngle = angle + dirAngles[i];
       final labelR = radius - 40;
-      final pos = Offset(
-        center.dx + labelR * sin(dirAngle),
-        center.dy - labelR * cos(dirAngle),
-      );
+      final pos = Offset(center.dx + labelR * sin(dirAngle), center.dy - labelR * cos(dirAngle));
 
-      final textPainter = TextPainter(
-        text: TextSpan(
-          text: directions[i],
-          style: TextStyle(
-            color: dirColors[i],
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+      final tp = TextPainter(
+        text: TextSpan(text: directions[i], style: TextStyle(color: dirColors[i], fontSize: 18, fontWeight: FontWeight.w700)),
         textDirection: TextDirection.ltr,
       )..layout();
-
-      textPainter.paint(
-        canvas,
-        Offset(pos.dx - textPainter.width / 2, pos.dy - textPainter.height / 2),
-      );
+      tp.paint(canvas, Offset(pos.dx - tp.width / 2, pos.dy - tp.height / 2));
     }
 
-    // Needle (points to top = device heading direction)
-    final needleLength = radius - 52;
+    // Pilgrimage site labels
+    for (final p in pilgrimBearings) {
+      if (p.bearing == null) continue;
+      final pAngle = angle + p.bearing! * pi / 180;
+      final pR = radius + 6;
+      final pos = Offset(center.dx + pR * sin(pAngle), center.dy - pR * cos(pAngle));
 
-    // North needle (top)
+      final dot = Paint()..color = AppColors.gold;
+      canvas.drawCircle(pos, 4, dot);
+
+      final tp = TextPainter(
+        text: TextSpan(text: p.name, style: const TextStyle(color: AppColors.gold, fontSize: 9, fontWeight: FontWeight.w600)),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      tp.paint(canvas, Offset(pos.dx - tp.width / 2, pos.dy + 5));
+    }
+
+    // Needle
+    final needleLength = radius - 52;
     final northPath = Path()
       ..moveTo(center.dx, center.dy - needleLength)
       ..lineTo(center.dx - 8, center.dy)
       ..lineTo(center.dx + 8, center.dy)
       ..close();
+    canvas.drawPath(northPath, Paint()..color = const Color(0xFFD32F2F));
 
-    canvas.drawPath(
-      northPath,
-      Paint()..color = const Color(0xFFD32F2F),
-    );
-
-    // South needle (bottom)
     final southPath = Path()
       ..moveTo(center.dx, center.dy + needleLength)
       ..lineTo(center.dx - 8, center.dy)
       ..lineTo(center.dx + 8, center.dy)
       ..close();
-
-    canvas.drawPath(
-      southPath,
-      Paint()..color = AppColors.textSecondary.withValues(alpha: 0.3),
-    );
+    canvas.drawPath(southPath, Paint()..color = textSecondary.withValues(alpha: 0.3));
 
     // Center dot
-    canvas.drawCircle(
-      center,
-      6,
-      Paint()..color = AppColors.textPrimary,
-    );
-    canvas.drawCircle(
-      center,
-      3,
-      Paint()..color = Colors.white,
-    );
+    canvas.drawCircle(center, 6, Paint()..color = textPrimary);
+    canvas.drawCircle(center, 3, Paint()..color = Colors.white);
   }
 
   @override
-  bool shouldRepaint(_CompassPainter oldDelegate) =>
-      oldDelegate.heading != heading;
+  bool shouldRepaint(_CompassPainter old) =>
+      old.heading != heading || old.isDark != isDark || old.showIshan != showIshan;
 }
 
 class _CompassPlaceholder extends StatelessWidget {
+  final bool isDark;
+  const _CompassPlaceholder({required this.isDark});
+
   @override
   Widget build(BuildContext context) {
+    final color = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          Icons.explore_off_rounded,
-          size: 64,
-          color: AppColors.textSecondary.withValues(alpha: 0.4),
-        ),
+        Icon(Icons.explore_off_rounded, size: 64, color: color.withValues(alpha: 0.4)),
         const SizedBox(height: 16),
-        const Text(
-          'Compass sensor not available',
-          style: TextStyle(
-            fontSize: 16,
-            color: AppColors.textSecondary,
-          ),
-        ),
+        Text('Compass sensor not available', style: TextStyle(fontSize: 16, color: color)),
         const SizedBox(height: 4),
-        const Text(
-          'This device may not have a magnetometer.',
-          style: TextStyle(
-            fontSize: 13,
-            color: AppColors.textSecondary,
-          ),
-        ),
+        Text('This device may not have a magnetometer.', style: TextStyle(fontSize: 13, color: color)),
       ],
     );
   }
 }
-
-// ── Calibration Overlay with animated figure-8 ──
 
 class _CalibrationOverlay extends StatelessWidget {
   final VoidCallback onDismiss;
@@ -341,39 +373,20 @@ class _CalibrationOverlay extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              size: 48,
-              color: AppColors.gold,
-            ),
+            const Icon(Icons.warning_amber_rounded, size: 48, color: AppColors.gold),
             const SizedBox(height: 16),
-            const Text(
-              'Compass Needs Calibration',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
+            const Text('Compass Needs Calibration', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white)),
             const SizedBox(height: 8),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
                 'Move your phone slowly in a figure-8 / infinity pattern until the compass stabilises.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                  height: 1.5,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.white70, height: 1.5),
               ),
             ),
             const SizedBox(height: 32),
-            const SizedBox(
-              width: 180,
-              height: 100,
-              child: _Figure8Animation(),
-            ),
+            const SizedBox(width: 180, height: 100, child: _Figure8Animation()),
             const SizedBox(height: 40),
             OutlinedButton(
               onPressed: onDismiss,
@@ -381,14 +394,9 @@ class _CalibrationOverlay extends StatelessWidget {
                 foregroundColor: Colors.white,
                 side: const BorderSide(color: Colors.white54),
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
-              child: const Text(
-                'Dismiss',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
+              child: const Text('Dismiss', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
             ),
           ],
         ),
@@ -399,93 +407,56 @@ class _CalibrationOverlay extends StatelessWidget {
 
 class _Figure8Animation extends StatefulWidget {
   const _Figure8Animation();
-
   @override
   State<_Figure8Animation> createState() => _Figure8AnimationState();
 }
 
-class _Figure8AnimationState extends State<_Figure8Animation>
-    with SingleTickerProviderStateMixin {
+class _Figure8AnimationState extends State<_Figure8Animation> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2500),
-    )..repeat();
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 2500))..repeat();
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  void dispose() { _controller.dispose(); super.dispose(); }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: _Figure8Painter(progress: _controller.value),
-          size: const Size(180, 100),
-        );
-      },
+      builder: (context, child) => CustomPaint(painter: _Figure8Painter(progress: _controller.value), size: const Size(180, 100)),
     );
   }
 }
 
 class _Figure8Painter extends CustomPainter {
-  _Figure8Painter({required this.progress});
   final double progress;
+  _Figure8Painter({required this.progress});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final cx = size.width / 2;
-    final cy = size.height / 2;
-    final rx = size.width * 0.38;
-    final ry = size.height * 0.38;
-
-    // Draw the infinity path
-    final pathPaint = Paint()
-      ..color = Colors.white24
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5;
+    final cx = size.width / 2, cy = size.height / 2;
+    final rx = size.width * 0.38, ry = size.height * 0.38;
 
     final path = Path();
-    const steps = 200;
-    for (var i = 0; i <= steps; i++) {
-      final t = i / steps * 2 * pi;
+    for (var i = 0; i <= 200; i++) {
+      final t = i / 200 * 2 * pi;
       final x = cx + rx * cos(t) / (1 + sin(t) * sin(t));
       final y = cy + ry * sin(t) * cos(t) / (1 + sin(t) * sin(t));
-      if (i == 0) {
-        path.moveTo(x, y);
-      } else {
-        path.lineTo(x, y);
-      }
+      i == 0 ? path.moveTo(x, y) : path.lineTo(x, y);
     }
-    canvas.drawPath(path, pathPaint);
+    canvas.drawPath(path, Paint()..color = Colors.white24..style = PaintingStyle.stroke..strokeWidth = 2.5);
 
-    // Draw the moving dot
     final t = progress * 2 * pi;
     final dotX = cx + rx * cos(t) / (1 + sin(t) * sin(t));
     final dotY = cy + ry * sin(t) * cos(t) / (1 + sin(t) * sin(t));
-
-    canvas.drawCircle(
-      Offset(dotX, dotY),
-      7,
-      Paint()..color = AppColors.gold,
-    );
-    canvas.drawCircle(
-      Offset(dotX, dotY),
-      4,
-      Paint()..color = Colors.white,
-    );
+    canvas.drawCircle(Offset(dotX, dotY), 7, Paint()..color = AppColors.gold);
+    canvas.drawCircle(Offset(dotX, dotY), 4, Paint()..color = Colors.white);
   }
 
   @override
-  bool shouldRepaint(covariant _Figure8Painter oldDelegate) =>
-      oldDelegate.progress != progress;
+  bool shouldRepaint(covariant _Figure8Painter old) => old.progress != progress;
 }
