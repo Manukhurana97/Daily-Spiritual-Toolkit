@@ -16,7 +16,7 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _currentIndex = 0;
 
-  static const _titles = ['Naam Jap', 'Panchang', 'Compass', 'Settings'];
+  static const _titles = ['Japa', 'Panchang', 'Compass', 'Settings'];
 
   static const _screens = [
     JapaScreen(),

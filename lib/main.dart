@@ -61,7 +61,7 @@ class _AppLoader extends ConsumerWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Naam Jap',
+                  'Nitya Sadhana',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
@@ -89,7 +89,7 @@ class _AppLoader extends ConsumerWidget {
           ),
         ),
       ),
-      data: (_) => const NaamJapApp(),
+      data: (_) => const NityaSadhanaApp(),
     );
   }
 }

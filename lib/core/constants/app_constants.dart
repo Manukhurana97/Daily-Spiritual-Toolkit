@@ -1,9 +1,9 @@
 class AppConstants {
   AppConstants._();
 
-  static const String appName = 'Naam Jap';
+  static const String appName = 'Nitya Sadhana';
   static const String tagline =
-      'Count your naam-jap, follow the right panchang,\nand face the right direction.';
+      'Your daily spiritual toolkit — japa counter,\npanchang, and direction compass.';
 
   static const int malaSize = 108;
   static const int maxMantras = 3;

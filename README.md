@@ -1,6 +1,6 @@
-# naam_jap
+# Nitya Sadhana
 
-A new Flutter project.
+Your daily spiritual toolkit — japa counter, panchang, and direction compass.
 
 ## Getting Started
 
