@@ -36,7 +36,7 @@ Non‑Pro (Free) – v1
 			No ads, no cloud, no user accounts
 			All data stored locally (no backend, no analytics by default).
 			
-Pro (Paid) – v1.5 (enhanced, still offline‑first)
+Pro (Paid) – v1.5 (enhanced)
 	Name‑jap counter (enhanced)
 		Unlimited user‑defined mantras.
 		Target modes: “108”, “1008”, “daily target (e.g., 500)”.
