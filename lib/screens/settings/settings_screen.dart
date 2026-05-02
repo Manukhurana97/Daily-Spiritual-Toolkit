@@ -236,17 +236,19 @@ class SettingsScreen extends ConsumerWidget {
                   icon: Icons.palette_rounded,
                   title: 'Theme',
                   isDark: isDark,
-                  trailing: SegmentedButton<ThemeMode>(
-                    segments: const [
-                      ButtonSegment(value: ThemeMode.light, icon: Icon(Icons.light_mode_rounded, size: 16)),
-                      ButtonSegment(value: ThemeMode.system, icon: Icon(Icons.settings_suggest_rounded, size: 16)),
-                      ButtonSegment(value: ThemeMode.dark, icon: Icon(Icons.dark_mode_rounded, size: 16)),
-                    ],
-                    selected: {settings.themeMode},
-                    onSelectionChanged: (modes) => settings.setThemeMode(modes.first),
-                    style: ButtonStyle(
-                      visualDensity: VisualDensity.compact,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  trailing: FittedBox(
+                    child: SegmentedButton<ThemeMode>(
+                      segments: const [
+                        ButtonSegment(value: ThemeMode.light, icon: Icon(Icons.light_mode_rounded, size: 16)),
+                        ButtonSegment(value: ThemeMode.system, icon: Icon(Icons.settings_suggest_rounded, size: 16)),
+                        ButtonSegment(value: ThemeMode.dark, icon: Icon(Icons.dark_mode_rounded, size: 16)),
+                      ],
+                      selected: {settings.themeMode},
+                      onSelectionChanged: (modes) => settings.setThemeMode(modes.first),
+                      style: ButtonStyle(
+                        visualDensity: VisualDensity.compact,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
                     ),
                   ),
                 ),
@@ -348,8 +350,8 @@ class SettingsScreen extends ConsumerWidget {
                           icon: Icons.volume_up_rounded,
                           title: 'Volume',
                           isDark: isDark,
-                          trailing: SizedBox(
-                            width: 120,
+                          trailing: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 120),
                             child: Slider(
                               value: audio.volume,
                               onChanged: isPro ? (v) => audio.setVolume(v) : null,

@@ -9,537 +9,607 @@ flutter run
 
 
 
+logs : manu@Manus-MacBook-Air Daily Spiritual Toolkit % flutter clean && flutter run
+Cleaning Xcode workspace...                                         6.2s
+Deleting build...                                                1,084ms
+Deleting .dart_tool...                                               7ms
+Deleting ephemeral...                                                1ms
+Deleting Generated.xcconfig...                                       1ms
+Deleting flutter_export_environment.sh...                            4ms
+Deleting Flutter.podspec...                                          0ms
+Deleting .flutter-plugins-dependencies...                            0ms
+Connected devices:
+RMX3944 (mobile)   • SS5T8T5DKNPRIJVW          • android-arm64 • Android 16
+(API 36)
+iPhone 16 (mobile) • 00008140-00020CEC3C8A801C • ios           • iOS 26.4.1
+23E254
 
-logs : 
+No wireless devices were found.
 
-W/VRI[MainActivity](28740): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@67af638
-D/FlutterJNI(28740): Sending viewport metrics to the engine.
-D/VRI[MainActivity](28740): onFocusEvent true
-D/InsetsController(28740): hide(ime(), fromIme=false)
-I/ImeTracker(28740): com.manukhurana.naam_jap:d7d5eb61: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): Error fetching customer data: PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.').
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): Error fetching customer data: PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.').
-I/flutter (28740): Entitlement sync error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-D/OplusScrollToTopManager(28740): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{eb59ad0 V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
-V/SystemSensorManagerExtImpl(28740): RegisterListener rot_vec type:11 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@45afe0 from com.manukhurana.naam_jap
-V/SystemSensorManagerExtImpl(28740): RegisterListener icm4n607 acc type:1 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@45afe0 from com.manukhurana.naam_jap
-V/SystemSensorManagerExtImpl(28740): RegisterListener mmc5603 mag type:2 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@45afe0 from com.manukhurana.naam_jap
-W/hurana.naam_jap(28740): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
-V/SystemSensorManagerExtImpl(28740): unRegisterListener by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@45afe0 and its name is rot_vec
-D/ProfileInstaller(28740): Installing profile for com.manukhurana.naam_jap
-V/SystemSensorManagerExtImpl(28740): unRegisterListener by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@45afe0 and its name is icm4n607 acc
-V/SystemSensorManagerExtImpl(28740): unRegisterListener by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@45afe0 and its name is mmc5603 mag
-V/SystemSensorManagerExtImpl(28740): RegisterListener rot_vec type:11 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@39c7f55 from com.manukhurana.naam_jap
-V/SystemSensorManagerExtImpl(28740): RegisterListener icm4n607 acc type:1 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@39c7f55 from com.manukhurana.naam_jap
-V/SystemSensorManagerExtImpl(28740): RegisterListener mmc5603 mag type:2 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@39c7f55 from com.manukhurana.naam_jap
-D/ViewRootImplExtImpl(28740): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=true, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
-D/VRI[MainActivity](28740): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][1080,2400]}, relayoutAsync:true, mSyncSeqId:0
-W/VRI[MainActivity](28740): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@67af638
-D/FlutterJNI(28740): Sending viewport metrics to the engine.
-I/SurfaceControl(28740):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xf6f024d,currentBufferRatio=1.0,desiredRatio=1.0
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/product_entitlement_mapping
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): Error updating product entitlement mappings. Error: PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.').
-E/IJankManager(28740): slideSceneEnd unknown scene 1000 mScene:-1
-D/OplusSystemUINavigationGestureExtImpl(28740): regionString = null
-D/OplusSystemUINavigationGestureExtImpl(28740): regionString = null
-D/ViewExtract(28740): [OplusViewExtractManager] OplusViewExtractManager init com.manukhurana.naam_jap
-D/OplusInputMethodManagerInternal(28740): get inputMethodManager extension: com.android.internal.view.IInputMethodManager$Stub$Proxy@ea7d1d3
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): perfLockAcq is supported. 
-I/PowerHalMgrImpl(28740): hdl:14235, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14235, pid:28740 
-D/ResourcesManagerExtImpl(28740): applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
-E/OplusPredictiveBackController(28740):  NoSuchMethodException 
-E/OplusPredictiveBackController(28740):  NoSuchMethodException 
-D/OplusPredictiveBackController(28740): should not HookOnBackInvokedCallbackEnabled for application com.google.android.gms.auth.api.signin.internal.SignInHubActivity@c175e6c sdk: 36
-D/OplusPredictiveBackController(28740): initPredictiveBackConfig for com.google.android.gms.auth.api.signin.internal.SignInHubActivity@c175e6c initPredictiveBackConfig mShouldInterceptKeyEvent false
-D/OplusPredictiveBackController(28740): should not HookOnBackInvokedCallbackEnabled for application com.google.android.gms.auth.api.signin.internal.SignInHubActivity@c175e6c sdk: 36
-D/WindowOnBackDispatcher(28740):  predictive settings is disabled for com.manukhurana.naam_jap
-I/ContentCaptureHelper(28740): Setting logging level to OFF
-D/ActivityThread(28740): ComponentInfo{com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity} checkFinished=false 2
-D/ResourcesManagerExtImpl(28740): applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
-D/WindowManager(28740): Add to mViews: com.android.internal.policy.DecorView{c6d136e I.E...... R.....I. 0,0-0,0 alpha=1.0 viewInfo = }[SignInHubActivity],pkg= com.manukhurana.naam_jap
-D/skia    (28740): setRusSupported enable 0
-D/ViewRootImplExtImpl(28740): onDisplayChanged -1 for VRI android.view.ViewRootImpl@71daca5
-D/VRI[MainActivity](28740): onFocusEvent false
-D/ResourcesManagerExtImpl(28740): applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
-E/OplusBracketLog(28740): [OplusViewMirrorManager] updateHostViewRootIfNeeded, not support android.view.ViewRootImpl@71daca5
-D/OplusPredictiveBackController(28740): should not HookOnBackInvokedCallbackEnabled for application com.google.android.gms.auth.api.signin.internal.SignInHubActivity@c175e6c sdk: 36
-D/WindowOnBackDispatcher(28740):  predictive settings is disabled for com.manukhurana.naam_jap
-D/OplusPredictiveBackController(28740): should not HookOnBackInvokedCallbackEnabled for application com.google.android.gms.auth.api.signin.internal.SignInHubActivity@c175e6c sdk: 36
-D/WindowOnBackDispatcher(28740):  predictive settings is disabled for com.manukhurana.naam_jap
-D/ViewRootImplExtImpl(28740): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=0, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258291200, title=com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity
-D/VRI[SignInHubActivity](28740): relayoutWindow result, sizeChanged:true, surfaceControlChanged:true, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(0, 0), mWidth:-1, mHeight:-1, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:25231616, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-W/VRI[SignInHubActivity](28740): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(0, 0), format:-2, blastBufferQueue:null
-D/BufferQueueConsumer(28740): [](id:704400000002,api:0,p:-1,c:28740) connect: controlledByApp=false
-D/BufferQueueConsumer(28740): [VRI[SignInHubActivity][com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity]#2(BLAST Consumer)2](id:704400000002,api:0,p:-1,c:28740) setMaxAcquiredBufferCount: 5
-D/HWUI    (28740): createSurface new attribs array
-D/libEGL  (28740): this is from skia gles
-I/SurfaceControl(28740):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity)/@0x6644134,currentBufferRatio=1.0,desiredRatio=1.0
-D/BLASTBufferQueue(28740): [VRI[SignInHubActivity][com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity]#2](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=74548353850288(auto) mPendingTransactions.size=0 graphicBufferId=123437360087059 transform=0
-D/VRI[SignInHubActivity](28740): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
-D/VRI[SignInHubActivity](28740): draw finished. seqId=0
-W/VRI[SignInHubActivity](28740): handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
-D/VRI[SignInHubActivity](28740): Received frameCommittedCallback lastAttemptedDrawFrameNum=2 didProduceBuffer=false syncBuffer=false
-D/VRI[SignInHubActivity](28740): draw finished. seqId=0
-D/OplusScrollToTopManager(28740): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{eb59ad0 V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to false
-D/ActivityThread(28740): ComponentInfo{com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity} checkFinished=false 4
-D/ResourcesManagerExtImpl(28740): applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
-D/VRI[SignInHubActivity](28740): onFocusEvent true
-D/ViewRootImplExtImpl(28740): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=true, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity
-D/VRI[SignInHubActivity](28740): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:25231616, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][1080,2400]}, relayoutAsync:true, mSyncSeqId:0
-W/VRI[SignInHubActivity](28740): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-2, blastBufferQueue:android.graphics.BLASTBufferQueue@46ae0ce
-D/ActivityClient(28740): activity finished by caller: android.app.Activity.finish:7639 android.app.Activity.finish:7656 com.google.android.gms.auth.api.signin.internal.zbw.onLoadFinished:3 androidx.loader.app.LoaderManagerImpl$LoaderObserver.onChanged:254 androidx.lifecycle.LiveData.considerNotify:133 androidx.lifecycle.LiveData.dispatchingValue:151 androidx.lifecycle.LiveData.setValue:309 androidx.lifecycle.MutableLiveData.setValue:50 androidx.loader.app.LoaderManagerImpl$LoaderInfo.setValue:188 androidx.loader.app.LoaderManagerImpl$LoaderInfo.onLoadComplete:173 
-D/InsetsController(28740): hide(ime(), fromIme=false)
-I/ImeTracker(28740): com.manukhurana.naam_jap:8101dea: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
-D/VRI[SignInHubActivity](28740): onFocusEvent false
-D/VRI[MainActivity](28740): onFocusEvent true
-D/ActivityThread(28740): ComponentInfo{com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity} checkFinished=false 4
-D/ResourcesManagerExtImpl(28740): applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
-D/VRI[SignInHubActivity](28740): dispatchAppVisibility visible:false mUpcomingWindowFocus:false
-D/VRI[SignInHubActivity](28740): visibilityChanged oldVisibility=true newVisibility=false
-D/HWUI    (28740): RenderProxy::destroy: this=0xb400006ed1f0e600, mContext=0xb400006edb41e440
-D/HWUI    (28740): SkiaOpenGLPipeline::setSurface: this=0xb400006edbb58000, surface=NULL
-D/ViewRootImplExtImpl(28740): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity
-D/VRI[SignInHubActivity](28740): relayoutWindow result, sizeChanged:false, surfaceControlChanged:true, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:false, attr.flag:25231616, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-D/BLASTBufferQueue(28740): [VRI[SignInHubActivity][com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity]#2](f:0,a:1) destructor()
-D/BufferQueueConsumer(28740): [VRI[SignInHubActivity][com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity]#2(BLAST Consumer)2](id:704400000002,api:0,p:-1,c:28740) disconnect
-D/InsetsController(28740): hide(ime(), fromIme=false)
-I/ImeTracker(28740): com.manukhurana.naam_jap:deda5a6e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
-D/VRI[SignInHubActivity](28740): setWindowStopped stopped:true
-D/OplusScrollToTopManager(28740): com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity,window dying
-D/OplusScrollToTopManager(28740): com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity,unregisterSystemUIBroadcastReceiver 
-D/OplusScrollToTopManager(28740): com.manukhurana.naam_jap/com.google.android.gms.auth.api.signin.internal.SignInHubActivity, unregisterSystemUIBroadcastReceiver failed java.lang.IllegalArgumentException: Receiver not registered: android.view.OplusScrollToTopManager$2@eb0a480
-W/WindowOnBackDispatcher(28740): sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@6596488
-D/HWUI    (28740): RenderProxy::destroy: this=0xb400006ed1f0e600, mContext=0xb400006edb41e440
-D/HWUI    (28740): SkiaOpenGLPipeline::setSurface: this=0xb400006edbb58000, surface=NULL
-D/ViewRootImpl(28740): Skipping stats log for color mode
-I/TRuntime.CctTransportBackend(28740): Making request to: https://firebaselogging.googleapis.com/v0cc/log/batch?format=json_proto3
-W/System  (28740): Ignoring header X-Firebase-Locale because its value was null.
-I/TRuntime.CctTransportBackend(28740): Status Code: 200
-W/System  (28740): Ignoring header X-Firebase-Locale because its value was null.
-D/OplusScrollToTopManager(28740): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{eb59ad0 V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
-D/FirebaseAuth(28740): Notifying id token listeners about user ( DtitAdj8ABbZcOZIvUjtHEuRMh02 ).
-D/FirebaseAuth(28740): Notifying auth state listeners about user ( DtitAdj8ABbZcOZIvUjtHEuRMh02 ).
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/identify
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-W/hurana.naam_jap(28740): Cleared Reference was only reachable from finalizer (only reported once)
-D/HWUI    (28740): SkiaOpenGLPipeline::setSurface: this=0xb400006edbb58000, surface=NULL
-W/DynamiteModule(28740): Local module descriptor class for com.google.android.gms.providerinstaller.dynamite not found.
-I/DynamiteModule(28740): Considering local module com.google.android.gms.providerinstaller.dynamite:0 and remote module com.google.android.gms.providerinstaller.dynamite:0
-W/ProviderInstaller(28740): Failed to load providerinstaller module: No acceptable module com.google.android.gms.providerinstaller.dynamite found. Local version is 0 and remote version is 0.
-D/ApplicationLoaders(28740): Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
-D/ApplicationLoaders(28740): Returning zygote-cached class loader: /system/framework/com.android.location.provider.jar
-D/ApplicationLoaders(28740): Returning zygote-cached class loader: /system/framework/com.android.media.remotedisplay.jar
-D/nativeloader(28740): Configuring clns-10 for other apk /system_ext/framework/com.android.extensions.appfunctions.jar. target_sdk_version=37, uses_libraries=ALL, library_path=/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/lib/arm64:/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
-D/nativeloader(28740): Extending system_exposed_libraries: libapuwareapusys.mtk.so:libapuwareapusys_v2.mtk.so:libapuwarexrp.mtk.so:libapuwarexrp_v2.mtk.so:libapuwareutils.mtk.so:libapuwareutils_v2.mtk.so:libapuwarehmp.mtk.so:libneuron_graph_delegate.mtk.so:libneuronusdk_adapter.mtk.so:libtflite_mtk.mtk.so:libarmnn_ndk.mtk.so:libcmdl_ndk.mtk.so:libnir_neon_driver_ndk.mtk.so:libmvpu_runtime.mtk.so:libmvpu_runtime_pub.mtk.so:libmvpu_engine_pub.mtk.so:libmvpu_pattern_pub.mtk.so:libmvpuop_mtk_cv.mtk.so:libmvpuop_mtk_nn.mtk.so:libmvpu_runtime_25.mtk.so:libmvpu_runtime_25_pub.mtk.so:libmvpu_engine_25_pub.mtk.so:libmvpu_pattern_25_pub.mtk.so:libmvpuop25_mtk_cv.mtk.so:libmvpuop25_mtk_nn.mtk.so:libmvpu_config.mtk.so:libmvpu_engine_30.mtk.so:libmvpu_pattern_30.mtk.so:libmvpu_cic_ci_compiler_30.mtk.so:libmvpu_runtime_30.mtk.so:libmvpu_clc_30_mvpu_debuginfo.mtk.so:libmvpu_clc_30_mvpu_elf.mtk.so:libmvpu_clc_30_mvpu_utility.mtk.so:libneuronservice_adapter.mtk.so:libneuron_sys_util.mtk.so:libmvpuop30_mtk_nn.mtk.so:libneuronusdk_adapter.9.mtk.so:l
-D/ApplicationLoaders(28740): Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
-D/ApplicationLoaders(28740): Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
-W/hurana.naam_jap(28740): Loading /data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/oat/arm64/base.odex non-executable as it requires an image which we failed to load
-D/nativeloader(28740): Configuring clns-11 for other apk /data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk. target_sdk_version=37, uses_libraries=, library_path=/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/lib/arm64:/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
-I/hurana.naam_jap(28740): AssetManager2(0xb400006ed1f0e628) locale list changing from [] to [en-GB]
-W/ProviderInstaller(28740): Failed to report request stats: com.google.android.gms.common.security.ProviderInstallerImpl.reportRequestStats [class android.content.Context, long, long]
-D/nativeloader(28740): Load /data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk!/lib/arm64-v8a/libconscrypt_gmscore_jni.so using class loader ns clns-11 (caller=/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk): ok
-V/NativeCrypto(28740): Registering com/google/android/gms/org/conscrypt/NativeCrypto's 336 native methods...
-E/GoogleApiManager(28740): Failed to get service from broker. 
-E/GoogleApiManager(28740): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
-E/GoogleApiManager(28740):      at android.os.Parcel.createExceptionOrNull(Parcel.java:3369)
-E/GoogleApiManager(28740):      at android.os.Parcel.createException(Parcel.java:3353)
-E/GoogleApiManager(28740):      at android.os.Parcel.readException(Parcel.java:3336)
-E/GoogleApiManager(28740):      at android.os.Parcel.readException(Parcel.java:3278)
-E/GoogleApiManager(28740):      at bjcn.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):36)
-E/GoogleApiManager(28740):      at bjaj.z(:com.google.android.gms@261631035@26.16.31 (260400-900800821):143)
-E/GoogleApiManager(28740):      at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):42)
-E/GoogleApiManager(28740):      at android.os.Handler.handleCallback(Handler.java:1027)
-E/GoogleApiManager(28740):      at android.os.Handler.dispatchMessage(Handler.java:108)
-E/GoogleApiManager(28740):      at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-E/GoogleApiManager(28740):      at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-E/GoogleApiManager(28740):      at android.os.Looper.loopOnce(Looper.java:298)
-E/GoogleApiManager(28740):      at android.os.Looper.loop(Looper.java:408)
-E/GoogleApiManager(28740):      at android.os.HandlerThread.run(HandlerThread.java:85)
-W/GoogleApiManager(28740): Not showing notification since connectionResult is not user-facing: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-W/FlagRegistrar(28740): Failed to register com.google.android.gms.providerinstaller#com.manukhurana.naam_jap
-W/FlagRegistrar(28740): glbp: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-W/FlagRegistrar(28740):         at glbr.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):13)
-W/FlagRegistrar(28740):         at hkxz.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):3)
-W/FlagRegistrar(28740):         at hkyb.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):139)
-W/FlagRegistrar(28740):         at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagRegistrar(28740):         at hkyj.f(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagRegistrar(28740):         at hkyj.m(:com.google.android.gms@261631035@26.16.31 (260400-900800821):101)
-W/FlagRegistrar(28740):         at hkyj.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):16)
-W/FlagRegistrar(28740):         at gcsx.hy(:com.google.android.gms@261631035@26.16.31 (260400-900800821):35)
-W/FlagRegistrar(28740):         at fpgu.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):12)
-W/FlagRegistrar(28740):         at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagRegistrar(28740):         at fpgv.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):18)
-W/FlagRegistrar(28740):         at fphk.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):34)
-W/FlagRegistrar(28740):         at fphm.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):22)
-W/FlagRegistrar(28740):         at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):9)
-W/FlagRegistrar(28740):         at bigd.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):48)
-W/FlagRegistrar(28740):         at bigd.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):10)
-W/FlagRegistrar(28740):         at bigd.g(:com.google.android.gms@261631035@26.16.31 (260400-900800821):191)
-W/FlagRegistrar(28740):         at bigd.onConnectionFailed(:com.google.android.gms@261631035@26.16.31 (260400-900800821):2)
-W/FlagRegistrar(28740):         at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):70)
-W/FlagRegistrar(28740):         at android.os.Handler.handleCallback(Handler.java:1027)
-W/FlagRegistrar(28740):         at android.os.Handler.dispatchMessage(Handler.java:108)
-W/FlagRegistrar(28740):         at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagRegistrar(28740):         at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-W/FlagRegistrar(28740):         at android.os.Looper.loopOnce(Looper.java:298)
-W/FlagRegistrar(28740):         at android.os.Looper.loop(Looper.java:408)
-W/FlagRegistrar(28740):         at android.os.HandlerThread.run(HandlerThread.java:85)
-W/FlagRegistrar(28740): Caused by: bibq: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-W/FlagRegistrar(28740):         at bizv.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):15)
-W/FlagRegistrar(28740):         at bido.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagRegistrar(28740):         at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-W/FlagRegistrar(28740):         ... 12 more
-I/hurana.naam_jap(28740): hiddenapi: Accessing hidden method Ljava/security/spec/ECParameterSpec;->getCurveName()Ljava/lang/String; (runtime_flags=0, domain=core-platform, api=unsupported) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: allowed
-I/hurana.naam_jap(28740): hiddenapi: Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (runtime_flags=0, domain=core-platform, api=unsupported) from Lhfke; (domain=app, TargetSdkVersion=36) using reflection: allowed
-E/GoogleApiManager(28740): Failed to get service from broker. 
-E/GoogleApiManager(28740): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
-E/GoogleApiManager(28740):      at android.os.Parcel.createExceptionOrNull(Parcel.java:3369)
-E/GoogleApiManager(28740):      at android.os.Parcel.createException(Parcel.java:3353)
-E/GoogleApiManager(28740):      at android.os.Parcel.readException(Parcel.java:3336)
-E/GoogleApiManager(28740):      at android.os.Parcel.readException(Parcel.java:3278)
-E/GoogleApiManager(28740):      at bjcn.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):36)
-E/GoogleApiManager(28740):      at bjaj.z(:com.google.android.gms@261631035@26.16.31 (260400-900800821):143)
-E/GoogleApiManager(28740):      at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):42)
-E/GoogleApiManager(28740):      at android.os.Handler.handleCallback(Handler.java:1027)
-E/GoogleApiManager(28740):      at android.os.Handler.dispatchMessage(Handler.java:108)
-E/GoogleApiManager(28740):      at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-E/GoogleApiManager(28740):      at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-E/GoogleApiManager(28740):      at android.os.Looper.loopOnce(Looper.java:298)
-E/GoogleApiManager(28740):      at android.os.Looper.loop(Looper.java:408)
-E/GoogleApiManager(28740):      at android.os.HandlerThread.run(HandlerThread.java:85)
-W/GoogleApiManager(28740): Not showing notification since connectionResult is not user-facing: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-I/ProviderInstaller(28740): Installed default security provider GmsCore_OpenSSL
-W/FlagStore(28740): Unable to update local snapshot for com.google.android.gms.providerinstaller#com.manukhurana.naam_jap, may result in stale flags.
-W/FlagStore(28740): java.util.concurrent.ExecutionException: glbp: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-W/FlagStore(28740):     at hkyj.j(:com.google.android.gms@261631035@26.16.31 (260400-900800821):21)
-W/FlagStore(28740):     at hkys.t(:com.google.android.gms@261631035@26.16.31 (260400-900800821):24)
-W/FlagStore(28740):     at hkyj.get(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at hlcx.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):2)
-W/FlagStore(28740):     at hlbn.s(:com.google.android.gms@261631035@26.16.31 (260400-900800821):10)
-W/FlagStore(28740):     at glhe.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at glgi.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-W/FlagStore(28740):     at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:520)
-W/FlagStore(28740):     at java.util.concurrent.FutureTask.run(FutureTask.java:317)
-W/FlagStore(28740):     at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:348)
-W/FlagStore(28740):     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
-W/FlagStore(28740):     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
-W/FlagStore(28740):     at java.lang.Thread.run(Thread.java:1564)
-W/FlagStore(28740): Caused by: glbp: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-W/FlagStore(28740):     at glbr.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):13)
-W/FlagStore(28740):     at hkxz.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):3)
-W/FlagStore(28740):     at hkyb.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):139)
-W/FlagStore(28740):     at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at hkyj.f(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at hkyj.m(:com.google.android.gms@261631035@26.16.31 (260400-900800821):101)
-W/FlagStore(28740):     at hkyj.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):16)
-W/FlagStore(28740):     at gcsx.hy(:com.google.android.gms@261631035@26.16.31 (260400-900800821):35)
-W/FlagStore(28740):     at fpgu.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):12)
-W/FlagStore(28740):     at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at fpgv.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):18)
-W/FlagStore(28740):     at fphk.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):34)
-W/FlagStore(28740):     at fphr.B(:com.google.android.gms@261631035@26.16.31 (260400-900800821):17)
-W/FlagStore(28740):     at fpgm.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):60)
-W/FlagStore(28740):     at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at fpgn.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):8)
-W/FlagStore(28740):     at fphk.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):34)
-W/FlagStore(28740):     at fphm.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):22)
-W/FlagStore(28740):     at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):9)
-W/FlagStore(28740):     at bigd.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):48)
-W/FlagStore(28740):     at bigd.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):10)
-W/FlagStore(28740):     at bigd.g(:com.google.android.gms@261631035@26.16.31 (260400-900800821):191)
-W/FlagStore(28740):     at bigd.onConnectionFailed(:com.google.android.gms@261631035@26.16.31 (260400-900800821):2)
-W/FlagStore(28740):     at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):70)
-W/FlagStore(28740):     at android.os.Handler.handleCallback(Handler.java:1027)
-W/FlagStore(28740):     at android.os.Handler.dispatchMessage(Handler.java:108)
-W/FlagStore(28740):     at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-W/FlagStore(28740):     at android.os.Looper.loopOnce(Looper.java:298)
-W/FlagStore(28740):     at android.os.Looper.loop(Looper.java:408)
-W/FlagStore(28740):     at android.os.HandlerThread.run(HandlerThread.java:85)
-W/FlagStore(28740): Caused by: bibq: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-W/FlagStore(28740):     at bizv.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):15)
-W/FlagStore(28740):     at bido.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-W/FlagStore(28740):     at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-W/FlagStore(28740):     ... 12 more
-I/hurana.naam_jap(28740): hiddenapi: Accessing hidden field Ljava/net/Socket;->impl:Ljava/net/SocketImpl; (runtime_flags=0, domain=core-platform, api=unsupported) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: allowed
-I/hurana.naam_jap(28740): hiddenapi: Accessing hidden method Ljava/security/spec/ECParameterSpec;->setCurveName(Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=unsupported) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: allowed
-W/Firestore(28740): (25.1.4) [WatchStream]: (c50696e) Stream closed with status: Status{code=NOT_FOUND, description=The database (default) does not exist for project daily-spiritual-toolkit Please visit https://console.cloud.google.com/datastore/setup?project=daily-spiritual-toolkit to add a Cloud Datastore or Cloud Firestore database. , cause=null}.
-W/Firestore(28740): (25.1.4) [OnlineStateTracker]: Could not reach Cloud Firestore backend. Connection failed 1 times. Most recent error: Status{code=NOT_FOUND, description=The database (default) does not exist for project daily-spiritual-toolkit Please visit https://console.cloud.google.com/datastore/setup?project=daily-spiritual-toolkit to add a Cloud Datastore or Cloud Firestore database. , cause=null}
-W/Firestore(28740): This typically indicates that your device does not have a healthy Internet connection at the moment. The client will operate in offline mode until it is able to successfully connect to the backend.
-I/flutter (28740): Whitelist check error: [cloud_firestore/unavailable] The service is currently unavailable. This is a most likely a transient condition and may be corrected by retrying with a backoff.
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): Error fetching customer data: PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.').
-I/flutter (28740): Entitlement sync error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-E/IJankManager(28740): slideSceneEnd unknown scene 1000 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14268, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-Another exception was thrown: A RenderFlex overflowed by 8.9 pixels on the
-right.
-Another exception was thrown: A RenderFlex overflowed by 7.3 pixels on the
-right.
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14272, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14276, pid:28740 
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14283, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14284, pid:28740 
-E/GoogleApiManager(28740): Failed to get service from broker. 
-E/GoogleApiManager(28740): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
-E/GoogleApiManager(28740):      at android.os.Parcel.createExceptionOrNull(Parcel.java:3369)
-E/GoogleApiManager(28740):      at android.os.Parcel.createException(Parcel.java:3353)
-E/GoogleApiManager(28740):      at android.os.Parcel.readException(Parcel.java:3336)
-E/GoogleApiManager(28740):      at android.os.Parcel.readException(Parcel.java:3278)
-E/GoogleApiManager(28740):      at bjcn.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):36)
-E/GoogleApiManager(28740):      at bjaj.z(:com.google.android.gms@261631035@26.16.31 (260400-900800821):143)
-E/GoogleApiManager(28740):      at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):42)
-E/GoogleApiManager(28740):      at android.os.Handler.handleCallback(Handler.java:1027)
-E/GoogleApiManager(28740):      at android.os.Handler.dispatchMessage(Handler.java:108)
-E/GoogleApiManager(28740):      at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
-E/GoogleApiManager(28740):      at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
-E/GoogleApiManager(28740):      at android.os.Looper.loopOnce(Looper.java:298)
-E/GoogleApiManager(28740):      at android.os.Looper.loop(Looper.java:408)
-E/GoogleApiManager(28740):      at android.os.HandlerThread.run(HandlerThread.java:85)
-W/GoogleApiManager(28740): Not showing notification since connectionResult is not user-facing: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-D/OplusPredictiveBackController(28740): should not HookOnBackInvokedCallbackEnabled for application com.manukhurana.naam_jap.MainActivity@c3c7ef3 sdk: 36
-D/WindowOnBackDispatcher(28740):  predictive settings is disabled for com.manukhurana.naam_jap
-W/WindowOnBackDispatcher(28740): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher(28740): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14290, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14293, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14290, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14295, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14297, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14299, pid:28740 
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14304, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14306, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14308, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14310, pid:28740 
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14314, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14317, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14318, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14323, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14325, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14326, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14323, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14327, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14331, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14333, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14335, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14331, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14336, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14341, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14342, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14344, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14341, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14346, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14348, pid:28740 
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14353, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14355, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14356, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14361, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/hurana.naam_jap(28740): legacy_receive_flag: 0
-D/hurana.naam_jap(28740): /proc/perfmgr_sbe/sbe_ioctl not exists: No such file or directory
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-I/PowerHalMgrImpl(28740): hdl:14362, pid:28740 
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14366, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14370, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14374, pid:28740 
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14384, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-I/PowerHalMgrImpl(28740): hdl:14391, pid:28740 
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-I/PowerHalMgrImpl(28740): hdl:14396, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14398, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14391, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14400, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14403, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14405, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14407, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14403, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-I/ScrollIdentify(28740): on fling
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-I/PowerHalMgrImpl(28740): hdl:14409, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14413, pid:28740 
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-E/IJankManager(28740): slideSceneEnd unknown scene 1003 mScene:-1
-D/OplusViewDragTouchViewHelper(28740): dispatchTouchView action = 1
-D/ViewRootImplExtImpl(28740): the up motion event handled by client, just return
-W/[Purchases] - WARN(28740): ⚠️ Unable to start a network connection due to a network configuration issue: https://api.revenuecat.com/v1/subscribers/%24RCAnonymousID%3Aa404dc0f925b4a18bcf6e263c17b1124/offerings
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-E/[Purchases] - ERROR(28740): 🤖‼️ Error fetching offerings - PurchasesError(code=InvalidCredentialsError, underlyingErrorMessage=Invalid API Key., message='There was a credentials issue. Check the underlying error for more details.')
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-I/flutter (28740): Purchase error: PlatformException(11, There was a credentials issue. Check the underlying error for more details., {code: 11, message: There was a credentials issue. Check the underlying error for more details., readableErrorCode: InvalidCredentialsError, readable_error_code: InvalidCredentialsError, underlyingErrorMessage: Invalid API Key.}, null)
-I/PowerHalMgrImpl(28740): hdl:14420, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14421, pid:28740 
-I/PowerHalMgrImpl(28740): hdl:14423, pid:28740 
+[1]: RMX3944 (SS5T8T5DKNPRIJVW)
+[2]: iPhone 16 (00008140-00020CEC3C8A801C)
+Please choose one (or "q" to quit): 1
+Resolving dependencies... 
+Downloading packages... '
+  _flutterfire_internals 1.3.59 (1.3.69 available)
+  cli_util 0.4.2 (0.5.0 available)
+  cloud_firestore 5.6.12 (6.3.0 available)
+  cloud_firestore_platform_interface 6.6.12 (7.2.0 available)
+  cloud_firestore_web 4.4.12 (5.3.0 available)
+  csv 6.0.0 (8.0.0 available)
+  firebase_auth 5.7.0 (6.4.0 available)
+  firebase_auth_platform_interface 7.7.3 (8.1.9 available)
+  firebase_auth_web 5.15.3 (6.1.5 available)
+  firebase_core 3.15.2 (4.7.0 available)
+  firebase_core_web 2.24.1 (3.6.0 available)
+  fl_chart 0.70.2 (1.2.0 available)
+  flutter_local_notifications 18.0.1 (21.0.0 available)
+  flutter_local_notifications_linux 5.0.0 (8.0.0 available)
+  flutter_local_notifications_platform_interface 8.0.0 (11.0.0 available)
+  flutter_riverpod 2.6.1 (3.3.1 available)
+  flutter_secure_storage 9.2.4 (10.0.0 available)
+  flutter_secure_storage_linux 1.2.3 (3.0.0 available)
+  flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+  flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
+  flutter_secure_storage_web 1.2.1 (2.1.0 available)
+  flutter_secure_storage_windows 3.1.2 (4.1.0 available)
+  freezed_annotation 2.4.4 (3.1.0 available)
+  google_sign_in 6.3.0 (7.2.0 available)
+  google_sign_in_android 6.2.1 (7.2.10 available)
+  google_sign_in_ios 5.9.0 (6.3.0 available)
+  google_sign_in_platform_interface 2.5.0 (3.1.0 available)
+  google_sign_in_web 0.12.4+4 (1.1.3 available)
+  hooks 1.0.2 (1.0.3 available)
+  js 0.6.7 (0.7.2 available)
+  matcher 0.12.19 (0.12.20 available)
+  meta 1.17.0 (1.18.2 available)
+  native_toolchain_c 0.17.6 (0.18.0 available)
+  package_info_plus 9.0.1 (10.1.0 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  permission_handler 11.4.0 (12.0.1 available)
+  permission_handler_android 12.1.0 (13.0.1 available)
+  purchases_flutter 8.11.0 (10.0.1 available)
+  riverpod 2.6.1 (3.2.1 available)
+  share_plus 10.1.4 (13.1.0 available)
+  share_plus_platform_interface 5.0.2 (7.1.0 available)
+  sign_in_with_apple 6.1.4 (7.0.1 available)
+  sign_in_with_apple_platform_interface 1.1.0 (2.0.0 available)
+  sign_in_with_apple_web 2.1.1 (3.0.0 available)
+  sqflite 2.4.2 (2.4.2+1 available)
+  sqflite_common 2.5.6 (2.5.6+1 available)
+  synchronized 3.4.0 (3.4.0+1 available)
+  test_api 0.7.10 (0.7.12 available)
+  timezone 0.10.1 (0.11.0 available)
+  vector_math 2.2.0 (2.3.0 available)
+  vm_service 15.0.2 (15.2.0 available)
+  win32 5.15.0 (6.1.0 available)
+  xml 6.6.1 (7.0.1 available)
+Got dependencies!
+53 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Launching lib/main.dart on RMX3944 in debug mode...
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+Running Gradle task 'assembleDebug'...                             25.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           5.3s
+D/FlutterJNI( 9609): Beginning load of flutter...
+D/FlutterJNI( 9609): flutter (null) was loaded normally!
+I/flutter ( 9609): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+D/FlutterGeolocator( 9609): Attaching Geolocator to activity
+D/FlutterRenderer( 9609): Width is zero. 0,0
+D/FlutterRenderer( 9609): Width is zero. 0,0
+D/FlutterJNI( 9609): Sending viewport metrics to the engine.
+I/hurana.naam_jap( 9609): Compiler allocated 7207KB to compile void android.view.ViewRootImpl.performTraversals()
+D/SurfaceView( 9609): 254198064 handleSyncNoBuffer
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/FlutterGeolocator( 9609): Creating service.
+D/FlutterGeolocator( 9609): Binding to location service.
+I/Choreographer( 9609): Skipped 38 frames!  The application may be doing too much work on its main thread.
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
+I/DynamicFramerate [FRTCConfigManager]( 9609): initFrameRateConfig: 
+I/DynamicFramerate [FRTCConfigManager]( 9609):  levelsFor120hz: [120, 60]
+I/DynamicFramerate [FRTCConfigManager]( 9609):  thresholdsFor120hz: [200]
+I/DynamicFramerate [FRTCConfigManager]( 9609):  levelsFor90hz: [90]
+I/DynamicFramerate [FRTCConfigManager]( 9609):  thresholdsFor90hz: []
+I/DynamicFramerate [FRTCConfigManager]( 9609): FRTCConfigManager: FRTC_CAPABILITY = 120, package name = com.manukhurana.naam_jap, WINDOW_ANIMATION_SPEED_RATE = 10, SCROLL_ANIMATION_SPEED_RATE = 20, PACKAGE_ENABLE = false
+I/DynamicFramerate [DynamicFrameRateController]( 9609): init info: mPackageName = com.manukhurana.naam_jap, mIsEnabled = false
+D/FlutterGeolocator( 9609): Geolocator foreground service connected
+D/FlutterGeolocator( 9609): Initializing Geolocator services
+D/FlutterGeolocator( 9609): Flutter engine connected. Connected engine count 1
+D/WindowLayoutComponentImpl( 9609): app addWindowLayoutInfoListener activity:com.manukhurana.naam_jap.MainActivity@c3c7ef3 consumer :androidx.window.layout.adapter.extensions.MulticastConsumer@1513092
+D/WindowLayoutComponentImpl( 9609): Register WindowLayoutInfoListener on Context=com.manukhurana.naam_jap.MainActivity@c3c7ef3, of which baseContext=android.app.ContextImpl@f4a5a63
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/FlutterJNI( 9609): Sending viewport metrics to the engine.
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+Syncing files to device RMX3944...                                 285ms
 
+Flutter run key commands.
+r Hot reload. 🔥🔥🔥
+R Hot restart.
+h List all available interactive commands.
+d Detach (terminate "flutter run" but leave application running).
+c Clear the screen
+q Quit (terminate the application on the device).
 
+A Dart VM Service on RMX3944 is available at:
+http://127.0.0.1:63914/_Xq61rGew6M=/
+The Flutter DevTools debugger and profiler on RMX3944 is available at:
+http://127.0.0.1:63914/_Xq61rGew6M=/devtools/?uri=ws://127.0.0.1:63914/_Xq61
+rGew6M=/ws
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+I/flutter ( 9609): RevenueCar: Using placeholder APi Key -skipping configuration
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
 
+══╡ EXCEPTION CAUGHT BY FOUNDATION LIBRARY
+╞════════════════════════════════════════════════════════
+The following assertion was thrown while dispatching notifications for
+SettingsNotifier:
+Providers are not allowed to modify other providers during their
+initialization.
 
+The provider FutureProvider<bool>#f2bc1 modified
+ChangeNotifierProvider<SettingsNotifier>#53e50
+while building.
+'package:riverpod/src/framework/element.dart':
+Failed assertion: line 479 pos 11: '_debugCurrentlyBuildingElement == null
+||
+              _debugCurrentlyBuildingElement == this'
 
+When the exception was thrown, this was the stack:
+#2      ProviderElementBase._notifyListeners.<anonymous closure>
+(package:riverpod/src/framework/element.dart:479:11)
+#3      ProviderElementBase._notifyListeners
+(package:riverpod/src/framework/element.dart:490:8)
+#4      ProviderElementBase.setState
+(package:riverpod/src/framework/element.dart:140:7)
+#5      ChangeNotifierProviderElement.create.listener
+(package:flutter_riverpod/src/change_notifier_provider/base.dart:216:26)
+#6      ChangeNotifier.notifyListeners
+(package:flutter/src/foundation/change_notifier.dart:432:24)
+#7      SettingsNotifier.initialize
+(package:nitya_sadhana/providers/settings_provider.dart:34:5)
+#8      appInitializedProvider.<anonymous closure>
+(package:nitya_sadhana/main.dart:19:36)
+#9      FutureProvider._create
+(package:riverpod/src/future_provider/base.dart:71:65)
+#10     FutureProviderElement.create.<anonymous closure>
+(package:riverpod/src/future_provider/base.dart:117:22)
+#11     FutureHandlerProviderElementMixin.handleFuture.<anonymous closure>
+(package:riverpod/src/async_notifier/base.dart:341:30)
+#12     FutureHandlerProviderElementMixin._handleAsync
+(package:riverpod/src/async_notifier/base.dart:388:47)
+#13     FutureHandlerProviderElementMixin.handleFuture
+(package:riverpod/src/async_notifier/base.dart:335:5)
+#14     FutureProviderElement.create
+(package:riverpod/src/future_provider/base.dart:116:5)
+#15     ProviderElementBase.buildState
+(package:riverpod/src/framework/element.dart:426:7)
+#16     ProviderElementBase.mount
+(package:riverpod/src/framework/element.dart:228:5)
+#17     _StateReader._create
+(package:riverpod/src/framework/container.dart:47:11)
+#18     _StateReader.getElement
+(package:riverpod/src/framework/container.dart:35:52)
+#19     ProviderContainer.readProviderElement.<anonymous closure>
+(package:riverpod/src/framework/container.dart:440:40)
+#20     ProviderContainer.readProviderElement
+(package:riverpod/src/framework/container.dart:475:8)
+#21     ProviderBase.addListener
+(package:riverpod/src/framework/provider_base.dart:79:26)
+#22     ProviderContainer.listen
+(package:riverpod/src/framework/container.dart:280:21)
+#23     ConsumerStatefulElement.watch.<anonymous closure>
+(package:flutter_riverpod/src/consumer.dart:564:25)
+#24     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:675:23)
+#25     ConsumerStatefulElement.watch
+(package:flutter_riverpod/src/consumer.dart:557:26)
+#26     _AppLoader.build (package:nitya_sadhana/main.dart:71:27)
+#27     _ConsumerState.build
+(package:flutter_riverpod/src/consumer.dart:476:19)
+#28     StatefulElement.build
+(package:flutter/src/widgets/framework.dart:5931:27)
+#29     ConsumerStatefulElement.build
+(package:flutter_riverpod/src/consumer.dart:539:20)
+#30     ComponentElement.performRebuild
+(package:flutter/src/widgets/framework.dart:5817:15)
+#31     StatefulElement.performRebuild
+(package:flutter/src/widgets/framework.dart:5982:11)
+#32     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+#33     ComponentElement._firstBuild
+(package:flutter/src/widgets/framework.dart:5799:5)
+#34     StatefulElement._firstBuild
+(package:flutter/src/widgets/framework.dart:5973:11)
+#35     ComponentElement.mount
+(package:flutter/src/widgets/framework.dart:5793:5)
+...     Normal element mounting (7 frames)
+#42     _UncontrolledProviderScopeElement.mount
+(package:flutter_riverpod/src/framework.dart:315:11)
+...     Normal element mounting (71 frames)
+#113    Element.inflateWidget
+(package:flutter/src/widgets/framework.dart:4587:20)
+#114    Element.updateChild
+(package:flutter/src/widgets/framework.dart:4059:18)
+#115    _RawViewElement._updateChild
+(package:flutter/src/widgets/view.dart:481:16)
+#116    _RawViewElement.mount (package:flutter/src/widgets/view.dart:504:5)
+...     Normal element mounting (15 frames)
+#131    Element.inflateWidget
+(package:flutter/src/widgets/framework.dart:4587:20)
+#132    Element.updateChild
+(package:flutter/src/widgets/framework.dart:4059:18)
+#133    RootElement._rebuild
+(package:flutter/src/widgets/binding.dart:1822:16)
+#134    RootElement.mount (package:flutter/src/widgets/binding.dart:1791:5)
+#135    RootWidget.attach.<anonymous closure>
+(package:flutter/src/widgets/binding.dart:1744:18)
+#136    BuildOwner.buildScope
+(package:flutter/src/widgets/framework.dart:3101:19)
+#137    RootWidget.attach (package:flutter/src/widgets/binding.dart:1743:13)
+#138    WidgetsBinding.attachToBuildOwner
+(package:flutter/src/widgets/binding.dart:1419:27)
+#139    WidgetsBinding.attachRootWidget
+(package:flutter/src/widgets/binding.dart:1404:5)
+#140    WidgetsBinding.scheduleAttachRootWidget.<anonymous closure>
+(package:flutter/src/widgets/binding.dart:1390:7)
+#144    _RawReceivePort._handleMessage
+(dart:isolate-patch/isolate_patch.dart:193:12)
+(elided 5 frames from class _AssertionError, class _Timer, and
+dart:async-patch)
 
-ios : 
+The SettingsNotifier sending notification was:
+  Instance of 'SettingsNotifier'
+════════════════════════════════════════════════════════════════════════════
+════════════════════════
 
-manu@Manus-MacBook-Air Daily Spiritual Toolkit % flutter build ios --release 
-xcrun devicectl device install app --device 00008140-00020CEC3C8A801C build/ios/iphoneos/Runner.app
-xcrun devicectl device process launch --device 00008140-00020CEC3C8A801C com.mk.naamJap.app
-
-xcrun devicectl device process launch --device 00008140-00020CEC3C8A801C com.mk.naamJap.app
-Building com.mk.naamJap.app for device (ios-release)...
-Automatically signing iOS for device deployment using specified development
-team in Xcode project: LPY848FXSU
-Running pod install...                                             26.4s
-Running Xcode build...                                                  
-Xcode build done.                                           388.8s
-✓ Built build/ios/iphoneos/Runner.app (65.8MB)
-Failed to load provisioning paramter list due to error: Error Domain=com.apple.dt.CoreDeviceError Code=1002 "No provider was found." UserInfo={NSLocalizedDescription=No provider was found.}.
-`devicectl manage create` may support a reduced set of arguments.
-14:27:05  Acquired tunnel connection to device.
-14:27:05  Enabling developer disk image services.
-14:27:05  Acquired usage assertion.
-App installed:
-• bundleID: com.mk.naamJap.app
-• installationURL: file:///private/var/containers/Bundle/Application/0D289A87-2DA6-4B01-8A13-571129797132/Runner.app/
-• launchServicesIdentifier: unknown
-• databaseUUID: 3386DA6E-05BC-4433-8DFB-4A48E8452F13
-• databaseSequenceNumber: 2012
-• options: 
-Failed to load provisioning paramter list due to error: Error Domain=com.apple.dt.CoreDeviceError Code=1002 "No provider was found." UserInfo={NSLocalizedDescription=No provider was found.}.
-`devicectl manage create` may support a reduced set of arguments.
-14:27:10  Acquired tunnel connection to device.
-14:27:10  Enabling developer disk image services.
-14:27:10  Acquired usage assertion.
-Launched application with com.mk.naamJap.app bundle identifier.
-Failed to load provisioning paramter list due to error: Error Domain=com.apple.dt.CoreDeviceError Code=1002 "No provider was found." UserInfo={NSLocalizedDescription=No provider was found.}.
-`devicectl manage create` may support a reduced set of arguments.
-14:27:10  Acquired tunnel connection to device.
-14:27:10  Enabling developer disk image services.
-14:27:10  Acquired usage assertion.
-Launched application with com.mk.naamJap.app bundle identifier.
-manu@Manus-MacBook-Air Daily Spiritual Toolkit % 
+I/libc    ( 9609): Requested dump for pid 9609 (hurana.naam_jap)
+I/GrallocExtra( 9609): gralloc_extra_query:is_SW3D 0
+D/BLASTBufferQueue( 9609): [f26c130 SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=77525033209466(auto) mPendingTransactions.size=0 graphicBufferId=41270340747274 transform=0
+I/Choreographer( 9609): Skipped 102 frames!  The application may be doing too much work on its main thread.
+D/ViewRootImplExtImpl( 9609): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+D/VRI[MainActivity]( 9609): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
+W/VRI[MainActivity]( 9609): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@ce72e05
+D/FlutterJNI( 9609): Sending viewport metrics to the engine.
+W/VRI[MainActivity]( 9609): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/SurfaceView( 9609): 254198064 finishedDrawing
+D/SurfaceView( 9609): 254198064 performDrawFinished mAttachedToWindow true
+D/LibMBrainProxy( 9609): Init Paramters
+W/ServiceManagerCppClient( 9609): Failed to get isDeclared for vendor.mediatek.hardware.mbrain.IMBrain/default: Status(-1, EX_SECURITY): 'SELinux denied for service.'
+D/ViewRootImplExtImpl( 9609): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+D/VRI[MainActivity]( 9609): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
+W/VRI[MainActivity]( 9609): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@ce72e05
+D/FlutterJNI( 9609): Sending viewport metrics to the engine.
+I/SurfaceControl( 9609):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xeac4eb2,currentBufferRatio=1.0,desiredRatio=1.0
+D/SurfaceView( 9609): 254198064 dispatchDraw mDrawFinished true isAboveParent false (mPrivateFlags & PFLAG_SKIP_DRAW) 128
+D/SurfaceView( 9609): 254198064 clearSurfaceViewPort mCornerRadius 0.0
+D/BLASTBufferQueue( 9609): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=77525168333774(auto) mPendingTransactions.size=0 graphicBufferId=41270340747282 transform=0
+D/VRI[MainActivity]( 9609): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
+D/ExtensionsLoader( 9609): createInstance(64bit) : createExtendedFactory
+D/ExtensionsLoader( 9609): Opened libSchedAssistExtImpl.so
+D/VRI[MainActivity]( 9609): draw finished. seqId=0
+D/VRI[MainActivity]( 9609): onFocusEvent true
+D/InsetsController( 9609): hide(ime(), fromIme=false)
+I/ImeTracker( 9609): com.manukhurana.naam_jap:8dad60ff: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+W/DynamiteModule( 9609): Local module descriptor class for com.google.android.gms.providerinstaller.dynamite not found.
+I/DynamiteModule( 9609): Considering local module com.google.android.gms.providerinstaller.dynamite:0 and remote module com.google.android.gms.providerinstaller.dynamite:0
+W/ProviderInstaller( 9609): Failed to load providerinstaller module: No acceptable module com.google.android.gms.providerinstaller.dynamite found. Local version is 0 and remote version is 0.
+D/ApplicationLoaders( 9609): Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
+D/ApplicationLoaders( 9609): Returning zygote-cached class loader: /system/framework/com.android.location.provider.jar
+D/ApplicationLoaders( 9609): Returning zygote-cached class loader: /system/framework/com.android.media.remotedisplay.jar
+D/nativeloader( 9609): Configuring clns-10 for other apk /system_ext/framework/com.android.extensions.appfunctions.jar. target_sdk_version=37, uses_libraries=ALL, library_path=/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/lib/arm64:/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
+D/nativeloader( 9609): Extending system_exposed_libraries: libapuwareapusys.mtk.so:libapuwareapusys_v2.mtk.so:libapuwarexrp.mtk.so:libapuwarexrp_v2.mtk.so:libapuwareutils.mtk.so:libapuwareutils_v2.mtk.so:libapuwarehmp.mtk.so:libneuron_graph_delegate.mtk.so:libneuronusdk_adapter.mtk.so:libtflite_mtk.mtk.so:libarmnn_ndk.mtk.so:libcmdl_ndk.mtk.so:libnir_neon_driver_ndk.mtk.so:libmvpu_runtime.mtk.so:libmvpu_runtime_pub.mtk.so:libmvpu_engine_pub.mtk.so:libmvpu_pattern_pub.mtk.so:libmvpuop_mtk_cv.mtk.so:libmvpuop_mtk_nn.mtk.so:libmvpu_runtime_25.mtk.so:libmvpu_runtime_25_pub.mtk.so:libmvpu_engine_25_pub.mtk.so:libmvpu_pattern_25_pub.mtk.so:libmvpuop25_mtk_cv.mtk.so:libmvpuop25_mtk_nn.mtk.so:libmvpu_config.mtk.so:libmvpu_engine_30.mtk.so:libmvpu_pattern_30.mtk.so:libmvpu_cic_ci_compiler_30.mtk.so:libmvpu_runtime_30.mtk.so:libmvpu_clc_30_mvpu_debuginfo.mtk.so:libmvpu_clc_30_mvpu_elf.mtk.so:libmvpu_clc_30_mvpu_utility.mtk.so:libneuronservice_adapter.mtk.so:libneuron_sys_util.mtk.so:libmvpuop30_mtk_nn.mtk.so:libneuronusdk_adapter.9.mtk.so:l
+D/ApplicationLoaders( 9609): Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+D/ApplicationLoaders( 9609): Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+W/hurana.naam_jap( 9609): Loading /data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/oat/arm64/base.odex non-executable as it requires an image which we failed to load
+D/nativeloader( 9609): Configuring clns-11 for other apk /data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk. target_sdk_version=37, uses_libraries=, library_path=/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/lib/arm64:/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
+I/hurana.naam_jap( 9609): AssetManager2(0xb400006ec6672928) locale list changing from [] to [en-GB]
+W/ProviderInstaller( 9609): Failed to report request stats: com.google.android.gms.common.security.ProviderInstallerImpl.reportRequestStats [class android.content.Context, long, long]
+D/nativeloader( 9609): Load /data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk!/lib/arm64-v8a/libconscrypt_gmscore_jni.so using class loader ns clns-11 (caller=/data/app/~~VfAJm1NixCvcb15naXsTbg==/com.google.android.gms--LuCgCi5bPyWj3lFAq--MQ==/base.apk): ok
+V/NativeCrypto( 9609): Registering com/google/android/gms/org/conscrypt/NativeCrypto's 336 native methods...
+I/hurana.naam_jap( 9609): hiddenapi: Accessing hidden method Ljava/security/spec/ECParameterSpec;->getCurveName()Ljava/lang/String; (runtime_flags=0, domain=core-platform, api=unsupported) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: allowed
+I/hurana.naam_jap( 9609): hiddenapi: Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (runtime_flags=0, domain=core-platform, api=unsupported) from Lhfke; (domain=app, TargetSdkVersion=36) using reflection: allowed
+E/GoogleApiManager( 9609): Failed to get service from broker. 
+E/GoogleApiManager( 9609): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
+E/GoogleApiManager( 9609):      at android.os.Parcel.createExceptionOrNull(Parcel.java:3369)
+E/GoogleApiManager( 9609):      at android.os.Parcel.createException(Parcel.java:3353)
+E/GoogleApiManager( 9609):      at android.os.Parcel.readException(Parcel.java:3336)
+E/GoogleApiManager( 9609):      at android.os.Parcel.readException(Parcel.java:3278)
+E/GoogleApiManager( 9609):      at bjcn.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):36)
+E/GoogleApiManager( 9609):      at bjaj.z(:com.google.android.gms@261631035@26.16.31 (260400-900800821):143)
+E/GoogleApiManager( 9609):      at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):42)
+E/GoogleApiManager( 9609):      at android.os.Handler.handleCallback(Handler.java:1027)
+E/GoogleApiManager( 9609):      at android.os.Handler.dispatchMessage(Handler.java:108)
+E/GoogleApiManager( 9609):      at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+E/GoogleApiManager( 9609):      at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+E/GoogleApiManager( 9609):      at android.os.Looper.loopOnce(Looper.java:298)
+E/GoogleApiManager( 9609):      at android.os.Looper.loop(Looper.java:408)
+E/GoogleApiManager( 9609):      at android.os.HandlerThread.run(HandlerThread.java:85)
+W/GoogleApiManager( 9609): Not showing notification since connectionResult is not user-facing: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+W/FlagRegistrar( 9609): Failed to register com.google.android.gms.providerinstaller#com.manukhurana.naam_jap
+W/FlagRegistrar( 9609): glbp: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+W/FlagRegistrar( 9609):         at glbr.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):13)
+W/FlagRegistrar( 9609):         at hkxz.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):3)
+W/FlagRegistrar( 9609):         at hkyb.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):139)
+W/FlagRegistrar( 9609):         at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagRegistrar( 9609):         at hkyj.f(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagRegistrar( 9609):         at hkyj.m(:com.google.android.gms@261631035@26.16.31 (260400-900800821):101)
+W/FlagRegistrar( 9609):         at hkyj.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):16)
+W/FlagRegistrar( 9609):         at gcsx.hy(:com.google.android.gms@261631035@26.16.31 (260400-900800821):35)
+W/FlagRegistrar( 9609):         at fpgu.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):12)
+W/FlagRegistrar( 9609):         at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagRegistrar( 9609):         at fpgv.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):18)
+W/FlagRegistrar( 9609):         at fphk.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):34)
+W/FlagRegistrar( 9609):         at fphm.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):22)
+W/FlagRegistrar( 9609):         at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):9)
+W/FlagRegistrar( 9609):         at bigd.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):48)
+W/FlagRegistrar( 9609):         at bigd.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):10)
+W/FlagRegistrar( 9609):         at bigd.g(:com.google.android.gms@261631035@26.16.31 (260400-900800821):191)
+W/FlagRegistrar( 9609):         at bigd.onConnectionFailed(:com.google.android.gms@261631035@26.16.31 (260400-900800821):2)
+W/FlagRegistrar( 9609):         at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):70)
+W/FlagRegistrar( 9609):         at android.os.Handler.handleCallback(Handler.java:1027)
+W/FlagRegistrar( 9609):         at android.os.Handler.dispatchMessage(Handler.java:108)
+W/FlagRegistrar( 9609):         at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagRegistrar( 9609):         at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+W/FlagRegistrar( 9609):         at android.os.Looper.loopOnce(Looper.java:298)
+W/FlagRegistrar( 9609):         at android.os.Looper.loop(Looper.java:408)
+W/FlagRegistrar( 9609):         at android.os.HandlerThread.run(HandlerThread.java:85)
+W/FlagRegistrar( 9609): Caused by: bibq: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+W/FlagRegistrar( 9609):         at bizv.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):15)
+W/FlagRegistrar( 9609):         at bido.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagRegistrar( 9609):         at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+W/FlagRegistrar( 9609):         ... 12 more
+E/GoogleApiManager( 9609): Failed to get service from broker. 
+E/GoogleApiManager( 9609): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
+E/GoogleApiManager( 9609):      at android.os.Parcel.createExceptionOrNull(Parcel.java:3369)
+E/GoogleApiManager( 9609):      at android.os.Parcel.createException(Parcel.java:3353)
+E/GoogleApiManager( 9609):      at android.os.Parcel.readException(Parcel.java:3336)
+E/GoogleApiManager( 9609):      at android.os.Parcel.readException(Parcel.java:3278)
+E/GoogleApiManager( 9609):      at bjcn.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):36)
+E/GoogleApiManager( 9609):      at bjaj.z(:com.google.android.gms@261631035@26.16.31 (260400-900800821):143)
+E/GoogleApiManager( 9609):      at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):42)
+E/GoogleApiManager( 9609):      at android.os.Handler.handleCallback(Handler.java:1027)
+E/GoogleApiManager( 9609):      at android.os.Handler.dispatchMessage(Handler.java:108)
+E/GoogleApiManager( 9609):      at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+E/GoogleApiManager( 9609):      at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+E/GoogleApiManager( 9609):      at android.os.Looper.loopOnce(Looper.java:298)
+E/GoogleApiManager( 9609):      at android.os.Looper.loop(Looper.java:408)
+E/GoogleApiManager( 9609):      at android.os.HandlerThread.run(HandlerThread.java:85)
+W/GoogleApiManager( 9609): Not showing notification since connectionResult is not user-facing: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+I/ProviderInstaller( 9609): Installed default security provider GmsCore_OpenSSL
+W/FlagStore( 9609): Unable to update local snapshot for com.google.android.gms.providerinstaller#com.manukhurana.naam_jap, may result in stale flags.
+W/FlagStore( 9609): java.util.concurrent.ExecutionException: glbp: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+W/FlagStore( 9609):     at hkyj.j(:com.google.android.gms@261631035@26.16.31 (260400-900800821):21)
+W/FlagStore( 9609):     at hkys.t(:com.google.android.gms@261631035@26.16.31 (260400-900800821):24)
+W/FlagStore( 9609):     at hkyj.get(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at hlcx.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):2)
+W/FlagStore( 9609):     at hlbn.s(:com.google.android.gms@261631035@26.16.31 (260400-900800821):10)
+W/FlagStore( 9609):     at glhe.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at glgi.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+W/FlagStore( 9609):     at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:520)
+W/FlagStore( 9609):     at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+W/FlagStore( 9609):     at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:348)
+W/FlagStore( 9609):     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+W/FlagStore( 9609):     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+W/FlagStore( 9609):     at java.lang.Thread.run(Thread.java:1564)
+W/FlagStore( 9609): Caused by: glbp: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+W/FlagStore( 9609):     at glbr.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):13)
+W/FlagStore( 9609):     at hkxz.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):3)
+W/FlagStore( 9609):     at hkyb.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):139)
+W/FlagStore( 9609):     at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at hkyj.f(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at hkyj.m(:com.google.android.gms@261631035@26.16.31 (260400-900800821):101)
+W/FlagStore( 9609):     at hkyj.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):16)
+W/FlagStore( 9609):     at gcsx.hy(:com.google.android.gms@261631035@26.16.31 (260400-900800821):35)
+W/FlagStore( 9609):     at fpgu.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):12)
+W/FlagStore( 9609):     at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at fpgv.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):18)
+W/FlagStore( 9609):     at fphk.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):34)
+W/FlagStore( 9609):     at fphr.B(:com.google.android.gms@261631035@26.16.31 (260400-900800821):17)
+W/FlagStore( 9609):     at fpgm.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):60)
+W/FlagStore( 9609):     at hlaj.execute(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at fpgn.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):8)
+W/FlagStore( 9609):     at fphk.b(:com.google.android.gms@261631035@26.16.31 (260400-900800821):34)
+W/FlagStore( 9609):     at fphm.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):22)
+W/FlagStore( 9609):     at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):9)
+W/FlagStore( 9609):     at bigd.q(:com.google.android.gms@261631035@26.16.31 (260400-900800821):48)
+W/FlagStore( 9609):     at bigd.d(:com.google.android.gms@261631035@26.16.31 (260400-900800821):10)
+W/FlagStore( 9609):     at bigd.g(:com.google.android.gms@261631035@26.16.31 (260400-900800821):191)
+W/FlagStore( 9609):     at bigd.onConnectionFailed(:com.google.android.gms@261631035@26.16.31 (260400-900800821):2)
+W/FlagStore( 9609):     at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):70)
+W/FlagStore( 9609):     at android.os.Handler.handleCallback(Handler.java:1027)
+W/FlagStore( 9609):     at android.os.Handler.dispatchMessage(Handler.java:108)
+W/FlagStore( 9609):     at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+W/FlagStore( 9609):     at android.os.Looper.loopOnce(Looper.java:298)
+W/FlagStore( 9609):     at android.os.Looper.loop(Looper.java:408)
+W/FlagStore( 9609):     at android.os.HandlerThread.run(HandlerThread.java:85)
+W/FlagStore( 9609): Caused by: bibq: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+W/FlagStore( 9609):     at bizv.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):15)
+W/FlagStore( 9609):     at bido.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+W/FlagStore( 9609):     at bidl.e(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+W/FlagStore( 9609):     ... 12 more
+I/hurana.naam_jap( 9609): hiddenapi: Accessing hidden field Ljava/net/Socket;->impl:Ljava/net/SocketImpl; (runtime_flags=0, domain=core-platform, api=unsupported) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: allowed
+I/hurana.naam_jap( 9609): hiddenapi: Accessing hidden method Ljava/security/spec/ECParameterSpec;->setCurveName(Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=unsupported) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: allowed
+E/MethodChannel#purchases_flutter( 9609): Failed to handle method call
+E/MethodChannel#purchases_flutter( 9609): kotlin.UninitializedPropertyAccessException: There is no singleton instance. Make sure you configure Purchases before trying to get the default instance. More info here: https://errors.rev.cat/configuring-sdk
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases.Purchases$Companion.getSharedInstance(Purchases.kt:1009)
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases.hybridcommon.CommonKt.getCustomerInfo(common.kt:490)
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.getCustomerInfo(PurchasesFlutterPlugin.java:550)
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:204)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Handler.handleCallback(Handler.java:1027)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Handler.dispatchMessage(Handler.java:108)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Looper.loopOnce(Looper.java:298)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Looper.loop(Looper.java:408)
+E/MethodChannel#purchases_flutter( 9609):       at android.app.ActivityThread.main(ActivityThread.java:9964)
+E/MethodChannel#purchases_flutter( 9609):       at java.lang.reflect.Method.invoke(Native Method)
+E/MethodChannel#purchases_flutter( 9609):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
+E/MethodChannel#purchases_flutter( 9609):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
+I/flutter ( 9609): Entitlement sync error: PlatformException(error, There is no singleton instance. Make sure you configure Purchases before trying to get the default instance. More info here: https://errors.rev.cat/configuring-sdk, null, kotlin.UninitializedPropertyAccessException: There is no singleton instance. Make sure you configure Purchases before trying to get the default instance. More info here: https://errors.rev.cat/configuring-sdk
+I/flutter ( 9609):      at com.revenuecat.purchases.Purchases$Companion.getSharedInstance(Purchases.kt:1009)
+I/flutter ( 9609):      at com.revenuecat.purchases.hybridcommon.CommonKt.getCustomerInfo(common.kt:490)
+I/flutter ( 9609):      at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.getCustomerInfo(PurchasesFlutterPlugin.java:550)
+I/flutter ( 9609):      at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:204)
+I/flutter ( 9609):      at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
+I/flutter ( 9609):      at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
+I/flutter ( 9609):      at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
+I/flutter ( 9609):      at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+I/flutter ( 9609):      at android.os.Handler.handleCallback(Handler.java:1027)
+I/flutter ( 9609):      at android.os.Handler.dispatchMessage(Handler.java:108)
+I/flutter ( 9609):      at android.os.Looper.loopOnce(Looper.java:298)
+I/flutter ( 9609):      at android.os.Looper.loop(Looper.java:408)
+I/flutter ( 9609):      at android.app.ActivityThread.main(ActivityThread.java:9964)
+I/flutter ( 9609):      at java.lang.reflect.Method.invoke(Native Method)
+I/flutter ( 9609):      at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
+I/flutter ( 9609):      at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
+I/flutter ( 9609): )
+D/OplusScrollToTopManager( 9609): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{eb59ad0 V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
+V/SystemSensorManagerExtImpl( 9609): RegisterListener rot_vec type:11 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@83c576b from com.manukhurana.naam_jap
+V/SystemSensorManagerExtImpl( 9609): RegisterListener icm4n607 acc type:1 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@83c576b from com.manukhurana.naam_jap
+V/SystemSensorManagerExtImpl( 9609): RegisterListener mmc5603 mag type:2 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@83c576b from com.manukhurana.naam_jap
+V/SystemSensorManagerExtImpl( 9609): unRegisterListener by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@83c576b and its name is rot_vec
+V/SystemSensorManagerExtImpl( 9609): unRegisterListener by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@83c576b and its name is icm4n607 acc
+V/SystemSensorManagerExtImpl( 9609): unRegisterListener by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@83c576b and its name is mmc5603 mag
+V/SystemSensorManagerExtImpl( 9609): RegisterListener rot_vec type:11 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@c1602c8 from com.manukhurana.naam_jap
+V/SystemSensorManagerExtImpl( 9609): RegisterListener icm4n607 acc type:1 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@c1602c8 from com.manukhurana.naam_jap
+V/SystemSensorManagerExtImpl( 9609): RegisterListener mmc5603 mag type:2 delay:30000us by com.hemanthraj.fluttercompass.FlutterCompassPlugin$1@c1602c8 from com.manukhurana.naam_jap
+W/hurana.naam_jap( 9609): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
+D/ProfileInstaller( 9609): Installing profile for com.manukhurana.naam_jap
+D/ViewRootImplExtImpl( 9609): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=true, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+D/VRI[MainActivity]( 9609): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][1080,2400]}, relayoutAsync:true, mSyncSeqId:0
+W/VRI[MainActivity]( 9609): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@ce72e05
+D/FlutterJNI( 9609): Sending viewport metrics to the engine.
+I/SurfaceControl( 9609):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xeac4eb2,currentBufferRatio=1.0,desiredRatio=1.0
+E/GoogleApiManager( 9609): Failed to get service from broker. 
+E/GoogleApiManager( 9609): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
+E/GoogleApiManager( 9609):      at android.os.Parcel.createExceptionOrNull(Parcel.java:3369)
+E/GoogleApiManager( 9609):      at android.os.Parcel.createException(Parcel.java:3353)
+E/GoogleApiManager( 9609):      at android.os.Parcel.readException(Parcel.java:3336)
+E/GoogleApiManager( 9609):      at android.os.Parcel.readException(Parcel.java:3278)
+E/GoogleApiManager( 9609):      at bjcn.a(:com.google.android.gms@261631035@26.16.31 (260400-900800821):36)
+E/GoogleApiManager( 9609):      at bjaj.z(:com.google.android.gms@261631035@26.16.31 (260400-900800821):143)
+E/GoogleApiManager( 9609):      at bigf.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):42)
+E/GoogleApiManager( 9609):      at android.os.Handler.handleCallback(Handler.java:1027)
+E/GoogleApiManager( 9609):      at android.os.Handler.dispatchMessage(Handler.java:108)
+E/GoogleApiManager( 9609):      at czrc.mD(:com.google.android.gms@261631035@26.16.31 (260400-900800821):1)
+E/GoogleApiManager( 9609):      at czrc.dispatchMessage(:com.google.android.gms@261631035@26.16.31 (260400-900800821):5)
+E/GoogleApiManager( 9609):      at android.os.Looper.loopOnce(Looper.java:298)
+E/GoogleApiManager( 9609):      at android.os.Looper.loop(Looper.java:408)
+E/GoogleApiManager( 9609):      at android.os.HandlerThread.run(HandlerThread.java:85)
+W/GoogleApiManager( 9609): Not showing notification since connectionResult is not user-facing: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null, clientMethodKey=null}
+E/IJankManager( 9609): slideSceneEnd unknown scene 1000 mScene:-1
+D/OplusSystemUINavigationGestureExtImpl( 9609): regionString = null
+D/OplusSystemUINavigationGestureExtImpl( 9609): regionString = null
+D/ViewExtract( 9609): [OplusViewExtractManager] OplusViewExtractManager init com.manukhurana.naam_jap
+D/OplusInputMethodManagerInternal( 9609): get inputMethodManager extension: com.android.internal.view.IInputMethodManager$Stub$Proxy@752d2d1
+D/OplusViewDragTouchViewHelper( 9609): dispatchTouchView action = 1
+D/ViewRootImplExtImpl( 9609): the up motion event handled by client, just return
+E/IJankManager( 9609): slideSceneEnd unknown scene 1003 mScene:-1
+D/OplusViewDragTouchViewHelper( 9609): dispatchTouchView action = 1
+D/ViewRootImplExtImpl( 9609): the up motion event handled by client, just return
+D/OplusPredictiveBackController( 9609): should not HookOnBackInvokedCallbackEnabled for application com.manukhurana.naam_jap.MainActivity@c3c7ef3 sdk: 36
+D/WindowOnBackDispatcher( 9609):  predictive settings is disabled for com.manukhurana.naam_jap
+W/WindowOnBackDispatcher( 9609): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 9609): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+E/IJankManager( 9609): slideSceneEnd unknown scene 1003 mScene:-1
+I/PowerHalMgrImpl( 9609): perfLockAcq is supported. 
+I/PowerHalMgrImpl( 9609): hdl:14473, pid:9609 
+I/PowerHalMgrImpl( 9609): hdl:14475, pid:9609 
+I/PowerHalMgrImpl( 9609): hdl:14477, pid:9609 
+I/PowerHalMgrImpl( 9609): hdl:14473, pid:9609 
+D/OplusViewDragTouchViewHelper( 9609): dispatchTouchView action = 1
+I/ScrollIdentify( 9609): on fling
+D/ViewRootImplExtImpl( 9609): the up motion event handled by client, just return
+I/PowerHalMgrImpl( 9609): hdl:14478, pid:9609 
+E/IJankManager( 9609): slideSceneEnd unknown scene 1003 mScene:-1
+I/PowerHalMgrImpl( 9609): hdl:14483, pid:9609 
+D/OplusViewDragTouchViewHelper( 9609): dispatchTouchView action = 1
+D/ViewRootImplExtImpl( 9609): the up motion event handled by client, just return
+E/hurana.naam_jap( 9609): legacy_receive_flag: 0
+D/hurana.naam_jap( 9609): /proc/perfmgr_sbe/sbe_ioctl not exists: No such file or directory
+E/MethodChannel#purchases_flutter( 9609): Failed to handle method call
+E/MethodChannel#purchases_flutter( 9609): kotlin.UninitializedPropertyAccessException: There is no singleton instance. Make sure you configure Purchases before trying to get the default instance. More info here: https://errors.rev.cat/configuring-sdk
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases.Purchases$Companion.getSharedInstance(Purchases.kt:1009)
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases.hybridcommon.CommonKt.getOfferings(common.kt:63)
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.getOfferings(PurchasesFlutterPlugin.java:418)
+E/MethodChannel#purchases_flutter( 9609):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:132)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
+E/MethodChannel#purchases_flutter( 9609):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Handler.handleCallback(Handler.java:1027)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Handler.dispatchMessage(Handler.java:108)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Looper.loopOnce(Looper.java:298)
+E/MethodChannel#purchases_flutter( 9609):       at android.os.Looper.loop(Looper.java:408)
+E/MethodChannel#purchases_flutter( 9609):       at android.app.ActivityThread.main(ActivityThread.java:9964)
+E/MethodChannel#purchases_flutter( 9609):       at java.lang.reflect.Method.invoke(Native Method)
+E/MethodChannel#purchases_flutter( 9609):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
+E/MethodChannel#purchases_flutter( 9609):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
+I/flutter ( 9609): Purchase error: PlatformException(error, There is no singleton instance. Make sure you configure Purchases before trying to get the default instance. More info here: https://errors.rev.cat/configuring-sdk, null, kotlin.UninitializedPropertyAccessException: There is no singleton instance. Make sure you configure Purchases before trying to get the default instance. More info here: https://errors.rev.cat/configuring-sdk
+I/flutter ( 9609):      at com.revenuecat.purchases.Purchases$Companion.getSharedInstance(Purchases.kt:1009)
+I/flutter ( 9609):      at com.revenuecat.purchases.hybridcommon.CommonKt.getOfferings(common.kt:63)
+I/flutter ( 9609):      at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.getOfferings(PurchasesFlutterPlugin.java:418)
+I/flutter ( 9609):      at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:132)
+I/flutter ( 9609):      at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
+I/flutter ( 9609):      at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
+I/flutter ( 9609):      at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
+I/flutter ( 9609):      at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+I/flutter ( 9609):      at android.os.Handler.handleCallback(Handler.java:1027)
+I/flutter ( 9609):      at android.os.Handler.dispatchMessage(Handler.java:108)
+I/flutter ( 9609):      at android.os.Looper.loopOnce(Looper.java:298)
+I/flutter ( 9609):      at android.os.Looper.loop(Looper.java:408)
+I/flutter ( 9609):      at android.app.ActivityThread.main(ActivityThread.java:9964)
+I/flutter ( 9609):      at java.lang.reflect.Method.invoke(Native Method)
+I/flutter ( 9609):      at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
+I/flutter ( 9609):      at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
+I/flutter ( 9609): )
+I/PowerHalMgrImpl( 9609): hdl:14485, pid:9609 
+I/PowerHalMgrImpl( 9609): hdl:14483, pid:9609 

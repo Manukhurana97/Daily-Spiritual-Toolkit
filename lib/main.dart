@@ -30,14 +30,19 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // TODO: Replace with your actual RevenueCat API keys from https://app.revenuecat.com
-  await Purchases.configure(
-    PurchasesConfiguration(
-      Platform.isIOS
-          ? 'appl_YOUR_IOS_REVENUECAT_API_KEY'
-          : 'goog_YOUR_ANDROID_REVENUECAT_API_KEY',
-    ),
-  );
+  const iosKey = 'test_CyxljWCHuzyTilaMqZcixWEQPvA';
+  const androidKey = 'test_CyxljWCHuzyTilaMqZcixWEQPvA';
+  final rcKey = Platform.isIOS ? iosKey : androidKey;
+
+  if(!rcKey.contains('')) {
+    await Purchases.configure(
+      PurchasesConfiguration(
+        rcKey,
+      ),
+    );
+  } else {
+    debugPrint('RevenueCar: Using placeholder APi Key -skipping configuration');
+  }
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
