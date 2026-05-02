@@ -15,15 +15,17 @@ import 'services/auth_service.dart';
 import 'services/notification_service.dart';
 import 'services/purchase_service.dart';
 
-final appInitializedProvider = FutureProvider<bool>((ref) async {
-  await ref.read(settingsProvider).initialize();
-  ref.read(authProvider).initialize();
-  await ref.read(purchaseProvider).init();
-  await NotificationService.init();
-  await ref.read(japaProvider).initialize();
-  await ref.read(panchangProvider).initialize();
-  ref.read(compassProvider).initialize();
-  return true;
+final appInitializedProvider = FutureProvider<bool>((ref) {
+  return Future.microtask(() async {
+    await ref.read(settingsProvider).initialize();
+    ref.read(authProvider).initialize();
+    await ref.read(purchaseProvider).init();
+    await NotificationService.init();
+    await ref.read(japaProvider).initialize();
+    await ref.read(panchangProvider).initialize();
+    ref.read(compassProvider).initialize();
+    return true;
+  });
 });
 
 void main() async {
@@ -35,11 +37,8 @@ void main() async {
   final rcKey = Platform.isIOS ? iosKey : androidKey;
 
   if(!rcKey.contains('')) {
-    await Purchases.configure(
-      PurchasesConfiguration(
-        rcKey,
-      ),
-    );
+    await Purchases.configure(PurchasesConfiguration(rcKey));
+    PurchaseService.rcConfigured = true;
   } else {
     debugPrint('RevenueCar: Using placeholder APi Key -skipping configuration');
   }

@@ -15,6 +15,7 @@ final purchaseProvider = ChangeNotifierProvider<PurchaseService>((ref) {
 class PurchaseService extends ChangeNotifier {
   static const _cacheKey = 'is_pro_user';
   static const _entitlementId = 'pro';
+  static bool rcConfigured = false;
 
   final Ref _ref;
   final _storage = const FlutterSecureStorage();
@@ -62,6 +63,7 @@ class PurchaseService extends ChangeNotifier {
         }
       }
 
+      if (!rcConfigured) return;
       final customerInfo = await Purchases.getCustomerInfo();
       if (customerInfo.entitlements.all[_entitlementId]?.isActive == true) {
         await _grantPro();
@@ -99,6 +101,10 @@ class PurchaseService extends ChangeNotifier {
   }
 
   Future<bool> purchasePro() async {
+    if(!rcConfigured) {
+      debugPrint('RevenueCat not configured - skipping purchase');
+      return false;
+    }
     try {
       final offerings = await Purchases.getOfferings();
       final current = offerings.current;
@@ -115,6 +121,9 @@ class PurchaseService extends ChangeNotifier {
   }
 
   Future<bool> restorePurchases() async {
+    if(!rcConfigured) {
+      return false;
+    }
     try {
       final customerInfo = await Purchases.restorePurchases();
       if (customerInfo.entitlements.all[_entitlementId]?.isActive == true) {
@@ -129,16 +138,20 @@ class PurchaseService extends ChangeNotifier {
   }
 
   Future<void> onUserSignedIn(String userId) async {
-    try {
-      await Purchases.logIn(userId);
-    } catch (_) {}
+    if(rcConfigured) {
+      try {
+        await Purchases.logIn(userId);
+      } catch (_) {}
+    }
     await _syncEntitlement();
   }
 
   Future<void> onUserSignedOut() async {
-    try {
-      await Purchases.logOut();
-    } catch (_) {}
+    if(rcConfigured) {
+      try {
+        await Purchases.logOut();
+      } catch (_) {}
+    }
     await _revokePro();
   }
 }
