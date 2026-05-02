@@ -12,7 +12,20 @@
           "package_name": "com.manukhurana.naam_jap"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "340549063781-3nuatdbrdnc2sbe2410nv95h8oqnp3ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manukhurana.naam_jap",
+            "certificate_hash": "e5dd3ccdead900932a754ea571010c39bfd88ca2"
+          }
+        },
+        {
+          "client_id": "340549063781-999euhl6p4tsh0sqo9cuc9u3sv2nb7p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyALP-qV-4j9iHMx_lO-ylT329eRy3eJ1z0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340549063781-999euhl6p4tsh0sqo9cuc9u3sv2nb7p7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "340549063781-t7ol4b48t7neuprj8ri6mp78b1saem15.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mk.naamJap.app"
+              }
+            }
+          ]
         }
       }
     }
