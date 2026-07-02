@@ -18,9 +18,8 @@ class NotificationService {
       requestBadgePermission: false,
       requestSoundPermission: true,
     );
-    const settings = InitializationSettings(android: androidSettings, iOS: iosSettings);
 
-    await _plugin.initialize(settings);
+    await _plugin.initialize(settings: const InitializationSettings(android: androidSettings, iOS: iosSettings));
     _initialized = true;
   }
 
@@ -32,11 +31,11 @@ class NotificationService {
     }
 
     await _plugin.zonedSchedule(
-      100,
-      'Brahma Muhurta',
-      'The most auspicious time for japa begins now. Open the app and start your sadhana.',
-      scheduledTime,
-      const NotificationDetails(
+      id: 100,
+      title: 'Brahma Muhurta',
+      body: 'The most auspicious time for japa begins now. Open the app and start your sadhana.',
+      scheduledDate: scheduledTime,
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'brahma_muhurta',
           'Brahma Muhurta',
@@ -47,7 +46,6 @@ class NotificationService {
         iOS: DarwinNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
@@ -59,11 +57,11 @@ class NotificationService {
     }
 
     await _plugin.zonedSchedule(
-      101,
-      'Sandhya Kaal',
-      'Twilight hour — an auspicious time for evening prayers and japa.',
-      scheduledTime,
-      const NotificationDetails(
+      id: 101,
+      title: 'Sandhya Kaal',
+      body: 'Twilight hour — an auspicious time for evening prayers and japa.',
+      scheduledDate: scheduledTime,
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'sandhya_kaal',
           'Sandhya Kaal',
@@ -74,7 +72,6 @@ class NotificationService {
         iOS: DarwinNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
@@ -84,11 +81,11 @@ class NotificationService {
   }
 
   static Future<void> cancelBrahmaMuhurta() async {
-    await _plugin.cancel(100);
+    await _plugin.cancel(id: 100);
   }
 
   static Future<void> cancelSandhyaKaal() async {
-    await _plugin.cancel(101);
+    await _plugin.cancel(id: 101);
   }
 
   static Future<bool> requestPermission() async {

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_compass/flutter_compass.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final compassProvider = ChangeNotifierProvider<CompassNotifier>((ref) {
   return CompassNotifier();
@@ -116,7 +116,6 @@ class CompassNotifier extends ChangeNotifier {
     try {
       final firstEvent = await FlutterCompass.events?.first.timeout(
         const Duration(seconds: 3),
-       onTimeout: () => null,
       );
       _isAvailable = firstEvent != null;
     } catch (_) {

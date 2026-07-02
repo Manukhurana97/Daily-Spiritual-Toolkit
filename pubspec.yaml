@@ -4,37 +4,37 @@ publish_to: 'none'
 version: 1.5.0+2
 
 environment:
-  sdk: ^3.11.4
+  sdk: ^3.10.0
 
 dependencies:
   flutter:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^3.3.2
   sqflite: ^2.4.2
   path: ^1.9.1
   shared_preferences: ^2.5.3
   flutter_compass: ^0.8.1
   intl: ^0.20.2
-  permission_handler: ^11.4.0
+  permission_handler: ^12.0.3
   sweph: ^3.2.1+2.10.3
   geolocator: ^14.0.2
   path_provider: ^2.1.5
 
   # Audio
-  audioplayers: ^6.1.0
+  audioplayers: ^6.7.1
 
   # Notifications
-  flutter_local_notifications: ^18.0.1
-  timezone: ^0.10.0
+  flutter_local_notifications: ^22.0.1
+  timezone: ^0.11.1
 
   # Charts
-  fl_chart: ^0.70.2
+  fl_chart: ^1.2.0
 
   # Export
   csv: ^6.0.0
-  share_plus: ^10.1.4
+  share_plus: ^13.2.0
 
 dev_dependencies:
   flutter_test:

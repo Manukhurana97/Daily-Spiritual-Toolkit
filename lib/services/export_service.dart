@@ -40,8 +40,9 @@ class ExportService {
           '${dir.path}/japa_export_${dateFormat.format(DateTime.now())}.csv');
       await file.writeAsString(csv);
 
-      await Share.shareXFiles(
-          [XFile(file.path)], subject: 'Japa History Export');
+      await SharePlus.instance.share(
+          ShareParams(files: [XFile(file.path)], subject: 'Japa History Export'),
+      );
       return 'Export ready - ${sessions.length} sessions.';
     } catch (e) {
         debugPrint('Export error: $e');
