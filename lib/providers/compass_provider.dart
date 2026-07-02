@@ -113,7 +113,16 @@ class CompassNotifier extends ChangeNotifier {
   static double _toRad(double deg) => deg * pi / 180;
 
   Future<void> initialize() async {
-    _isAvailable = (await FlutterCompass.events?.first) != null;
+    try {
+      final firstEvent = await FlutterCompass.events?.first.timeout(
+        const Duration(seconds: 3),
+       onTimeout: () => null,
+      );
+      _isAvailable = firstEvent != null;
+    } catch (_) {
+      _isAvailable = false;
+    }
+
     _hasPermission = true;
     _startListening();
     notifyListeners();

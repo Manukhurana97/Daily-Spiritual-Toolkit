@@ -10,8 +10,6 @@ class AppConstants {
 
   static const Duration antiSpamInterval = Duration(milliseconds: 300);
 
-  static const int maxTapsPerSecond = 10;
-
   static const List<String> defaultMantras = [
     'Radha',
     'Ram',

@@ -3,7 +3,7 @@ class JapaStats {
   final int totalCount;
   final int todayMalas;
   final int totalMalas;
-  final JapaSession? lastSession;
+  final LastSessionInfo? lastSession;
 
   const JapaStats({
     required this.todayCount,
@@ -21,12 +21,12 @@ class JapaStats {
   );
 }
 
-class JapaSession {
+class LastSessionInfo {
   final int count;
   final Duration duration;
   final DateTime endedAt;
 
-  const JapaSession({
+  const LastSessionInfo({
     required this.count,
     required this.duration,
     required this.endedAt,

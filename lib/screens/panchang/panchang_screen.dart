@@ -31,6 +31,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
     }
 
     final data = days[_selectedIndex];
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       child: Column(
@@ -66,6 +67,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         endTime: data.tithiEndTime,
                         nextValue: data.nextTithi,
                         color: AppColors.deepMaroon,
+                        isDark: isDark,
                       ),
                       const _Divider(),
                       _PanchangDetailTile(
@@ -75,6 +77,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         endTime: data.nakshatraEndTime,
                         nextValue: data.nextNakshatra,
                         color: AppColors.gold,
+                        isDark: isDark,
                       ),
                       const _Divider(),
                       _PanchangDetailTile(
@@ -84,6 +87,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         endTime: data.yogaEndTime,
                         nextValue: data.nextYoga,
                         color: AppColors.teal,
+                        isDark: isDark,
                       ),
                       const _Divider(),
                       _PanchangDetailTile(
@@ -93,6 +97,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         endTime: data.karanaEndTime,
                         nextValue: data.nextKarana,
                         color: AppColors.saffron,
+                        isDark: isDark,
                       ),
                     ],
                   ),
@@ -132,12 +137,12 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.red.shade50,
+                            color: isDark ? Colors.red.shade900.withValues(alpha: 0.3) : Colors.red.shade50,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Icon(
                             Icons.warning_amber_rounded,
-                            color: Colors.red.shade700,
+                            color: isDark ? Colors.red.shade300 :  Colors.red.shade700,
                             size: 20,
                           ),
                         ),
@@ -151,16 +156,16 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.red.shade700,
+                                  color: isDark ? Colors.red.shade300 :  Colors.red.shade700,
                                 ),
                               ),
                               const SizedBox(height: 2),
                               Text(
                                 '${data.rahuKaalStart} – ${data.rahuKaalEnd}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
-                                  color: AppColors.textPrimary,
+                                  color: isDark ?  AppColors.darkTextPrimary : AppColors.textPrimary,
                                 ),
                               ),
                             ],
@@ -205,7 +210,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.tealLight,
+                            color: isDark ? AppColors.teal.withValues(alpha: 0.15) : AppColors.tealLight,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Icon(
@@ -230,9 +235,9 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 data.auspiciousNote,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
-                                  color: AppColors.textSecondary,
+                                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                                   height: 1.4,
                                 ),
                               ),
@@ -266,9 +271,10 @@ class _DaySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       height: 72,
-      color: AppColors.cream,
+      color: isDark ? AppColors.darkSurface :  AppColors.cream,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -292,10 +298,10 @@ class _DaySelector extends StatelessWidget {
                         end: Alignment.bottomRight,
                       )
                     : null,
-                color: isSelected ? null : Colors.white,
+                color: isSelected ? null : (isDark ? AppColors.darkCard : Colors.white),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isSelected ? Colors.transparent : AppColors.divider,
+                  color: isSelected ? Colors.transparent : (isDark ? AppColors.darkDivider : AppColors.divider),
                 ),
                 boxShadow: isSelected
                     ? [
@@ -315,7 +321,7 @@ class _DaySelector extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: isSelected ? Colors.white70 : AppColors.textSecondary,
+                      color: isSelected ? Colors.white70 : (isDark ?  AppColors.darkTextSecondary : AppColors.textSecondary),
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -324,7 +330,7 @@ class _DaySelector extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
-                      color: isSelected ? Colors.white : AppColors.textPrimary,
+                      color: isSelected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
                     ),
                   ),
                 ],
@@ -472,6 +478,7 @@ class _PanchangDetailTile extends StatelessWidget {
   final String? endTime;
   final String? nextValue;
   final Color color;
+  final bool isDark;
 
   const _PanchangDetailTile({
     required this.icon,
@@ -480,6 +487,7 @@ class _PanchangDetailTile extends StatelessWidget {
     this.endTime,
     this.nextValue,
     required this.color,
+    required this.isDark,
   });
 
   @override
@@ -493,7 +501,7 @@ class _PanchangDetailTile extends StatelessWidget {
             margin: const EdgeInsets.only(top: 2),
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
+              color: color.withValues(alpha: isDark ? 0.2 : 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, size: 18, color: color),
@@ -505,9 +513,9 @@ class _PanchangDetailTile extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -517,10 +525,10 @@ class _PanchangDetailTile extends StatelessWidget {
                     Flexible(
                       child: Text(
                         value,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                         ),
                       ),
                     ),
@@ -541,9 +549,9 @@ class _PanchangDetailTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     nextValue!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
-                      color: AppColors.textSecondary,
+                      color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

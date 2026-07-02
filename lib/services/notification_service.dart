@@ -26,13 +26,16 @@ class NotificationService {
 
   static Future<void> scheduleBrahmaMuhurta(DateTime sunriseLocal) async {
     final brahmaMuhurta = sunriseLocal.subtract(const Duration(hours: 1, minutes: 36));
-    if (brahmaMuhurta.isBefore(DateTime.now())) return;
+    var scheduledTime = tz.TZDateTime.from(brahmaMuhurta, tz.local);
+    if (scheduledTime.isBefore(tz.TZDateTime.now(tz.local))) {
+      scheduledTime = scheduledTime.add(const Duration(days: 1));
+    }
 
     await _plugin.zonedSchedule(
       100,
       'Brahma Muhurta',
       'The most auspicious time for japa begins now. Open the app and start your sadhana.',
-      tz.TZDateTime.from(brahmaMuhurta, tz.local),
+      scheduledTime,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'brahma_muhurta',
@@ -45,17 +48,21 @@ class NotificationService {
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
   static Future<void> scheduleSandhyaKaal(DateTime sunsetLocal) async {
-    if (sunsetLocal.isBefore(DateTime.now())) return;
+    var scheduledTime = tz.TZDateTime.from(sunsetLocal, tz.local);
+    if (scheduledTime.isBefore(tz.TZDateTime.now(tz.local))) {
+      scheduledTime = scheduledTime.add(const Duration(days: 1));
+    }
 
     await _plugin.zonedSchedule(
       101,
       'Sandhya Kaal',
       'Twilight hour — an auspicious time for evening prayers and japa.',
-      tz.TZDateTime.from(sunsetLocal, tz.local),
+      scheduledTime,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'sandhya_kaal',
@@ -68,6 +75,7 @@ class NotificationService {
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 

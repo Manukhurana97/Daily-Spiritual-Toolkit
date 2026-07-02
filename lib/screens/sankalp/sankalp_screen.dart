@@ -290,6 +290,12 @@ class _CreateSankalpFormState extends State<_CreateSankalpForm> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _goalController.addListener(() => setState(() {}));
+  }
+
+  @override
   void dispose() {
     _goalController.dispose();
     super.dispose();

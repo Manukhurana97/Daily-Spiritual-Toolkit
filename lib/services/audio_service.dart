@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,15 +9,34 @@ final audioServiceProvider = ChangeNotifierProvider<AudioService>((ref) {
 
 enum SoundType { tanpura, templeBells, river }
 
-class AudioService extends ChangeNotifier {
+class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   final _player = AudioPlayer();
   SoundType? _currentSound;
   bool _isPlaying = false;
+  bool _wasPlayingBeforePause = false;
   double _volume = 0.3;
+
+  AudioService() {
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   SoundType? get currentSound => _currentSound;
   bool get isPlaying => _isPlaying;
   double get volume => _volume;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _wasPlayingBeforePause = _isPlaying;
+      if (_isPlaying) {
+        _player.pause();
+      }
+    } else if (state == AppLifecycleState.resumed) {
+      if (_wasPlayingBeforePause) {
+        _player.resume();
+      }
+    }
+  }
 
   static const _assets = {
     SoundType.tanpura: 'audio/tanpura.mp3',
@@ -61,6 +81,7 @@ class AudioService extends ChangeNotifier {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _player.dispose();
     super.dispose();
   }

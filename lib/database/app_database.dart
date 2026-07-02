@@ -210,7 +210,14 @@ class AppDatabase {
 
     int streak = 0;
     final now = DateTime.now();
-    var expected = DateTime(now.year, now.month, now.day);
+    final today = DateTime(now.year, now.month, now.day);
+    final firstDay = DateTime.parse(rows.first['day'] as String);
+
+    // Allow streak to start from today or yesterday
+    var expected = (firstDay == today) ? today : today.subtract(const Duration(days: 1));
+    if (firstDay != today && firstDay != today.subtract(const Duration(days: 1))) {
+      return 0;
+    }
 
     for (final row in rows) {
       final day = DateTime.parse(row['day'] as String);

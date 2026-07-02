@@ -1,19 +1,16 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
+import '../../models/mantra.dart';
 import '../../providers/japa_provider.dart';
 import '../../providers/panchang_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../services/audio_service.dart';
-import '../../services/auth_service.dart';
 import '../../services/export_service.dart';
 import '../../services/notification_service.dart';
-import '../../services/purchase_service.dart';
-import '../../screens/paywall/paywall_screen.dart';
 import '../../screens/sankalp/sankalp_screen.dart';
 import '../../widgets/section_card.dart';
 
@@ -24,10 +21,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final japa = ref.watch(japaProvider);
-    final auth = ref.watch(authProvider);
-    final purchase = ref.watch(purchaseProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isPro = purchase.isPro;
 
     return SafeArea(
       child: ListView(
@@ -35,169 +29,14 @@ class SettingsScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 16),
 
-          // ── Account ──
-          SectionCard(
-            title: 'Account',
-            child: auth.isSignedIn
-                ? Column(
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: AppColors.saffronLight,
-                            child: Text(
-                              (auth.displayName ?? auth.email ?? '?')[0].toUpperCase(),
-                              style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.saffron),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  auth.displayName ?? 'User',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-                                  ),
-                                ),
-                                Text(
-                                  auth.email ?? '',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (isPro)
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: AppColors.saffron.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: const Text(
-                                'PRO',
-                                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.saffron),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(
-                          onPressed: () async {
-                            await ref.read(authProvider).signOut();
-                            await ref.read(purchaseProvider).onUserSignedOut();
-                          },
-                          child: const Text('Sign Out'),
-                        ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      Text(
-                        'Sign in to unlock Pro features and sync purchases.',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: auth.isLoading
-                              ? null
-                              : () async {
-                                  final user = await ref.read(authProvider).signInWithGoogle();
-                                  if (user != null) {
-                                    await ref.read(purchaseProvider).onUserSignedIn(user.uid);
-                                  }
-                                },
-                          icon: const Icon(Icons.login_rounded, size: 18),
-                          label: const Text('Sign in with Google'),
-                        ),
-                      ),
-                      if (Platform.isIOS) ...[
-                        const SizedBox(height: 8),
-                        SizedBox(
-                          width: double.infinity,
-                          child: OutlinedButton.icon(
-                            onPressed: auth.isLoading
-                                ? null
-                                : () async {
-                                    final user = await ref.read(authProvider).signInWithApple();
-                                    if (user != null) {
-                                      await ref.read(purchaseProvider).onUserSignedIn(user.uid);
-                                    }
-                                  },
-                            icon: const Icon(Icons.apple_rounded, size: 18),
-                            label: const Text('Sign in with Apple'),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-          ),
-
-          // ── Pro Unlock ──
-          if (!isPro)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              child: Material(
-                borderRadius: BorderRadius.circular(16),
-                child: InkWell(
-                  onTap: () => PaywallScreen.show(context),
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [AppColors.saffron, AppColors.deepMaroon],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Unlock Pro', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)),
-                              Text('Unlimited mantras, Sankalp, sounds & more', style: TextStyle(color: Colors.white70, fontSize: 12)),
-                            ],
-                          ),
-                        ),
-                        Icon(Icons.arrow_forward_ios_rounded, color: Colors.white54, size: 16),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-          // ── Sankalp (Pro) ──
-          _ProGatedTile(
-            isPro: isPro,
+          // Sankalp
+          _SettingsTile(
             icon: Icons.auto_awesome_rounded,
             title: 'Sankalp (Vow)',
             subtitle: 'Set a chanting goal with deadline',
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const SankalpScreen()),
             ),
-            onLocked: () => PaywallScreen.show(context),
           ),
 
           // ── Mantras Management ──
@@ -219,9 +58,9 @@ class SettingsScreen extends ConsumerWidget {
                     isDark: isDark,
                   );
                 }),
-                if (japa.mantras.length < (isPro ? 50 : AppConstants.maxMantras))
+                if (japa.mantras.length < AppConstants.maxMantras)
                   _AddMantraButton(
-                    onTap: () => _showAddMantraDialog(context, ref, isPro: isPro),
+                    onTap: () => _showAddMantraDialog(context, ref),
                   ),
               ],
             ),
@@ -256,19 +95,9 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
 
-          // ── Notifications (Pro) ──
+          // ── Notifications ──
           SectionCard(
             title: 'Notifications',
-            trailing: !isPro
-                ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.saffron.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Text('PRO', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.saffron)),
-                  )
-                : null,
             child: Column(
               children: [
                 _SwitchRow(
@@ -276,7 +105,7 @@ class SettingsScreen extends ConsumerWidget {
                   title: 'Brahma Muhurta',
                   subtitle: '1.5 hours before sunrise',
                   value: settings.brahmaMuhurtaNotif,
-                  enabled: isPro,
+                  enabled: true,
                   isDark: isDark,
                   onChanged: (v) async {
                     await settings.setBrahmaMuhurtaNotif(v);
@@ -297,7 +126,7 @@ class SettingsScreen extends ConsumerWidget {
                   title: 'Sandhya Kaal',
                   subtitle: 'At sunset time',
                   value: settings.sandhyaKaalNotif,
-                  enabled: isPro,
+                  enabled: true,
                   isDark: isDark,
                   onChanged: (v) async {
                     await settings.setSandhyaKaalNotif(v);
@@ -319,51 +148,39 @@ class SettingsScreen extends ConsumerWidget {
           // ── Background Sound ──
           SectionCard(
             title: 'Background Sound',
-            trailing: !isPro
-                ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.saffron.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Text('PRO', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.saffron)),
-                  )
-                : null,
-            child: Opacity(
-              opacity: isPro ? 1.0 : 0.5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Play soothing sounds during japa. Tap the music icon on the Japa screen to choose.',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(''
+                    'Play soothing sounds during japa. Tap the music icon teh japa screen to choose.',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                   ),
-                  const SizedBox(height: 8),
-                  Consumer(builder: (_, ref, __) {
-                    final audio = ref.watch(audioServiceProvider);
-                    return Column(
-                      children: [
-                        _SettingRow(
-                          icon: Icons.volume_up_rounded,
-                          title: 'Volume',
-                          isDark: isDark,
-                          trailing: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 120),
-                            child: Slider(
-                              value: audio.volume,
-                              onChanged: isPro ? (v) => audio.setVolume(v) : null,
-                              activeColor: AppColors.saffron,
-                            ),
+                ),
+                const SizedBox(height: 8,),
+                Consumer(
+                    builder: (_, ref, __) {
+                      final audio = ref.watch(audioServiceProvider);
+                      return Column(
+                        children: [
+                          _SettingRow(
+                              icon: Icons.volume_up_rounded,
+                              title: 'Volume',
+                              isDark: isDark,
+                              trailing: SizedBox(
+                                width: 120,
+                                child: Slider(
+                                  value: audio.volume,
+                                  onChanged: (v) => audio.setVolume(v),
+                                  activeColor: AppColors.saffron,
+                                ),
+                              ),
                           ),
-                        ),
-                      ],
-                    );
-                  }),
-                ],
-              ),
+                        ],
+                      );
+                    }),
+              ],
             ),
           ),
 
@@ -372,20 +189,23 @@ class SettingsScreen extends ConsumerWidget {
             title: 'Data',
             child: Column(
               children: [
-                _ProGatedTile(
-                  isPro: isPro,
+                _SettingsTile(
                   icon: Icons.file_download_rounded,
                   title: 'Export Japa History',
                   subtitle: 'Download CSV file',
                   dense: true,
-                  onTap: () {
+                  onTap: () async {
                     final mantra = japa.activeMantra;
-                    ExportService.exportSessions(
+                    final msg = await ExportService.exportSessions(
                       mantraId: mantra?.id,
                       mantraName: mantra?.name ?? 'All',
                     );
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating),
+                      );
+                    }
                   },
-                  onLocked: () => PaywallScreen.show(context),
                 ),
                 const SizedBox(height: 8),
                 _ResetAllButton(onTap: () => _confirmResetAll(context, ref)),
@@ -470,7 +290,7 @@ class SettingsScreen extends ConsumerWidget {
                       SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'No ads. Sign in only for Pro. Data stays on device.',
+                          'No ads. Your data stays on device.',
                           style: TextStyle(fontSize: 12, color: AppColors.teal, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -515,7 +335,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _confirmDelete(BuildContext context, WidgetRef ref, mantra) {
+  void _confirmDelete(BuildContext context, WidgetRef ref, Mantra mantra) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -535,7 +355,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showRenameDialog(BuildContext context, WidgetRef ref, mantra) {
+  void _showRenameDialog(BuildContext context, WidgetRef ref, Mantra mantra) {
     final controller = TextEditingController(text: mantra.name);
     showDialog(
       context: context,
@@ -564,7 +384,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showAddMantraDialog(BuildContext context, WidgetRef ref, {bool isPro = false}) {
+  void _showAddMantraDialog(BuildContext context, WidgetRef ref) {
     final controller = TextEditingController();
     showDialog(
       context: context,
@@ -581,9 +401,7 @@ class SettingsScreen extends ConsumerWidget {
           TextButton(
             onPressed: () {
               final name = controller.text.trim();
-              if (name.isNotEmpty) {
-                ref.read(japaProvider).addMantra(name, isPro: isPro);
-              }
+              ref.read(japaProvider).addMantra(name);
               Navigator.pop(ctx);
             },
             child: const Text('Add'),
@@ -761,22 +579,18 @@ class _SwitchRow extends StatelessWidget {
   }
 }
 
-class _ProGatedTile extends StatelessWidget {
-  final bool isPro;
+class _SettingsTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final VoidCallback onTap;
-  final VoidCallback onLocked;
+  final VoidCallback? onTap;
   final bool dense;
 
-  const _ProGatedTile({
-    required this.isPro,
+  const _SettingsTile({
     required this.icon,
     required this.title,
     required this.subtitle,
-    required this.onTap,
-    required this.onLocked,
+    this.onTap,
     this.dense = false,
   });
 
@@ -786,7 +600,7 @@ class _ProGatedTile extends StatelessWidget {
 
     if (dense) {
       return InkWell(
-        onTap: isPro ? onTap : onLocked,
+        onTap: onTap ,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
@@ -802,17 +616,7 @@ class _ProGatedTile extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!isPro)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: AppColors.saffron.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: const Text('PRO', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.saffron)),
-                )
-              else
-                const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.textSecondary),
+              const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.textSecondary),
             ],
           ),
         ),
@@ -825,7 +629,7 @@ class _ProGatedTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: isDark ? AppColors.darkCard : Colors.white,
         child: InkWell(
-          onTap: isPro ? onTap : onLocked,
+          onTap: onTap,
           borderRadius: BorderRadius.circular(16),
           child: Container(
             padding: const EdgeInsets.all(16),
@@ -846,17 +650,8 @@ class _ProGatedTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (!isPro)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.saffron.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Text('PRO', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.saffron)),
-                  )
-                else
-                  const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.textSecondary),
+
+                const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.textSecondary),
               ],
             ),
           ),

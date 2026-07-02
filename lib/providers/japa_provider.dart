@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/constants/app_constants.dart';
 import '../database/app_database.dart';
 import '../models/mantra.dart';
-import '../models/japa_session.dart' as db;
+import '../models/japa_session.dart';
 import '../models/japa_stats.dart';
 
 final japaProvider = ChangeNotifierProvider<JapaNotifier>((ref) {
@@ -126,8 +126,8 @@ class JapaNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> addMantra(String name, {bool isPro = false}) async {
-    final max = isPro ? 50 : AppConstants.maxMantras;
+  Future<void> addMantra(String name) async {
+    final max = AppConstants.maxMantras;
     if (_mantras.length >= max) return;
     final mantra = await AppDatabase.insertMantra(name);
     _mantras.add(mantra);
@@ -187,7 +187,7 @@ class JapaNotifier extends ChangeNotifier {
   Future<void> _saveCurrentSession() async {
     if (_activeMantra == null || _currentCount == 0 || _sessionStart == null) return;
 
-    final session = db.JapaSession(
+    final session = JapaSession(
       mantraId: _activeMantra!.id!,
       count: _currentCount,
       startedAt: _sessionStart!,
@@ -205,10 +205,10 @@ class JapaNotifier extends ChangeNotifier {
     final totalCount = await AppDatabase.getTotalCount(mantraId);
     final lastRow = await AppDatabase.getLastSession(mantraId);
 
-    JapaSession? lastSession;
+    LastSessionInfo? lastSession;
     if (lastRow != null) {
-      final s = db.JapaSession.fromMap(lastRow);
-      lastSession = JapaSession(
+      final s = JapaSession.fromMap(lastRow);
+      lastSession = LastSessionInfo(
         count: s.count,
         duration: s.duration,
         endedAt: s.endedAt,
