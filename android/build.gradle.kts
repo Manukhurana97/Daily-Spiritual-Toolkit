@@ -20,13 +20,9 @@ subprojects {
 }
 
 subprojects {
-    afterEvaluate {
-        if (extensions.findByName("android") != null) {
-            val androidExt = extensions.getByName("android")
-            if (androidExt is com.android.build.gradle.LibraryExtension) {
-                androidExt.ndkVersion = "28.2.12676358"
-            }
-        }
+    plugins.withId("com.android.library") {
+        val androidExt = extensions.getByName("android") as com.android.build.gradle.LibraryExtension
+        androidExt.ndkVersion = "28.2.13676358"
     }
 }
 
