@@ -1,16 +1,16 @@
 manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % flutter clean
 flutter pub get
 flutter run
-Deleting build...                                                    0ms
-Deleting .dart_tool...                                               0ms
+Deleting build...                                                  220ms
+Deleting .dart_tool...                                               3ms
 Deleting ephemeral...                                                0ms
 Deleting Generated.xcconfig...                                       0ms
 Deleting flutter_export_environment.sh...                            0ms
 Deleting ephemeral...                                                0ms
 Deleting ephemeral...                                                0ms
 Deleting .flutter-plugins-dependencies...                            0ms
-Resolving dependencies...
-Downloading packages...
+Resolving dependencies... (1.2s)
+Downloading packages... (20.7s)
   _fe_analyzer_shared 99.0.0 (104.0.0 available)
   analyzer 12.1.0 (14.0.0 available)
   cli_util 0.4.2 (0.5.1 available)
@@ -84,9 +84,9 @@ Execution failed for task ':sweph:configureCMakeDebug[arm64-v8a]'.
 
       Change Dir: /Users/manu/.pub-cache/hosted/pub.dev/sweph-3.2.1+2.10.3/android/.cxx/Debug/3j5d3my4/arm64-v8a/CMakeFiles/CMakeTmp
 
-      Run Build Command(s):/Users/manu/Library/Android/sdk/cmake/3.22.1/bin/ninja cmTC_5c513 && [1/2] Building C object CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o
-      FAILED: CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o
-      /Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fPIE -MD -MT CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o -MF CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o.d -o CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o -c /Users/manu/.pub-cache/hosted/pub.dev/sweph-3.2.1+2.10.3/android/.cxx/Debug/3j5d3my4/arm64-v8a/CMakeFiles/CMakeTmp/testCCompiler.c
+      Run Build Command(s):/Users/manu/Library/Android/sdk/cmake/3.22.1/bin/ninja cmTC_b8e72 && [1/2] Building C object CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o
+      FAILED: CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o
+      /Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fPIE -MD -MT CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o -MF CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o.d -o CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o -c /Users/manu/.pub-cache/hosted/pub.dev/sweph-3.2.1+2.10.3/android/.cxx/Debug/3j5d3my4/arm64-v8a/CMakeFiles/CMakeTmp/testCCompiler.c
       /bin/sh: /Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang: Bad CPU type in executable
       ninja: build stopped: subcommand failed.
 
@@ -134,9 +134,9 @@ Execution failed for task ':sweph:configureCMakeDebug[arm64-v8a]'.
 
       Change Dir: /Users/manu/.pub-cache/hosted/pub.dev/sweph-3.2.1+2.10.3/android/.cxx/Debug/3j5d3my4/arm64-v8a/CMakeFiles/CMakeTmp
 
-      Run Build Command(s):/Users/manu/Library/Android/sdk/cmake/3.22.1/bin/ninja cmTC_5c513 && [1/2] Building C object CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o
-      FAILED: CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o
-      /Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fPIE -MD -MT CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o -MF CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o.d -o CMakeFiles/cmTC_5c513.dir/testCCompiler.c.o -c /Users/manu/.pub-cache/hosted/pub.dev/sweph-3.2.1+2.10.3/android/.cxx/Debug/3j5d3my4/arm64-v8a/CMakeFiles/CMakeTmp/testCCompiler.c
+      Run Build Command(s):/Users/manu/Library/Android/sdk/cmake/3.22.1/bin/ninja cmTC_b8e72 && [1/2] Building C object CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o
+      FAILED: CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o
+      /Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fPIE -MD -MT CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o -MF CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o.d -o CMakeFiles/cmTC_b8e72.dir/testCCompiler.c.o -c /Users/manu/.pub-cache/hosted/pub.dev/sweph-3.2.1+2.10.3/android/.cxx/Debug/3j5d3my4/arm64-v8a/CMakeFiles/CMakeTmp/testCCompiler.c
       /bin/sh: /Users/manu/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang: Bad CPU type in executable
       ninja: build stopped: subcommand failed.
 
@@ -283,37 +283,6 @@ Execution failed for task ':sweph:configureCMakeDebug[arm64-v8a]'.
         at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
         at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
         at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
-        at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
-        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
-        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
-        at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
-        at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
-        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
-        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
-        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
-        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
-        at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
-        at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
-        at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
-        at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
-        at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
-        at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
-        at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
-        at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
-        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
-        at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
-        at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
-        at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
-        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
-        at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
-        at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
-        at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
         at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
         at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
         at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
@@ -323,11 +292,11 @@ Execution failed for task ':sweph:configureCMakeDebug[arm64-v8a]'.
         at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
         at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:48)
         at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:277)
-        ... 171 more
+        ... 140 more
   Caused by: org.gradle.process.internal.ExecException: Process 'command '/Users/manu/Library/Android/sdk/cmake/3.22.1/bin/cmake'' finished with non-zero exit value 1
         at org.gradle.process.internal.DefaultExecHandle$ExecResultImpl.assertNormalExitValue(DefaultExecHandle.java:442)
         at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:46)
-        ... 172 more
+        ... 141 more
 
 
 * Try:
@@ -336,7 +305,7 @@ Execution failed for task ':sweph:configureCMakeDebug[arm64-v8a]'.
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 16s
-Running Gradle task 'assembleDebug'...                             16.3s
+BUILD FAILED in 15s
+Running Gradle task 'assembleDebug'...                             15.4s
 Error: Gradle task assembleDebug failed with exit code 1
 manu@Manus-MacBook-Air Daily-Spiritual-Toolkit %
