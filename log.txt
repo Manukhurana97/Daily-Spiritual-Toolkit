@@ -89,4 +89,4 @@ Execution failed for task ':app:checkDebugAarMetadata'.
 BUILD FAILED in 4m 34s
 Running Gradle task 'assembleDebug'...                            274.6s
 Error: Gradle task assembleDebug failed with exit code 1
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % `1234567890-`
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit %
