@@ -4,8 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/providers/settings_provider.dart';
+import 'package:nitya_sadhana/providers/stats_provider.dart';
+import 'package:nitya_sadhana/widgets/section_card.dart';
+import 'package:nitya_sadhana/widgets/streak_chart.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/japa_stats.dart';
 import '../../providers/japa_provider.dart';
@@ -80,20 +83,34 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
       return const Center(child: CircularProgressIndicator());
     }
 
+    final settings = ref.watch(settingsProvider);
+    final malaSize = japa.malaSize;
     final malaProgress = japa.currentMalaProgress;
-    final progressFraction = malaProgress / AppConstants.malaSize;
+    final progressFraction = malaProgress / malaSize;
     final directionHint = japa.activeMantra?.targetDirection;
 
+    // Sync target settings on first build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (japa.malaSize != settings.malaSize || japa.dailyGoal != settings.dailyGoal) {
+        japa.updateTargets(malaSize: settings.malaSize, dailyGoal: settings.dailyGoal);
+      }
+    });
+
     return SafeArea(
-      child: Column(
-        children: [
+      child: CustomScrollView(
+        slivers: [
           // Mantra Selector + Audio toggle
-          Row(
-            children: [
-              Expanded(child: _MantraSelector(japa: japa, isDark: isDark)),
-              _AudioToggle(audio: audio),
-            ],
-          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: _MantraSelector(japa: japa, isDark: isDark)),
+                    _AudioToggle(audio: audio),
+                  ],
+                ),
+
+
 
           // Direction hint
           if (directionHint != null && directionHint.isNotEmpty)
@@ -120,7 +137,8 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
             ),
 
           // Counter Area with glow
-          Expanded(
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.42,
             child: Center(
               child: GestureDetector(
                 onTap: _onTap,
@@ -137,9 +155,9 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
                     builder: (context, child) {
                       return _CounterOrb(
                         count: malaProgress,
-                        total: AppConstants.malaSize,
+                        total: malaSize,
                         progress: progressFraction,
-                        completedMalas: japa.completedMalas,
+                        completedMalas: japa.completedMala,
                         glowIntensity: _glowAnimation.value,
                         isDark: isDark,
                       );
@@ -179,9 +197,21 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
           ),
           const SizedBox(height: 16),
 
+          // Daily Goal Progress
+          if (japa.dailyGoal > 0)
+            _DailyGoalBar(current: japa.stats.todayCount, goal: japa.dailyGoal, isDark: isDark,),
+
           // Stats Row
           _StatsRow(stats: japa.stats),
+          const SizedBox(height: 8),
+
+          // Streak & Weekly Chart
+          if (japa.activeMantra != null)
+            _StreakSection(mantraId: japa.activeMantra!.id!, isDark: isDark),
           const SizedBox(height: 16),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -445,6 +475,56 @@ class _ActionChip extends StatelessWidget {
   }
 }
 
+class _DailyGoalBar extends StatelessWidget {
+  final int current;
+  final int goal;
+  final bool isDark;
+
+  const _DailyGoalBar({required this.current, required this.goal, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    final fraction = (current / goal).clamp(0.0, 1.0);
+    final reached = current >= goal;
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                reached ? Icons.emoji_events_rounded : Icons.flag_rounded,
+                size: 16,
+                color: reached ? AppColors.gold : AppColors.teal,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                  reached ? 'Daily goal reached!' : '$current / $goal today',
+                  style: TextStyle(
+                    fontSize: 13, fontWeight: FontWeight.w600,
+                    color: reached ? AppColors.gold : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
+                  ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: fraction,
+              minHeight: 6,
+              backgroundColor: isDark ? AppColors.darkDivider : AppColors.divider,
+              valueColor: AlwaysStoppedAnimation((reached ? AppColors.gold : AppColors.teal),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class _StatsRow extends StatelessWidget {
   final JapaStats stats;
   const _StatsRow({required this.stats});
@@ -490,6 +570,48 @@ class _StatsRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _StreakSection extends ConsumerStatefulWidget {
+  final int mantraId;
+  final bool isDark;
+
+  const _StreakSection({required this.mantraId, required this.isDark});
+
+  @override
+  ConsumerState<_StreakSection> createState() => _StreakSectionState();
+}
+
+class _StreakSectionState extends ConsumerState<_StreakSection> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(statsProvider).loadForMantra(widget.mantraId);
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant _StreakSection old) {
+    super.didUpdateWidget(old);
+    if (old.mantraId != widget.mantraId) {
+      ref.read(statsProvider).loadForMantra(widget.mantraId);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = ref.watch(statsProvider);
+    if (stats.isLoading || stats.weeklyData.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return SectionCard(
+        title: 'Weekly Progress',
+        child: StreakChart(data: stats.weeklyData, streak: stats.currentStreak
+        ),
     );
   }
 }

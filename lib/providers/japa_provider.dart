@@ -38,8 +38,19 @@ class JapaNotifier extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get hasSession => _sessionStart != null && _currentCount > 0;
 
-  int get currentMalaProgress => _currentCount % AppConstants.malaSize;
-  int get completedMalas => _currentCount ~/ AppConstants.malaSize;
+  int _malaSize = AppConstants.defaultMalaSize;
+  int _dailyGoal = 0;
+
+  int get malaSize => _malaSize;
+  int get dailyGoal => _dailyGoal;
+  int get currentMalaProgress => _currentCount % _malaSize;
+  int get completedMala => _currentCount ~/ _malaSize;
+
+  void updateTargets({required int malaSize, required int dailyGoal}) {
+    _malaSize = malaSize;
+    _dailyGoal = dailyGoal;
+    notifyListeners();
+  }
 
   Future<void> initialize() async {
     _isLoading = true;
@@ -126,12 +137,23 @@ class JapaNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> addMantra(String name) async {
+  Future<bool> addMantra(
+      String name, {
+        String? actualMantra,
+        String? targetDirection,
+      }) async {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return false;
     final max = AppConstants.maxMantras;
-    if (_mantras.length >= max) return;
-    final mantra = await AppDatabase.insertMantra(name);
+    if (_mantras.length >= max) return false;
+    final mantra = await AppDatabase.insertMantra(
+      trimmed,
+      actualMantra: actualMantra?.trim(),
+      targetDirection: targetDirection?.trim(),
+    );
     _mantras.add(mantra);
     notifyListeners();
+    return true;
   }
 
   Future<void> updateMantraDetails(Mantra mantra) async {
@@ -218,8 +240,8 @@ class JapaNotifier extends ChangeNotifier {
     _stats = JapaStats(
       todayCount: todayCount,
       totalCount: totalCount,
-      todayMalas: todayCount ~/ AppConstants.malaSize,
-      totalMalas: totalCount ~/ AppConstants.malaSize,
+      todayMalas: todayCount ~/ malaSize,
+      totalMalas: totalCount ~/ malaSize,
       lastSession: lastSession,
     );
     notifyListeners();

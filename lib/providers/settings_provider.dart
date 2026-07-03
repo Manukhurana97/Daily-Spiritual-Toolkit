@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +12,8 @@ class SettingsNotifier extends ChangeNotifier {
   static const _keyThemeMode = 'theme_mode';
   static const _keyBrahmaMuhurtaNotif = 'notif_brahma_muhurta';
   static const _keySandhyaKaalNotif = 'notif_sandhya_kaal';
+  static const _keyMalaSize = 'mala_size';
+  static const _keyDailySize = 'daily_size';
 
   SharedPreferences? _prefs;
   int? _defaultMantraId;
@@ -20,6 +21,8 @@ class SettingsNotifier extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
   bool _brahmaMuhurtaNotif = false;
   bool _sandhyaKaalNotif = false;
+  int _malaSize = 108;
+  int _dailyGoal = 0;
   bool _isLoading = true;
 
   int? get defaultMantraId => _defaultMantraId;
@@ -27,6 +30,8 @@ class SettingsNotifier extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
   bool get brahmaMuhurtaNotif => _brahmaMuhurtaNotif;
   bool get sandhyaKaalNotif => _sandhyaKaalNotif;
+  int get malaSize => _malaSize;
+  int get dailyGoal => _dailyGoal;
   bool get isLoading => _isLoading;
 
   Future<void> initialize() async {
@@ -46,7 +51,8 @@ class SettingsNotifier extends ChangeNotifier {
 
     _brahmaMuhurtaNotif = _prefs?.getBool(_keyBrahmaMuhurtaNotif) ?? false;
     _sandhyaKaalNotif = _prefs?.getBool(_keySandhyaKaalNotif) ?? false;
-
+    _malaSize = _prefs?.getInt(_keyMalaSize) ?? 108;
+    _dailyGoal = _prefs?.getInt(_keyDailySize) ?? 0;
     _isLoading = false;
     notifyListeners();
   }
@@ -87,6 +93,18 @@ class SettingsNotifier extends ChangeNotifier {
   Future<void> setSandhyaKaalNotif(bool enabled) async {
     _sandhyaKaalNotif = enabled;
     await _prefs?.setBool(_keySandhyaKaalNotif, enabled);
+    notifyListeners();
+  }
+
+  Future<void> setMalaSize(int size) async {
+    _malaSize = size;
+    await _prefs?.setInt(_keyMalaSize, size);
+    notifyListeners();
+  }
+
+  Future<void> setDailyGoal(int goal) async {
+    _dailyGoal = goal;
+    await _prefs?.setInt(_keyDailySize, goal);
     notifyListeners();
   }
 }

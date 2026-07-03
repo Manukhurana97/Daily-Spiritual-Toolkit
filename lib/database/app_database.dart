@@ -82,9 +82,18 @@ class AppDatabase {
     return rows.map(Mantra.fromMap).toList();
   }
 
-  static Future<Mantra> insertMantra(String name) async {
+  static Future<Mantra> insertMantra(
+      String name, {
+        String? actualMantra,
+        String? targetDirection
+      }) async {
     final db = await instance;
-    final mantra = Mantra(name: name, createdAt: DateTime.now());
+    final mantra = Mantra(
+        name: name,
+        actualMantra: actualMantra,
+        targetDirection: targetDirection,
+        createdAt: DateTime.now()
+    );
     final id = await db.insert('mantras', mantra.toMap());
     return mantra.copyWith(id: id);
   }

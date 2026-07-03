@@ -5,8 +5,8 @@ class AppConstants {
   static const String tagline =
       'Your daily spiritual toolkit — japa counter,\npanchang, and direction compass.';
 
-  static const int malaSize = 108;
-  static const int maxMantras = 3;
+  static const int defaultMalaSize = 108;
+  static const int maxMantras = 50;
 
   static const Duration antiSpamInterval = Duration(milliseconds: 300);
 
@@ -15,4 +15,6 @@ class AppConstants {
     'Ram',
     'Krishna',
   ];
+
+  static const List<int> malaSizePresents = [27, 54, 108, 1008];
 }

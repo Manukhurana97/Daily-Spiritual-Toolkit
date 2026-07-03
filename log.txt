@@ -1,69 +1,11 @@
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % flutter pub get
-Resolving dependencies...
-Downloading packages... (4.6s)
-+ _fe_analyzer_shared 99.0.0 (104.0.0 available)
-+ analyzer 12.1.0 (14.0.0 available)
-+ cli_config 0.2.0
-  cli_util 0.4.2 (0.5.1 available)
-+ convert 3.1.2
-+ coverage 1.15.1
-  csv 6.0.0 (8.0.0 available)
-+ ffi_leak_tracker 0.1.2
-> fl_chart 1.2.0 (was 0.70.2)
-> flutter_local_notifications 22.0.1 (was 18.0.1)
-> flutter_local_notifications_linux 8.0.1 (was 5.0.0)
-> flutter_local_notifications_platform_interface 12.0.0 (was 8.0.0)
-+ flutter_local_notifications_web 1.0.0
-+ flutter_local_notifications_windows 3.1.1
-> flutter_riverpod 3.3.2 (was 2.6.1)
-+ frontend_server_client 4.0.0
-  geolocator 14.0.2 (14.0.3 available)
-> geolocator_linux 0.2.6 (was 0.2.4)
-+ glob 2.1.3
-+ http_multi_server 3.2.2
-  image 4.8.0 (4.9.1 available)
-+ io 1.0.5
-  matcher 0.12.19 (0.12.20 available)
-  meta 1.18.0 (1.18.3 available)
-+ node_preamble 2.0.2
-  package_config 2.2.0 (3.0.0 available)
-> package_info_plus 10.2.0 (was 9.0.1)
-> package_info_plus_platform_interface 4.1.0 (was 3.2.1)
-> permission_handler 12.0.3 (was 11.4.0)
-> permission_handler_android 13.0.1 (was 12.1.0)
-+ pool 1.5.2
-> riverpod 3.3.2 (was 2.6.1)
-> share_plus 13.2.0 (was 10.1.4)
-> share_plus_platform_interface 7.1.0 (was 5.0.2)
-+ shelf 1.4.2
-+ shelf_packages_handler 3.0.2
-+ shelf_static 1.1.3
-+ shelf_web_socket 3.0.0
-+ source_map_stack_trace 2.1.2
-+ source_maps 0.10.13
-+ test 1.31.0 (1.31.2 available)
-  test_api 0.7.11 (0.7.13 available)
-+ test_core 0.6.17 (0.6.19 available)
-> timezone 0.11.1 (was 0.10.1)
-  vector_math 2.2.0 (2.4.0 available)
-+ watcher 1.2.1
-+ web_socket 1.0.1
-+ web_socket_channel 3.0.3
-+ webkit_inspection_protocol 1.2.1
-> win32 6.3.0 (was 5.15.0)
-  xml 6.6.1 (7.0.1 available)
-Changed 41 dependencies!
-14 packages have newer versions incompatible with dependency constraints.
-Try `flutter pub outdated` for more information.
 manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % flutter clean
 flutter pub get
 flutter run
-Deleting build...                                                    1ms
-Deleting .dart_tool...                                               1ms
+Deleting build...                                                    0ms
+Deleting .dart_tool...                                               0ms
 Deleting ephemeral...                                                0ms
 Deleting Generated.xcconfig...                                       0ms
 Deleting flutter_export_environment.sh...                            0ms
-Deleting ephemeral...                                                0ms
 Deleting ephemeral...                                                0ms
 Deleting ephemeral...                                                0ms
 Deleting .flutter-plugins-dependencies...                            0ms
@@ -87,14 +29,56 @@ Got dependencies!
 14 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
 Launching lib/main.dart on RMX3944 in debug mode...
-Upgrading gradle.properties
-Upgrading gradle.properties
+Checking the license for package NDK (Side by side) 21.1.6352462 in /Users/manu/Library/Android/sdk/licenses
+License for package NDK (Side by side) 21.1.6352462 accepted.
+Preparing "Install NDK (Side by side) 21.1.6352462 v.21.1.6352462".
+"Install NDK (Side by side) 21.1.6352462 v.21.1.6352462" ready.
+Installing NDK (Side by side) 21.1.6352462 in /Users/manu/Library/Android/sdk/ndk/21.1.6352462
+"Install NDK (Side by side) 21.1.6352462 v.21.1.6352462" complete.
+"Install NDK (Side by side) 21.1.6352462 v.21.1.6352462" finished.
+WARNING: Your Android app project: app located at: /Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/android/app/build.gradle.kts
+applies the Kotlin Gradle Plugin, which will cause build failures in future versions of Flutter.
+Please migrate your app to Built-in Kotlin using this guide: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers
+
+Checking the license for package Android SDK Build-Tools 35 in /Users/manu/Library/Android/sdk/licenses
+License for package Android SDK Build-Tools 35 accepted.
+Preparing "Install Android SDK Build-Tools 35 v.35.0.0".
+"Install Android SDK Build-Tools 35 v.35.0.0" ready.
+Installing Android SDK Build-Tools 35 in /Users/manu/Library/Android/sdk/build-tools/35.0.0
+"Install Android SDK Build-Tools 35 v.35.0.0" complete.
+"Install Android SDK Build-Tools 35 v.35.0.0" finished.
+[=========                              ] 25%
+[=========                              ] 25% Fetch remote repository...
+[=======================================] 100% Fetch remote repository...
+[=========                              ] 25%
+[=========                              ] 25% Fetch remote repository...
+[=======================================] 100% Fetch remote repository...
+[=========                              ] 25%
+[=========                              ] 25% Fetch remote repository...
+[=======================================] 100% Fetch remote repository...
+Checking the license for package Android SDK Platform 31 in /Users/manu/Library/Android/sdk/licenses
+License for package Android SDK Platform 31 accepted.
+Preparing "Install Android SDK Platform 31 (revision 1)".
+"Install Android SDK Platform 31 (revision 1)" ready.
+Installing Android SDK Platform 31 in /Users/manu/Library/Android/sdk/platforms/android-31
+"Install Android SDK Platform 31 (revision 1)" complete.
+"Install Android SDK Platform 31 (revision 1)" finished.
+[=========                              ] 25%
+[=========                              ] 25% Fetch remote repository...
+[=======================================] 100% Fetch remote repository...
 
 FAILURE: Build failed with an exception.
 
 * What went wrong:
-A problem occurred configuring project ':sweph'.
-> [CXX1101] NDK at /Users/manu/Library/Android/sdk/ndk/21.1.6352462 did not have a source.properties file
+Execution failed for task ':app:checkDebugAarMetadata'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckAarMetadataWorkAction
+   > An issue was found when checking AAR metadata:
+
+       1.  Dependency ':flutter_local_notifications' requires desugar_jdk_libs version to be
+           2.1.4 or above for :app, which is currently 2.0.4
+
+           See https://d.android.com/studio/build/library-desugaring for more
+           details.
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
@@ -102,13 +86,7 @@ A problem occurred configuring project ':sweph'.
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 30s
-Running Gradle task 'assembleDebug'...                             30.7s
-
-┌─ Flutter Fix ─────────────────────────────────────────────────────────────────────────────────────────────┐
-│     [!] This is likely due to a malformed download of the NDK.                                            │
-│     This can be fixed by deleting the local NDK copy at: /Users/manu/Library/Android/sdk/ndk/21.1.6352462 │
-│     and allowing the Android Gradle Plugin to automatically re-download it.                               │
-│                                                                                                           │
-└───────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+BUILD FAILED in 4m 34s
+Running Gradle task 'assembleDebug'...                            274.6s
 Error: Gradle task assembleDebug failed with exit code 1
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % `1234567890-`

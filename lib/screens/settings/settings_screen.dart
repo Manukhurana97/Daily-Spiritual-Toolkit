@@ -54,7 +54,7 @@ class SettingsScreen extends ConsumerWidget {
                     canDelete: japa.mantras.length > 1,
                     onSetDefault: () => settings.setDefaultMantraId(mantra.id),
                     onDelete: () => _confirmDelete(context, ref, mantra),
-                    onRename: () => _showRenameDialog(context, ref, mantra),
+                    onEdit: () => _showEditMantraDialog(context, ref, mantra),
                     isDark: isDark,
                   );
                 }),
@@ -93,6 +93,87 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+          // Japa Target
+          SectionCard(
+              title: 'Japa Target',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Mala Size',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: AppConstants.malaSizePresents.map((size) {
+                      final selected = settings.malaSize == size;
+                      return ChoiceChip(
+                          label: Text('$size'),
+                          selected: selected,
+                        onSelected: (_) {
+                            settings.setMalaSize(size);
+                            ref.read(japaProvider).updateTargets(malaSize: size, dailyGoal: settings.dailyGoal);
+                        },
+                        selectedColor: isDark ? AppColors.saffron.withValues(alpha: 0.2) : AppColors.saffronLight,
+                        side: BorderSide(color: selected ? AppColors.saffron : (isDark ? AppColors.darkDivider : AppColors.divider)),
+                        labelStyle: TextStyle(
+                          color: selected ? AppColors.saffron : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                          fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 16),
+                  Text (
+                      'Daily Goal',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    settings.dailyGoal > 0
+                        ? 'Target: ${settings.dailyGoal} japs per day'
+                        : 'No daily goal set',
+                    style: TextStyle(fontSize: 12, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      ...[0, 100, 500, 1000].map((goal) {
+                        final selected = settings.dailyGoal == goal;
+                        return Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: ChoiceChip(
+                                label: Text(goal == 0 ? 'Off' : '$goal'),
+                                selected: selected,
+                              onSelected: (_) {
+                                  settings.setDailyGoal(goal);
+                                  ref.read(japaProvider).updateTargets(malaSize: settings.malaSize, dailyGoal: goal);
+                              },
+                              selectedColor: isDark ? AppColors.teal.withValues(alpha: 0.2) : AppColors.tealLight,
+                              side: BorderSide(color: selected ? AppColors.teal : (isDark ? AppColors.darkDivider : AppColors.divider)),
+                              labelStyle: TextStyle(
+                                color: selected ? AppColors.teal : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                                fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
+                        );
+                      }),
+                    ],
+                  ),
+                ],
+              ),
           ),
 
           // ── Notifications ──
@@ -152,7 +233,7 @@ class SettingsScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(''
-                    'Play soothing sounds during japa. Tap the music icon teh japa screen to choose.',
+                    'Play soothing sounds during japa. Tap the music icon on the japa screen to choose.',
                   style: TextStyle(
                     fontSize: 13,
                     color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
@@ -355,59 +436,147 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showRenameDialog(BuildContext context, WidgetRef ref, Mantra mantra) {
-    final controller = TextEditingController(text: mantra.name);
+  void _showEditMantraDialog(BuildContext context, WidgetRef ref, Mantra mantra) {
+    final nameCtrl = TextEditingController(text: mantra.name);
+    final mantraCtrl = TextEditingController(text: mantra.actualMantra ?? '');
+    final dirCtrl = TextEditingController(text: mantra.targetDirection ?? '');
+
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Rename Mantra'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          textCapitalization: TextCapitalization.words,
-          decoration: const InputDecoration(hintText: 'Enter mantra name', border: OutlineInputBorder()),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              final name = controller.text.trim();
-              if (name.isNotEmpty) {
-                ref.read(japaProvider).renameMantra(mantra, name);
-              }
-              Navigator.pop(ctx);
-            },
-            child: const Text('Save'),
+      builder: (ctx) {
+        final isDark = Theme.of(ctx).brightness == Brightness.dark;
+        return AlertDialog(
+          title: const Text('Edit Mantra'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: nameCtrl,
+                  autofocus: true,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: InputDecoration(
+                    labelText: 'Mantra Name *',
+                    hintText: 'e.g Radha',
+                    border: const OutlineInputBorder(),
+                    labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                TextField(
+                  controller: dirCtrl,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: InputDecoration(
+                    labelText: 'Facing Direction',
+                    hintText: 'e.g East, West, North-east',
+                    border: const OutlineInputBorder(),
+                    helperText: 'Optional - direction to face during japa',
+                    helperMaxLines: 2,
+                    labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary)
+                  ),
+                )
+              ],
+            ),
           ),
-        ],
-      ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+                onPressed: () {
+                  final name = nameCtrl.text.trim();
+                  if (name.isEmpty) return;
+                  ref.read(japaProvider).updateMantraDetails(
+                      mantra.copyWith(
+                        name: name,
+                        actualMantra: mantraCtrl.text.trim().isEmpty ? null : mantraCtrl.text.trim(),
+                        targetDirection: dirCtrl.text.trim().isEmpty ? null : dirCtrl.text.trim(),
+                        clearActualMantra: mantraCtrl.text.trim().isEmpty,
+                        clearTargetDirection: dirCtrl.text.trim().isEmpty,
+                      )
+                  );
+                  Navigator.pop(ctx);
+                }, child: const Text('Save'),
+            ),
+          ],
+        );
+      }
     );
   }
 
   void _showAddMantraDialog(BuildContext context, WidgetRef ref) {
-    final controller = TextEditingController();
+    final nameCtrl = TextEditingController();
+    final mantraCtrl = TextEditingController();
+    final dirCtrl = TextEditingController();
+
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) {
+        final isDark = Theme.of(ctx).brightness == Brightness.dark;
+        return AlertDialog(
         title: const Text('Add Mantra'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          textCapitalization: TextCapitalization.words,
-          decoration: const InputDecoration(hintText: 'e.g. Om Namah Shivaya', border: OutlineInputBorder()),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameCtrl,
+                autofocus: true,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                    labelText: 'Mantra Name *',
+                    hintText: 'e.g. Om Namah Shivaya',
+                    border: const OutlineInputBorder(),
+                    labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                ),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: mantraCtrl,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: InputDecoration(
+                  labelText: 'Full Mantra Text',
+                  hintText: 'e.g/ Om Namah Bhagsvate Vasudevaya',
+                  labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                ),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: dirCtrl,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: 'Facing Direction',
+                  hintText: 'e.g East, West, North-East',
+                  helperText: 'Optional - direction to face during japa',
+                  helperMaxLines: 2,
+                  labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                ),
+              )
+            ],
+          ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           TextButton(
             onPressed: () {
-              final name = controller.text.trim();
-              ref.read(japaProvider).addMantra(name);
+              final name = nameCtrl.text.trim();
+              if (name.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating,)
+                );
+                return;
+              }
+              ref.read(japaProvider).addMantra(
+                name,
+                actualMantra: mantraCtrl.text.trim().isEmpty ? null: mantraCtrl.text.trim(),
+                targetDirection: dirCtrl.text.trim().isEmpty ? null: dirCtrl.text.trim(),
+              );
               Navigator.pop(ctx);
             },
             child: const Text('Add'),
           ),
         ],
-      ),
+      );
+      }
     );
   }
 }
@@ -420,7 +589,7 @@ class _MantraTile extends StatelessWidget {
   final bool canDelete;
   final VoidCallback onSetDefault;
   final VoidCallback onDelete;
-  final VoidCallback onRename;
+  final VoidCallback onEdit;
   final bool isDark;
 
   const _MantraTile({
@@ -431,7 +600,7 @@ class _MantraTile extends StatelessWidget {
     required this.canDelete,
     required this.onSetDefault,
     required this.onDelete,
-    required this.onRename,
+    required this.onEdit,
     required this.isDark,
   });
 
@@ -485,13 +654,13 @@ class _MantraTile extends StatelessWidget {
               onSelected: (action) {
                 switch (action) {
                   case 'default': onSetDefault();
-                  case 'rename': onRename();
+                  case 'edit': onEdit();
                   case 'delete': onDelete();
                 }
               },
               itemBuilder: (_) => [
                 if (!isDefault) const PopupMenuItem(value: 'default', child: Text('Set as Default')),
-                const PopupMenuItem(value: 'rename', child: Text('Rename')),
+                const PopupMenuItem(value: 'edit', child: Text('Edit')),
                 if (canDelete) const PopupMenuItem(value: 'delete', child: Text('Remove', style: TextStyle(color: Colors.red))),
               ],
               icon: const Icon(Icons.more_vert, size: 20),
