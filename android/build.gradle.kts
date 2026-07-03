@@ -19,6 +19,18 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+subprojects {
+    afterEvaluate {
+        if (extensions.findByName("android") != null) {
+            val androidExt = extensions.getByName("android")
+            if (androidExt is com.android.build.gradle.LibraryExtension) {
+                androidExt.ndkVersion = "28.2.12676358"
+            }
+        }
+    }
+}
+
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
