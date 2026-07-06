@@ -1,8 +1,8 @@
 package com.manukhurana.naam_jap
 
 import android.app.NotificationManager
-import android.context.Context
-import android.context.Intent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.view.KeyEvent
@@ -17,17 +17,17 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        volumnChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.manukhurana.naam_jap/volume")
+        volumeChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.manukhurana.naam_jap/volume")
         dndChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.manukhurana.naam_jap/dnd")
         dndChannel?.setMethodCallHandler { call, result ->
             val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             when(call.method) {
                 "hasPermission" -> {
-                    request.success(nm.isNotificationPolicyAccessGranted)
+                    result.success(nm.isNotificationPolicyAccessGranted)
                 }
                 "requestPermission" -> {
                     if (!nm.isNotificationPolicyAccessGranted) {
-                        val intent = Intent(Settings.ACTIOn_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+                        val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
                         startActivity(intent)
                     }
                     result.success(nm.isNotificationPolicyAccessGranted)
