@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/browser.dart';
+import 'package:timezone/timezone.dart';
 
 import '../models/panchang_data.dart';
 import '../services/panchang_calculator.dart';
