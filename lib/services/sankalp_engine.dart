@@ -5,9 +5,15 @@ import '../models/sankalp.dart';
 class SankalpEngine {
   final Sankalp sankalp;
   final int completedCount;
+  final int todayCount;
 
-  const SankalpEngine({required this.sankalp, required this.completedCount});
+  const SankalpEngine({
+    required this.sankalp,
+    required this.completedCount,
+    this.todayCount = 0,
+  });
 
+  bool get isDaily => sankalp.mode == SankalpMode.daily;
   int get remainingChants => max(0, sankalp.totalGoal - completedCount);
 
   int get remainingDays {
@@ -22,6 +28,9 @@ class SankalpEngine {
 
   int get dailyRequired => (remainingChants / remainingDays).ceil();
   int get dailyRequiredRounds => (dailyRequired / 108).ceil();
+  int get totalRemaining => isDaily ? max(0, dailyRequired - todayCount) : remainingChants;
+  bool get todayComplete => isDaily && todayCount >= dailyRequired;
+
   double get progressFraction => min(1.0, completedCount / sankalp.totalGoal);
   bool get isComplete => completedCount >= sankalp.totalGoal;
   bool get isOverdue => DateTime.now().isAfter(sankalp.endDate) && !isComplete;
@@ -37,4 +46,5 @@ class SankalpEngine {
     if (isOnTrack) return 'On Track';
     return 'Behind';
   }
+  String get modeLabel => isDaily ? 'Daily Target' : 'Flexible (One-shot OK)';
 }

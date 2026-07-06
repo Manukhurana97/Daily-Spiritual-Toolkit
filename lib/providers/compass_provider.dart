@@ -127,12 +127,21 @@ class CompassNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  double? _accuracy;
+  bool _calibrationDismissed = false;
+
+  double? get accuracy => _accuracy;
+  bool get isLowAccuracy => _accuracy != null && _accuracy! >= 0 && _accuracy! < 25;
+
   void _startListening() {
     _subscription = FlutterCompass.events?.listen((event) {
       if (event.heading != null) {
         _heading = event.heading;
-        final accuracy = event.accuracy;
-        _needsCalibration = accuracy != null && accuracy < 0;
+        _accuracy = event.accuracy;
+        final unreachable = _accuracy != null && _accuracy! < 0;
+        if (unreachable && !_calibrationDismissed) {
+          _needsCalibration = true;
+        }
         notifyListeners();
       }
     });
@@ -140,6 +149,7 @@ class CompassNotifier extends ChangeNotifier {
 
   void dismissCalibration() {
     _needsCalibration = false;
+    _calibrationDismissed = true;
     notifyListeners();
   }
 

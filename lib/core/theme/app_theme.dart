@@ -93,10 +93,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
       textTheme: const TextTheme(
@@ -191,7 +188,11 @@ class AppTheme {
         backgroundColor: AppColors.darkSurface,
         indicatorColor: AppColors.saffron.withValues(alpha: 0.2),
         labelTextStyle: WidgetStatePropertyAll(
-          const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.darkTextSecondary),
+          const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: AppColors.darkTextSecondary,
+          ),
         ),
         height: 72,
         elevation: 3,
@@ -206,10 +207,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
       textTheme: const TextTheme(

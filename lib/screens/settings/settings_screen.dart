@@ -1,6 +1,9 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
@@ -11,7 +14,6 @@ import '../../providers/settings_provider.dart';
 import '../../services/audio_service.dart';
 import '../../services/export_service.dart';
 import '../../services/notification_service.dart';
-import '../../screens/sankalp/sankalp_screen.dart';
 import '../../widgets/section_card.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -28,16 +30,6 @@ class SettingsScreen extends ConsumerWidget {
         padding: const EdgeInsets.only(bottom: 32),
         children: [
           const SizedBox(height: 16),
-
-          // Sankalp
-          _SettingsTile(
-            icon: Icons.auto_awesome_rounded,
-            title: 'Sankalp (Vow)',
-            subtitle: 'Set a chanting goal with deadline',
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SankalpScreen()),
-            ),
-          ),
 
           // ── Mantras Management ──
           SectionCard(
@@ -194,7 +186,7 @@ class SettingsScreen extends ConsumerWidget {
                       await NotificationService.requestPermission();
                       final sunrise = ref.read(panchangProvider).todaySunrise;
                       if (sunrise != null) {
-                        await NotificationService.scheduleBrahmaMuhurta(sunrise);
+                        await NotificationService.scheduleBrahmaMuhurta(sunrise, sound: settings.notifSound);
                       }
                     } else {
                       await NotificationService.cancelBrahmaMuhurta();
@@ -215,16 +207,55 @@ class SettingsScreen extends ConsumerWidget {
                       await NotificationService.requestPermission();
                       final sunset = ref.read(panchangProvider).todaySunset;
                       if (sunset != null) {
-                        await NotificationService.scheduleSandhyaKaal(sunset);
+                        await NotificationService.scheduleSandhyaKaal(sunset, sound: settings.notifSound);
                       }
                     } else {
                       await NotificationService.cancelSandhyaKaal();
                     }
                   },
                 ),
+
+                if(settings.brahmaMuhurtaNotif || settings.sandhyaKaalNotif) ...[
+                  const Divider(height: 4),
+                  _SettingRow(
+                      icon: Icons.music_note_rounded,
+                      title: 'Alarm sound',
+                      isDark: isDark,
+                      trailing: DropdownButton<String>(
+                          value: settings.notifSound,
+                          underline: const SizedBox(),
+                        isDense: true,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                        ),
+                        items: NotificationService.soundOptions.entries.map((e) {
+                          return DropdownMenuItem(value: e.key, child: Text(e.value));
+                        }).toList(),
+                        onChanged: (v) async {
+                            if (v == null) return;
+                            await settings.setNotifSound(v);
+                            // Reschedule with new sound
+                          final panchang = ref.read(panchangProvider);
+                          if (settings.brahmaMuhurtaNotif && panchang.todaySunrise != null) {
+                            await NotificationService.cancelBrahmaMuhurta();
+                            await NotificationService.scheduleBrahmaMuhurta(panchang.todaySunrise!, sound: v);
+                          }
+                          if (settings.sandhyaKaalNotif && panchang.todaySunset != null) {
+                            await NotificationService.cancelSandhyaKaal();
+                            await NotificationService.scheduleSandhyaKaal(panchang.todaySunset!, sound: v);
+                          }
+                        },
+                      ),
+                  ),
+                ],
               ],
             ),
           ),
+
+          // Sadhana Mode (DND
+          _SadhanaModeSetting(isDark: isDark),
 
           // ── Background Sound ──
           SectionCard(
@@ -891,6 +922,271 @@ class _AddMantraButton extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _SadhanaModeSetting extends ConsumerStatefulWidget {
+  final bool isDark;
+  const _SadhanaModeSetting({required this.isDark});
+
+  @override
+  ConsumerState<_SadhanaModeSetting> createState() => _SadhanaModeSec();
+}
+
+class _SadhanaModeSec extends ConsumerState<_SadhanaModeSetting> {
+  int _timerMinutes = 0; // 0 = no Timer
+
+  void _showIosFocusGuide(BuildContext context) {
+    final isDark = widget.isDark;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => Padding(
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40, height: 4,
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.white24 : Colors.black12,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Icon(Icons.do_not_disturb_on_rounded, size: 24, color: AppColors.saffron),
+                  const SizedBox(width: 10,),
+                  Text(
+                    'Enable Focus Mode on iPhone',
+                    style: TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.w700,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _iOSStep('1', 'Open iPhone Settings -> Focus', isDark),
+              _iOSStep('2', 'Tap "Do Not Disturb" or create a custom Focus', isDark),
+              _iOSStep('3', 'Turn it on before starting year sadhana', isDark),
+              _iOSStep('4', 'Or use Control Center - swipe down and tap the moon icon 🌙', isDark),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.teal.withValues(alpha: isDark ? 0.12 : 0.06),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.info_outline, size: 16, color: AppColors.teal),
+                    const SizedBox(width: 8),
+                    Expanded(
+                        child: Text(
+                          'iOS does not allow apps to control DND directly. '
+                              'Please use the build-in Focus Mode for a distraction-free experience. ',
+                          style: TextStyle(fontSize: 12, color: isDark ? Colors.white70 : Colors.black54),
+                        ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: const Text('Got it'),
+                ),
+              )
+            ],
+          ),
+      )
+    );
+  }
+
+  Widget _iOSStep(String num, String text, bool isDark) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 24, height: 24,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.saffron.withValues(alpha: 0.12),
+              shape: BoxShape.circle,
+            ),
+            child: Text(num, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.saffron)),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+              child: Text(
+                text, 
+                style: TextStyle(fontSize: 14, color: isDark ? Colors.white70 : Colors.black87),
+              ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    final sadhana = ref.watch(sadhanaModeProvider);
+    final isDark = widget.isDark;
+    
+    return SectionCard(
+      title: 'Sadhana Mode',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Silence all distractions during your spiritual practice.',
+            style: TextStyle(fontSize: 13, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+          ),
+          const SizedBox(height: 12),
+
+          // Active status banner
+          if (sadhana.isActive)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppColors.teal.withValues(alpha: isDark ? 0.15 : 0.08),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.teal.withValues(alpha: 0.3)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.self_improvement_rounded, size: 24, color: AppColors.teal),
+                  const SizedBox(width: 10,),
+                  Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Sadhana Mode Active',
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.teal),
+                          ),
+                          if (sadhana.timerDuration != null)
+                            Text(
+                              'Auto-off timer set',
+                              style: TextStyle(fontSize: 11, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                            ),
+                        ],
+                      ),
+                  ),
+                  TextButton(
+                      onPressed: () => sadhana.deactivate(),
+                      child: const Text('End', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600)),
+                  ),
+                ],
+              ),
+            ),
+
+          if (!sadhana.isActive) ...[
+            // Timer selection
+            Text(
+              'Auto-off Timer (optional)',
+              style: TextStyle(
+                fontSize: 13, fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [0, 30, 60, 90, 120].map((mins) {
+                final selected = _timerMinutes == mins;
+                return ChoiceChip(
+                    label: Text(mins == 0 ? 'Manual' : '$mins min'),
+                    selected: selected,
+                  onSelected: (_) => setState(() => _timerMinutes == mins),
+                  selectedColor: isDark ? AppColors.saffron.withValues(alpha: 0.2) : AppColors.saffronLight,
+                  side: BorderSide(
+                    color: selected ? AppColors.saffron : (isDark ? AppColors.darkDivider : AppColors.divider),
+                  ),
+                  labelStyle: TextStyle(
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                    color: selected ? AppColors.saffron : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    fontSize: 13,
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 14),
+
+            // Activate button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                  onPressed: () async {
+                    // On Android: check & request DND permission if needed
+                    if (Platform.isAndroid && !sadhana.hasAndroidDndPermission) {
+                      await sadhana.requestAndroidPermission();
+                    }
+                    // On iOS: show focus guide on first use
+                    if (Platform.isIOS && !sadhana.iosGuideShown) {
+                      sadhana.markIosGuideShown();
+                      if (context.mounted) _showIosFocusGuide(context);
+                    }
+                    final duration = _timerMinutes > 0 ? Duration(minutes: _timerMinutes) : null;
+                    sadhana.activate(duration: duration);
+                  },
+                icon: const Icon(Icons.self_improvement_rounded),
+                  label: Text(_timerMinutes > 0
+                  ? 'Start Sadhana Mode ($_timerMinutes min)'
+                      : 'Start Sadhana Mode'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  backgroundColor: AppColors.saffron,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+            ),
+
+            // Platform info
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.04),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Platform.isAndroid ? Icons.android_rounded : Icons.apple_rounded,
+                    size: 16,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                      child: Text(
+                        Platform.isAndroid
+                            ? 'Activates system Do Not Disturb - silences calls, messages & notifications,'
+                            : 'Tap a get a guide on enabling iOS Focus Mode for distraction-free practice.',
+                        style: TextStyle(fontSize: 11, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                      ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

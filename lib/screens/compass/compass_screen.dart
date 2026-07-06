@@ -95,6 +95,34 @@ class CompassScreen extends ConsumerWidget {
                   ),
                 ),
 
+              // Low accuracy warning banner
+              if (compass.isLowAccuracy)
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 0, 32, 8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isDark ? Colors.orange.shade900.withValues(alpha: 0.3) : Colors.orange.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.orange.shade300.withValues(alpha: 0.5)),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.warning_amber_rounded, size: 18, color: Colors.orange.shade700),
+                          const SizedBox(width: 10),
+                          Expanded(
+                              child: Text(
+                                'Low accuracy - move phone in figure-8 to calibrate',
+                                style: TextStyle(fontSize: 12, color: Colors.orange.shade700, fontWeight: FontWeight.w500),
+                              ),
+                          ),
+                          const SizedBox(width: 4),
+                          SizedBox(width: 24, height: 24, child: _Figure8Animation()),
+                        ],
+                      ),
+                    ),
+                ),
+
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
                 child: Container(

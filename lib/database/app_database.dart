@@ -19,7 +19,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE mantras (
@@ -49,6 +49,7 @@ class AppDatabase {
             end_date TEXT NOT NULL,
             created_at TEXT NOT NULL,
             completed_at TEXT,
+            mode TEXT NOT NULL DEFAULT 'daily',
             FOREIGN KEY (mantra_id) REFERENCES mantras(id)
           )
         ''');
@@ -66,9 +67,17 @@ class AppDatabase {
               end_date TEXT NOT NULL,
               created_at TEXT NOT NULL,
               completed_at TEXT,
+              mode TEXT NOT NULL DEFAULT 'daily',
               FOREIGN KEY (mantra_id) REFERENCES mantras(id)
             )
           ''');
+        }
+        if (oldVersion < 3) {
+          try {
+            await db.execute("ALTER TABLE sankalp ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily");
+          } catch(_) {
+            // column may already exist
+          }
         }
       },
     );
@@ -269,6 +278,17 @@ class AppDatabase {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  static Future<int> getCountForDate(int mantraId, DateTime date) async {
+    final db = await instance;
+    final startOfDay = DateTime(date.year, date.month, date.day).toIso8601String();
+    final endOfDay = DateTime(date.year, date.month, date.day, 23, 59, 59).toIso8601String();
+    final result = await db.rawQuery(
+      'SELECT COALESCE(SUM(count), 0) as total FROM japa_sessions WHERE mantra_id = ? AND started_at >= ? AND started_at <= ? ',
+      [mantraId, startOfDay, endOfDay],
+    );
+    return (result.first['total'] as int) ?? 0;
   }
 
   static Future<List<Sankalp>> getCompletedSankalps(int mantraId) async {

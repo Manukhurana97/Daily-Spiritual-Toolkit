@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nitya_sadhana/providers/settings_provider.dart';
 import 'package:nitya_sadhana/providers/stats_provider.dart';
+import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/widgets/section_card.dart';
 import 'package:nitya_sadhana/widgets/streak_chart.dart';
 
@@ -91,8 +92,12 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
 
     // Sync target settings on first build
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (japa.malaSize != settings.malaSize || japa.dailyGoal != settings.dailyGoal) {
-        japa.updateTargets(malaSize: settings.malaSize, dailyGoal: settings.dailyGoal);
+      if (japa.malaSize != settings.malaSize ||
+          japa.dailyGoal != settings.dailyGoal) {
+        japa.updateTargets(
+          malaSize: settings.malaSize,
+          dailyGoal: settings.dailyGoal,
+        );
       }
     });
 
@@ -105,114 +110,176 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
               children: [
                 Row(
                   children: [
-                    Expanded(child: _MantraSelector(japa: japa, isDark: isDark)),
+                    Expanded(
+                      child: _MantraSelector(japa: japa, isDark: isDark),
+                    ),
+                    _SadhanaModeChip(),
                     _AudioToggle(audio: audio),
                   ],
                 ),
 
-
-
-          // Direction hint
-          if (directionHint != null && directionHint.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.gold.withValues(alpha: isDark ? 0.2 : 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.explore_rounded, size: 16, color: AppColors.gold),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Face ${directionHint[0].toUpperCase()}${directionHint.substring(1)} for this mantra',
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.gold),
+                // Direction hint
+                if (directionHint != null && directionHint.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.gold.withValues(
+                          alpha: isDark ? 0.2 : 0.1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.explore_rounded,
+                            size: 16,
+                            color: AppColors.gold,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Face ${directionHint[0].toUpperCase()}${directionHint.substring(1)} for this mantra',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.gold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
 
-          // Counter Area with glow
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.42,
-            child: Center(
-              child: GestureDetector(
-                onTap: _onTap,
-                child: AnimatedBuilder(
-                  animation: _pulseAnimation,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _pulseAnimation.value,
-                      child: child,
-                    );
-                  },
-                  child: AnimatedBuilder(
-                    animation: _glowAnimation,
-                    builder: (context, child) {
-                      return _CounterOrb(
-                        count: malaProgress,
-                        total: malaSize,
-                        progress: progressFraction,
-                        completedMalas: japa.completedMala,
-                        glowIntensity: _glowAnimation.value,
-                        isDark: isDark,
-                      );
-                    },
+                // Counter Area with glow
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.42,
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: _onTap,
+                      child: AnimatedBuilder(
+                        animation: _pulseAnimation,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _pulseAnimation.value,
+                            child: child,
+                          );
+                        },
+                        child: AnimatedBuilder(
+                          animation: _glowAnimation,
+                          builder: (context, child) {
+                            return _CounterOrb(
+                              count: malaProgress,
+                              total: malaSize,
+                              progress: progressFraction,
+                              completedMalas: japa.completedMala,
+                              glowIntensity: _glowAnimation.value,
+                              isDark: isDark,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
 
-          // Actions
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (japa.hasSession) ...[
-                  _ActionChip(
-                    label: 'End Session',
-                    icon: Icons.stop_circle_outlined,
-                    color: AppColors.deepMaroon,
-                    onTap: () {
-                      japa.endSession();
-                      ref.read(audioServiceProvider).stop();
-                    },
+                // Actions
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (japa.hasSession) ...[
+                        _ActionChip(
+                          label: 'End Session',
+                          icon: Icons.stop_circle_outlined,
+                          color: AppColors.deepMaroon,
+                          onTap: () {
+                            japa.endSession();
+                            ref.read(audioServiceProvider).stop();
+                          },
+                        ),
+                        const SizedBox(width: 12),
+                      ],
+                      _ActionChip(
+                        label: 'Reset',
+                        icon: Icons.refresh_rounded,
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.textSecondary,
+                        onTap: () => japa.resetCounter(),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                ],
-                _ActionChip(
-                  label: 'Reset',
-                  icon: Icons.refresh_rounded,
-                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                  onTap: () => japa.resetCounter(),
                 ),
+                const SizedBox(height: 16),
+
+                // Daily Goal Progress
+                if (japa.dailyGoal > 0)
+                  _DailyGoalBar(
+                    current: japa.stats.todayCount,
+                    goal: japa.dailyGoal,
+                    isDark: isDark,
+                  ),
+
+                // Stats Row
+                _StatsRow(stats: japa.stats),
+                const SizedBox(height: 8),
+
+                // Streak & Weekly Chart
+                if (japa.activeMantra != null)
+                  _StreakSection(
+                    mantraId: japa.activeMantra!.id!,
+                    isDark: isDark,
+                  ),
+                const SizedBox(height: 16),
               ],
             ),
           ),
-          const SizedBox(height: 16),
-
-          // Daily Goal Progress
-          if (japa.dailyGoal > 0)
-            _DailyGoalBar(current: japa.stats.todayCount, goal: japa.dailyGoal, isDark: isDark,),
-
-          // Stats Row
-          _StatsRow(stats: japa.stats),
-          const SizedBox(height: 8),
-
-          // Streak & Weekly Chart
-          if (japa.activeMantra != null)
-            _StreakSection(mantraId: japa.activeMantra!.id!, isDark: isDark),
-          const SizedBox(height: 16),
-              ],
-            ),
-          )
         ],
+      ),
+    );
+  }
+}
+
+class _SadhanaModeChip extends ConsumerWidget {
+  const _SadhanaModeChip();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sadhana = ref.watch(sadhanaModeProvider);
+
+    return GestureDetector(
+      onTap: () {
+        if (sadhana.isActive) {
+          sadhana.deactivate();
+        } else {
+          sadhana.activate();
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 2),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          decoration: BoxDecoration(
+            color: sadhana.isActive
+                ? AppColors.teal.withValues(alpha: 0.15)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            sadhana.isActive
+                ? Icons.do_not_disturb_on_rounded
+                : Icons.do_not_disturb_off_rounded,
+            size: 22,
+            color: sadhana.isActive ? AppColors.teal : AppColors.textSecondary,
+          ),
+        ),
       ),
     );
   }
@@ -239,10 +306,19 @@ class _AudioToggle extends StatelessWidget {
       },
       itemBuilder: (_) => [
         const PopupMenuItem(value: SoundType.tanpura, child: Text('Tanpura')),
-        const PopupMenuItem(value: SoundType.templeBells, child: Text('Temple Bells')),
-        const PopupMenuItem(value: SoundType.river, child: Text('Flowing River')),
+        const PopupMenuItem(
+          value: SoundType.templeBells,
+          child: Text('Temple Bells'),
+        ),
+        const PopupMenuItem(
+          value: SoundType.river,
+          child: Text('Flowing River'),
+        ),
         if (audio.isPlaying)
-          const PopupMenuItem(value: null, child: Text('Stop', style: TextStyle(color: Colors.red))),
+          const PopupMenuItem(
+            value: null,
+            child: Text('Stop', style: TextStyle(color: Colors.red)),
+          ),
       ],
     );
   }
@@ -282,7 +358,9 @@ class _MantraSelector extends StatelessWidget {
               labelStyle: TextStyle(
                 color: isActive
                     ? AppColors.saffron
-                    : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    : (isDark
+                          ? AppColors.darkTextSecondary
+                          : AppColors.textSecondary),
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
               ),
             );
@@ -371,7 +449,9 @@ class _CounterOrb extends StatelessWidget {
                 ),
                 if (isNearComplete)
                   BoxShadow(
-                    color: AppColors.gold.withValues(alpha: glowIntensity * 0.3),
+                    color: AppColors.gold.withValues(
+                      alpha: glowIntensity * 0.3,
+                    ),
                     blurRadius: 40,
                     spreadRadius: 10,
                   ),
@@ -390,7 +470,9 @@ class _CounterOrb extends StatelessWidget {
                     style: TextStyle(
                       fontSize: size * 0.22,
                       fontWeight: FontWeight.w700,
-                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.textPrimary,
                       height: 1.1,
                     ),
                   ),
@@ -399,7 +481,9 @@ class _CounterOrb extends StatelessWidget {
                   'of $total',
                   style: TextStyle(
                     fontSize: 14,
-                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.textSecondary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -407,7 +491,10 @@ class _CounterOrb extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.saffron.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12),
@@ -480,14 +567,18 @@ class _DailyGoalBar extends StatelessWidget {
   final int goal;
   final bool isDark;
 
-  const _DailyGoalBar({required this.current, required this.goal, required this.isDark});
+  const _DailyGoalBar({
+    required this.current,
+    required this.goal,
+    required this.isDark,
+  });
 
   @override
   Widget build(BuildContext context) {
     final fraction = (current / goal).clamp(0.0, 1.0);
     final reached = current >= goal;
     return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -500,11 +591,16 @@ class _DailyGoalBar extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                  reached ? 'Daily goal reached!' : '$current / $goal today',
-                  style: TextStyle(
-                    fontSize: 13, fontWeight: FontWeight.w600,
-                    color: reached ? AppColors.gold : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
-                  ),
+                reached ? 'Daily goal reached!' : '$current / $goal today',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: reached
+                      ? AppColors.gold
+                      : (isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.textPrimary),
+                ),
               ),
             ],
           ),
@@ -514,11 +610,14 @@ class _DailyGoalBar extends StatelessWidget {
             child: LinearProgressIndicator(
               value: fraction,
               minHeight: 6,
-              backgroundColor: isDark ? AppColors.darkDivider : AppColors.divider,
-              valueColor: AlwaysStoppedAnimation((reached ? AppColors.gold : AppColors.teal),
+              backgroundColor: isDark
+                  ? AppColors.darkDivider
+                  : AppColors.divider,
+              valueColor: AlwaysStoppedAnimation(
+                (reached ? AppColors.gold : AppColors.teal),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -609,9 +708,8 @@ class _StreakSectionState extends ConsumerState<_StreakSection> {
     }
 
     return SectionCard(
-        title: 'Weekly Progress',
-        child: StreakChart(data: stats.weeklyData, streak: stats.currentStreak
-        ),
+      title: 'Weekly Progress',
+      child: StreakChart(data: stats.weeklyData, streak: stats.currentStreak),
     );
   }
 }

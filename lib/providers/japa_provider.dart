@@ -101,12 +101,16 @@ class JapaNotifier extends ChangeNotifier {
   }
 
   /// Returns true if the tap was accepted, false if throttled.
+  /// Anti-spam interval is dynamic: short naams allow fast tapping,
+  /// long mantras enforce a realistic pace.
   bool tap() {
     final now = DateTime.now();
 
     if (_lastTapTime != null) {
+      final mantraText = _activeMantra?.actualMantra ?? _activeMantra?.name ?? '';
+      final minInterval = AppConstants.antiSpanInterval(mantraText.length);
       final elapsed = now.difference(_lastTapTime!);
-      if (elapsed < AppConstants.antiSpamInterval) {
+      if (elapsed < minInterval) {
         return false;
       }
     }

@@ -14,6 +14,7 @@ class SettingsNotifier extends ChangeNotifier {
   static const _keySandhyaKaalNotif = 'notif_sandhya_kaal';
   static const _keyMalaSize = 'mala_size';
   static const _keyDailySize = 'daily_size';
+  static const _keyNotifSound = 'notif_sound';
 
   SharedPreferences? _prefs;
   int? _defaultMantraId;
@@ -23,6 +24,7 @@ class SettingsNotifier extends ChangeNotifier {
   bool _sandhyaKaalNotif = false;
   int _malaSize = 108;
   int _dailyGoal = 0;
+  String _notifSound = 'default';
   bool _isLoading = true;
 
   int? get defaultMantraId => _defaultMantraId;
@@ -32,6 +34,7 @@ class SettingsNotifier extends ChangeNotifier {
   bool get sandhyaKaalNotif => _sandhyaKaalNotif;
   int get malaSize => _malaSize;
   int get dailyGoal => _dailyGoal;
+  String get notifSound => _notifSound;
   bool get isLoading => _isLoading;
 
   Future<void> initialize() async {
@@ -53,6 +56,7 @@ class SettingsNotifier extends ChangeNotifier {
     _sandhyaKaalNotif = _prefs?.getBool(_keySandhyaKaalNotif) ?? false;
     _malaSize = _prefs?.getInt(_keyMalaSize) ?? 108;
     _dailyGoal = _prefs?.getInt(_keyDailySize) ?? 0;
+    _notifSound = _prefs?.getString(_keyNotifSound) ?? 'default';
     _isLoading = false;
     notifyListeners();
   }
@@ -105,6 +109,12 @@ class SettingsNotifier extends ChangeNotifier {
   Future<void> setDailyGoal(int goal) async {
     _dailyGoal = goal;
     await _prefs?.setInt(_keyDailySize, goal);
+    notifyListeners();
+  }
+
+  Future<void> setNotifSound(String sound) async {
+    _notifSound = sound;
+    await _prefs?.setString(_keyNotifSound, sound);
     notifyListeners();
   }
 }

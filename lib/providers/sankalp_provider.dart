@@ -29,7 +29,8 @@ class SankalpNotifier extends ChangeNotifier {
         mantraId,
         _activeSankalp!.startDate,
       );
-      _engine = SankalpEngine(sankalp: _activeSankalp!, completedCount: count);
+      final todayCount = await AppDatabase.getCountForDate(mantraId, DateTime.now());
+      _engine = SankalpEngine(sankalp: _activeSankalp!, completedCount: count, todayCount: todayCount);
 
       if (_engine!.isComplete && _activeSankalp!.completedAt == null) {
         await AppDatabase.completeSankalp(_activeSankalp!.id!);
@@ -48,6 +49,7 @@ class SankalpNotifier extends ChangeNotifier {
     required int totalGoal,
     required DateTime startDate,
     required DateTime endDate,
+    SankalpMode mode = SankalpMode.daily,
   }) async {
     final sankalp = Sankalp(
       mantraId: mantraId,
@@ -55,6 +57,7 @@ class SankalpNotifier extends ChangeNotifier {
       startDate: startDate,
       endDate: endDate,
       createdAt: DateTime.now(),
+      mode: mode,
     );
     await AppDatabase.insertSankalp(sankalp);
     await loadForMantra(mantraId);

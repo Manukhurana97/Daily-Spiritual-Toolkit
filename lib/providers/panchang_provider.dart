@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/browser.dart';
 
 import '../models/panchang_data.dart';
 import '../services/panchang_calculator.dart';
@@ -18,13 +22,14 @@ class PanchangNotifier extends ChangeNotifier {
   List<PanchangData> _days = [];
   bool _isLoading = true;
   String? _error;
-  bool _usingDefaultLocation = false;
+  LocationTier _locationTier = LocationTier.fallback;
 
   List<PanchangData> get days => _days;
   PanchangData? get today => _days.isNotEmpty ? _days[0] : null;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  bool get usingDefaultLocation => _usingDefaultLocation;
+  LocationTier get locationTier => _locationTier;
+  bool get usingDefaultLocation => _locationTier == LocationTier.fallback;
 
   Future<void> initialize() async {
     _isLoading = true;
@@ -33,21 +38,35 @@ class PanchangNotifier extends ChangeNotifier {
     try {
       await PanchangCalculator.init();
 
-      final position = await _getLocation();
-      final double lat;
-      final double lng;
-      final String? locationLabel;
+      double lat;
+      double lng;
+      double alt;
+      String? locationLabel;
 
+      // Fallback chain: GPS -> IP geolocation -> New Delhi default
+      final position = await _getGpsLocation();
       if (position != null) {
         lat = position.latitude;
         lng = position.longitude;
+        alt = position.altitude.clamp(0, 9000);
         locationLabel = null;
-        _usingDefaultLocation = false;
+        _locationTier = LocationTier.gps;
       } else {
-        lat = _defaultLat;
-        lng = _defaultLng;
-        locationLabel = _defaultCity;
-        _usingDefaultLocation = true;
+        // Try IP-based geolocation
+        final ipLoc = await _getIpLocation();
+        if (ipLoc != null) {
+          lat = ipLoc['lat'] as double;
+          lng = ipLoc['lng'] as double;
+          alt = 0; // IP geolocation doesn't provide altitude
+          locationLabel = ipLoc['city'] as String?;
+          _locationTier = LocationTier.ip;
+        } else {
+          lat = _defaultLat;
+          lng = _defaultLng;
+          alt = 216; // New Delhi avg elevation
+          locationLabel = _defaultCity;
+          _locationTier = LocationTier.fallback;
+        }
       }
 
       final now = DateTime.now();
@@ -55,12 +74,12 @@ class PanchangNotifier extends ChangeNotifier {
 
       _days = List.generate(7, (i) {
         final date = DateTime(now.year, now.month, now.day).add(Duration(days: i));
-        final result = PanchangCalculator.calculate(date, lat, lng);
+        final result = PanchangCalculator.calculate(date, lat, lng, alt);
         if (i == 0) {
           _todaySunrise = result.sunrise;
           _todaySunset = result.sunset;
         }
-        return _resultToData(result, date, timeFormat, locationLabel);
+        return _resultToData(result, date, timeFormat, locationLabel, _locationTier);
       });
       _error = null;
     } catch (e) {
@@ -87,6 +106,7 @@ class PanchangNotifier extends ChangeNotifier {
     DateTime date,
     DateFormat timeFormat,
     String? locationLabel,
+    LocationTier tier,
   ) {
     String? brahmaMuhurta;
     if (result.sunrise != null) {
@@ -118,13 +138,18 @@ class PanchangNotifier extends ChangeNotifier {
       moonSign: result.moonSign,
       rahuKaalStart: result.rahuKaal != null ? timeFormat.format(result.rahuKaal!.start) : null,
       rahuKaalEnd: result.rahuKaal != null ? timeFormat.format(result.rahuKaal!.end) : null,
+      gulikaKaalStart: result.gulikaKaal != null ? timeFormat.format(result.gulikaKaal!.start) : null,
+      gulikaKaalEnd: result.gulikaKaal != null ? timeFormat.format(result.gulikaKaal!.end) : null,
+      abhijitMahurtaStart: result.abhijitMuhurta != null ? timeFormat.format(result.abhijitMuhurta!.start) : null,
+      abhijitMahurtaEnd: result.abhijitMuhurta != null ? timeFormat.format(result.abhijitMuhurta!.end) : null,
       auspiciousNote: _generateNote(result, brahmaMuhurta: brahmaMuhurta),
       locationLabel: locationLabel,
       brahmaMuhurta: brahmaMuhurta,
+      accuracyTier: tier,
     );
   }
 
-  Future<Position?> _getLocation() async {
+  Future<Position?> _getGpsLocation() async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) return null;
@@ -138,12 +163,34 @@ class PanchangNotifier extends ChangeNotifier {
 
       return await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.low,
+          accuracy: LocationAccuracy.high,
           timeLimit: Duration(seconds: 10),
         ),
       );
     } catch (e) {
-      debugPrint('Location error: $e');
+      debugPrint('GPS Location error: $e');
+      return null;
+    }
+  }
+
+  /// IP-based geolocation fallback - no permission needed.
+  /// Returns {lat, lng, city} or null if offline/failed.
+  Future<Map<String, dynamic>?> _getIpLocation() async {
+    try {
+      final client = HttpClient();
+      client.connectionTimeout = const Duration(seconds: 5);
+      final request = await client.getUrl(Uri.parse('http://ip.api.com/json/?fields=status,city,lat,lon'));
+      final response = await request.close().timeout(const Duration(seconds: 5));
+      if (response.statusCode != 200) return null;
+      final body = await response.transform(utf8.decoder).join();
+      final json = jsonDecode(body) as Map<String, dynamic>;
+      if (json['status'] != 'success') return null;
+      final lat = (json['lat'] as num?)?.toDouble();
+      final lng = (json['lng'] as num?)?.toDouble();
+      if (lat == null || lng == null) return null;
+      return {'lat': lat, 'lng': lng, 'city': json['city'] as String? ?? 'Unknown'};
+    } catch (e) {
+      debugPrint('IP geolocation error: $e');
       return null;
     }
   }
@@ -174,6 +221,11 @@ class PanchangNotifier extends ChangeNotifier {
       notes.add("Guruvar — ideal for learning and guru's blessings.");
     } else if (vara.contains('saturday')) {
       notes.add('Shanivar — chant protective mantras for Shani.');
+    }
+
+    if (result.abhijitMuhurta != null) {
+      final tf = DateFormat('hh:mm a');
+      notes.add('Abhijit Muhurta: ${tf.format(result.abhijitMuhurta!.start)} - ${tf.format(result.abhijitMuhurta!.end)}) (always auspicious).');
     }
 
     if (notes.isEmpty) {

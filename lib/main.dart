@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 
 import 'app.dart';
 import 'providers/japa_provider.dart';
@@ -17,6 +18,7 @@ final appInitializedProvider = FutureProvider<bool>((ref) {
     await ref.read(japaProvider).initialize();
     await ref.read(panchangProvider).initialize();
     ref.read(compassProvider).initialize();
+    await ref.read(sadhanaModeProvider).initialize();
     return true;
   });
 });

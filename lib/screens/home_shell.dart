@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nitya_sadhana/screens/sankalp/sankalp_screen.dart';
 
 import '../core/theme/app_theme.dart';
 import 'japa/japa_screen.dart';
@@ -16,12 +17,13 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _currentIndex = 0;
 
-  static const _titles = ['Japa', 'Panchang', 'Compass', 'Settings'];
+  static const _titles = ['Japa', 'Panchang', 'Compass', 'Sankalp', 'Settings'];
 
   static const _screens = [
     JapaScreen(),
     PanchangScreen(),
     CompassScreen(),
+    SankalpScreen(),
     SettingsScreen(),
   ];
 
@@ -55,6 +57,11 @@ class _HomeShellState extends State<HomeShell> {
             icon: Icon(Icons.explore_outlined),
             selectedIcon: Icon(Icons.explore_rounded, color: AppColors.saffron),
             label: 'Compass',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.auto_awesome_outlined),
+            selectedIcon: Icon(Icons.auto_awesome_rounded, color: AppColors.saffron),
+            label: 'Sankalp',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),

@@ -39,9 +39,9 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   static const _assets = {
-    SoundType.tanpura: 'audio/tanpura.mp3',
-    SoundType.templeBells: 'audio/temple_bells.mp3',
-    SoundType.river: 'audio/river.mp3',
+    SoundType.tanpura: 'sounds/Tanpura.mp3',
+    SoundType.templeBells: 'sounds/TempleBell.mp3',
+    SoundType.river: 'sounds/FlowingRiver.mp3',
   };
 
   Future<void> play(SoundType sound) async {

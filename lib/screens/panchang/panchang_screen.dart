@@ -52,7 +52,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                 _DateHeader(
                   data: data,
                   isToday: _selectedIndex == 0,
-                  usingDefault: panchang.usingDefaultLocation,
+                  tier: data.accuracyTier,
                 ),
 
                 // Panchang Details
@@ -173,6 +173,106 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> {
                         ),
                       ],
                     ),
+                  ),
+
+                // Gulika Kaal
+                if (data.gulikaKaalStart != null && data.gulikaKaalEnd != null)
+                  SectionCard(
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: isDark ? Colors.orange.shade900.withValues(alpha: 0.3) : Colors.orange.shade50,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(
+                              Icons.do_not_disturb_on_outlined,
+                              color: isDark ? Colors.orange.shade300 : Colors.orange.shade700,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Gulika kaal',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: isDark ? Colors.orange.shade300 : Colors.orange.shade700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '${data.gulikaKaalStart} - ${data.gulikaKaalEnd}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                                    ),
+                                  )
+                                ],
+                              )
+                          )
+                        ],
+                      ),
+                  ),
+
+                // Abhijit Muhurta
+                if (data.abhijitMahurtaStart != null && data.abhijitMahurtaEnd != null)
+                  SectionCard(
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: isDark ? Colors.green.shade900.withValues(alpha: 0.3) : Colors.green.shade50,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(
+                              Icons.auto_awesome,
+                              color: isDark ? Colors.green.shade300 : Colors.green.shade700,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Abhijit Mahurta',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: isDark ? Colors.green.shade300 : Colors.green.shade700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '${data.abhijitMahurtaStart} - ${data.abhijitMahurtaEnd}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    'Always auspicious - ideal for important activities',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                                    ),
+                                  )
+                                ],
+                              )
+                          )
+                        ],
+                      )
                   ),
 
                 // Zodiac Signs
@@ -348,13 +448,154 @@ class _DaySelector extends StatelessWidget {
 class _DateHeader extends StatelessWidget {
   final PanchangData data;
   final bool isToday;
-  final bool usingDefault;
+  final LocationTier tier;
 
   const _DateHeader({
     required this.data,
     required this.isToday,
-    required this.usingDefault,
+    required this.tier,
   });
+
+  void _showAccuracyInfo(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    String tierLabel;
+    String tierDesc;
+    String accuracy;
+    IconData tierIcon;
+    Color tierColor;
+
+    switch (tier) {
+      case LocationTier.gps:
+        tierLabel = 'GPS Location';
+        tierDesc = 'Using your device\'s precise GPS coordinates and altitude.';
+        accuracy = '±5-15 seconds';
+        tierIcon = Icons.gps_fixed;
+        tierColor = Colors.green;
+        break;
+      case LocationTier.ip:
+        tierLabel = 'IP-Based Location';
+        tierDesc = 'GPS was unavailable. Using approximate location from your internet connection (city-level).';
+        accuracy = '±1-3 minutes';
+        tierIcon = Icons.wifi;
+        tierColor = Colors.orange;
+        break;
+      case LocationTier.fallback:
+        tierLabel = 'Default Location (New Delhi)';
+        tierDesc = 'Could not determine your location. Showing panchang for New Delhi. Enable location access for accurate results';
+        accuracy = 'May differ significantly';
+        tierIcon = Icons.location_off;
+        tierColor = Colors.red;
+        break;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => Padding(
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40, height: 4,
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.white24 : Colors.black12,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Icon(tierIcon, color: tierColor, size: 28),
+                const SizedBox(width: 12),
+                Text(
+                  'Panchang Accuracy',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _AccuracyInfoRow(
+              label: 'Location Source',
+              value: tierLabel,
+              valueColor: tierColor,
+              isDark: isDark,
+            ),
+            const SizedBox(height: 8),
+            _AccuracyInfoRow(
+              label: 'Time Accuracy',
+              value: tierLabel,
+              valueColor: tierColor,
+              isDark: isDark,
+            ),
+            if (data.locationLabel != null) ...[
+              const SizedBox(height: 8),
+              _AccuracyInfoRow(
+                label: 'Location',
+                value: data.locationLabel!,
+                isDark: isDark,
+              ),
+            ],
+            const SizedBox(height: 16),
+            Text(
+              tierDesc,
+              style: TextStyle(
+                fontSize: 13,
+                color: isDark ? Colors.white54 : Colors.black54,
+                height: 1.4
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: isDark ? Colors.white10 : Colors.grey.shade200,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Powered by Swiss Ephemeris',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white70 : Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Same astronomical engine used by professional astrologers worldwide. '
+                        'Lahiri Ayanamsa (Indian national standard). '
+                        'Moon parallax correction for your exact position.',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: isDark ? Colors.white38 : Colors.black38,
+                      height: 1.4,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -388,9 +629,11 @@ class _DateHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              if (usingDefault && data.locationLabel != null)
+              // Location clip
+              if (data.locationLabel != null)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  margin: const EdgeInsets.only(right: 6),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(10),
@@ -411,6 +654,27 @@ class _DateHeader extends StatelessWidget {
                     ],
                   ),
                 ),
+
+              // Accuracy info button
+              GestureDetector(
+                onTap: () => _showAccuracyInfo(context),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    shape: BoxShape.circle
+                  ),
+                  child: Icon(
+                    Icons.info_outline,
+                    size: 16,
+                    color: tier == LocationTier.gps
+                      ? Colors.greenAccent.shade100
+                        : tier == LocationTier.ip
+                      ? Colors.orangeAccent.shade100
+                        : Colors.redAccent.shade100,
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 4),
@@ -441,6 +705,44 @@ class _DateHeader extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _AccuracyInfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color? valueColor;
+  final bool isDark;
+
+  const _AccuracyInfoRow({
+    required this.label,
+    required this.value,
+    this.valueColor,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            color: isDark ? Colors.white54 : Colors.black54,
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: valueColor ?? (isDark ? Colors.white : Colors.black87),
+          ),
+        )
+      ],
     );
   }
 }
@@ -548,7 +850,7 @@ class _PanchangDetailTile extends StatelessWidget {
                 if (nextValue != null) ...[
                   const SizedBox(height: 2),
                   Text(
-                    nextValue!,
+                    'then $nextValue',
                     style: TextStyle(
                       fontSize: 13,
                       color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,

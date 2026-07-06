@@ -1,3 +1,9 @@
+enum LocationTier {
+  gps, // GPS/device location - ±5-15 sec accuracy
+  ip, // IP-based geolocation - ±1-3 min accuracy
+  fallback, // Default city (New Delhi) - may differ significantly
+}
+
 class PanchangData {
   final String date;
   final String tithi;
@@ -22,9 +28,14 @@ class PanchangData {
   final String moonSign;
   final String? rahuKaalStart;
   final String? rahuKaalEnd;
+  final String? gulikaKaalStart;
+  final String? gulikaKaalEnd;
+  final String? abhijitMahurtaStart;
+  final String? abhijitMahurtaEnd;
   final String auspiciousNote;
   final String? locationLabel;
   final String? brahmaMuhurta;
+  final LocationTier accuracyTier;
 
   const PanchangData({
     required this.date,
@@ -50,9 +61,14 @@ class PanchangData {
     required this.moonSign,
     this.rahuKaalStart,
     this.rahuKaalEnd,
+    this.gulikaKaalStart,
+    this.gulikaKaalEnd,
+    this.abhijitMahurtaStart,
+    this.abhijitMahurtaEnd,
     required this.auspiciousNote,
     this.locationLabel,
     this.brahmaMuhurta,
+    this.accuracyTier = LocationTier.fallback,
   });
 
   static PanchangData placeholder(String date, {String? locationLabel}) =>
@@ -70,7 +86,9 @@ class PanchangData {
         moonPhase: '—',
         sunSign: '—',
         moonSign: '—',
-        auspiciousNote: 'Could not calculate panchang. Please enable location access.',
+        auspiciousNote:
+            'Could not calculate panchang. Please enable location access.',
         locationLabel: locationLabel,
+        accuracyTier: LocationTier.fallback,
       );
 }
