@@ -82,6 +82,42 @@ class CompassNotifier extends ChangeNotifier {
     return diff <= 15 || diff >= 345;
   }
 
+  /// Convert direction name to degrees ()=N, 90=E, etc.)
+  static double? directionToDegress(String? direction) {
+    if (direction == null) return null;
+    final d = direction.trim().toLowerCase();
+    return switch (d) {
+      'north' || 'n' => 0,
+      'north-east' || 'northeast' || 'ne' => 45,
+      'east' || 'e'=> 90,
+      'south-east' || 'southeast' || 'se' => 135,
+      'south' || 's' => 180,
+      'south-west' || 'southwest' || 'sw' => 225,
+      'west' || 'w' => 270,
+      'north-west' || 'northwest' || 'nw' => 315,
+      _ => null,
+    };
+  }
+
+  /// Returns guidance string if user is NOT facing the target direction(±15°)
+  /// Returns null if facing correctly or compass unavailable
+  String? directionGuidance(String? targetDirection) {
+    if (_heading == null || targetDirection == null) return null;
+    final targetDeg = directionToDegress(targetDirection);
+    if(targetDeg == null) return null;
+    // Shorted angular difference
+    double diff = targetDeg - _heading!;
+    if (diff > 180) diff -= 360;
+    if (diff <- 180) diff += 360;
+    if (diff.abs() <= 15) return null; //correctly facing
+    return diff > 0 ? "Turn right ⤴" : "Turn Left ⤵";
+  }
+
+  /// Whether user is facing targetDirection with ±15°
+  bool isFacingDirection(String? targetDirection) {
+    return directionGuidance(targetDirection) == null && _heading != null && targetDirection != null;
+  }
+
   void setUserLocation(double lat, double lng) {
     _userLat = lat;
     _userLng = lng;
@@ -141,6 +177,8 @@ class CompassNotifier extends ChangeNotifier {
         final unreachable = _accuracy != null && _accuracy! < 0;
         if (unreachable && !_calibrationDismissed) {
           _needsCalibration = true;
+        } else if (!unreachable && _needsCalibration) {
+          _needsCalibration = false;
         }
         notifyListeners();
       }

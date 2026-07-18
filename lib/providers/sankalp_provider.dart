@@ -13,11 +13,17 @@ class SankalpNotifier extends ChangeNotifier {
   SankalpEngine? _engine;
   Sankalp? _activeSankalp;
   bool _isLoading = false;
+  List<Sankalp> _history = [];
+  Set<int> _sankalpMantraIds = {};
 
   SankalpEngine? get engine => _engine;
   Sankalp? get activeSankalp => _activeSankalp;
   bool get isLoading => _isLoading;
   bool get hasActiveSankalp => _activeSankalp != null && !(_engine?.isComplete ?? false);
+  List<Sankalp> get hisotry => _history;
+  Set<int> get sankalpMantraIds => _sankalpMantraIds;
+
+  bool mantraHasSankalp(int mantraId) => _sankalpMantraIds.contains(mantraId);
 
   Future<void> loadForMantra(int mantraId) async {
     _isLoading = true;
@@ -44,6 +50,22 @@ class SankalpNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadHistory() async {
+    _history = await AppDatabase.getSankalpHistory();
+    notifyListeners();
+  }
+
+  Future<void> loadSankalpMantraIds(List<int> mantraIds) async {
+    final ids = <int>{};
+    for (final id in mantraIds) {
+      if (await AppDatabase.hasActiveSankalpForMantra(id)) {
+        ids.add(id);
+      }
+    }
+    _sankalpMantraIds = ids;
+    notifyListeners();
+  }
+
   Future<void> createSankalp({
     required int mantraId,
     required int totalGoal,
@@ -60,7 +82,19 @@ class SankalpNotifier extends ChangeNotifier {
       mode: mode,
     );
     await AppDatabase.insertSankalp(sankalp);
+    _sankalpMantraIds.add(mantraId);
     await loadForMantra(mantraId);
+  }
+
+  Future<void> cancelSankalp() async {
+    if (_activeSankalp == null) return;
+    await AppDatabase.cancelSankalp(_activeSankalp!.id!);
+    final mantraid = _activeSankalp!.mantraId;
+    _activeSankalp = null;
+    _engine = null;
+    _sankalpMantraIds.remove(mantraid);
+    await loadHistory();
+    notifyListeners();
   }
 
   Future<void> refresh(int mantraId) async {

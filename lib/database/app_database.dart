@@ -19,7 +19,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE mantras (
@@ -49,6 +49,7 @@ class AppDatabase {
             end_date TEXT NOT NULL,
             created_at TEXT NOT NULL,
             completed_at TEXT,
+            canceled_at TEXT,
             mode TEXT NOT NULL DEFAULT 'daily',
             FOREIGN KEY (mantra_id) REFERENCES mantras(id)
           )
@@ -75,6 +76,13 @@ class AppDatabase {
         if (oldVersion < 3) {
           try {
             await db.execute("ALTER TABLE sankalp ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily");
+          } catch(_) {
+            // column may already exist
+          }
+        }
+        if (oldVersion < 4) {
+          try {
+            await db.execute("ALTER TABLE sankalp ADD COLUMN canceled_at TEXT");
           } catch(_) {
             // column may already exist
           }
@@ -261,7 +269,7 @@ class AppDatabase {
     final db = await instance;
     final rows = await db.query(
       'sankalps',
-      where: 'mantra_id = ? AND completed_at IS NULL',
+      where: 'mantra_id = ? AND completed_at IS NULL  AND canceled_at IS NULL',
       whereArgs: [mantraId],
       orderBy: 'created_at DESC',
       limit: 1,
@@ -289,6 +297,22 @@ class AppDatabase {
       [mantraId, startOfDay, endOfDay],
     );
     return (result.first['total'] as int) ?? 0;
+  }
+
+  static Future<void> cancelSankalp(int id) async {
+    final db = await instance;
+    await db.update('sankalp', {'canceled_at': DateTime.now().toIso8601String()}, where: 'id = ?', whereArgs: [id]);
+  }
+  static Future<List<Sankalp>> getSankalpHistory() async {
+    final db = await instance;
+    final rows = await db.query('sankalp', where: 'completed_at NOT NULL OR canceled_at IS NOT NULL', orderBy: 'COALESCE(completed_at, canceled_at) DESC',);
+    return rows.map(Sankalp.fromMap).toList();
+  }
+
+  static Future<bool> hasActiveSankalpForMantra(int mantraId) async {
+    final db = await instance;
+    final rows = await db.query("sanlaps", where: 'mantra_id = ? and completed_at IS NOT NULL AND canceled_at IS NULL', whereArgs: [mantraId], limit: 1);
+    return rows.isNotEmpty;
   }
 
   static Future<List<Sankalp>> getCompletedSankalps(int mantraId) async {

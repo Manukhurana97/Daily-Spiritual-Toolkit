@@ -495,6 +495,18 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 14),
                 TextField(
+                  controller: mantraCtrl,
+                  textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                      labelText: 'Description / Actual Mantra',
+                      hintText: 'e.g Full mantra text or notes',
+                      border: const OutlineInputBorder(),
+                      helperText: 'optional - full text or description',
+                      helperMaxLines: 2,
+                    ),
+                ),
+                const SizedBox(height: 14),
+                TextField(
                   controller: dirCtrl,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/providers/japa_provider.dart';
+import 'package:nitya_sadhana/providers/sankalp_provider.dart';
 import 'package:nitya_sadhana/screens/sankalp/sankalp_screen.dart';
 
 import '../core/theme/app_theme.dart';
@@ -7,14 +10,14 @@ import 'panchang/panchang_screen.dart';
 import 'compass/compass_screen.dart';
 import 'settings/settings_screen.dart';
 
-class HomeShell extends StatefulWidget {
+class HomeShell extends ConsumerStatefulWidget {
   const HomeShell({super.key});
 
   @override
-  State<HomeShell> createState() => _HomeShellState();
+  ConsumerState<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends State<HomeShell> {
+class _HomeShellState extends ConsumerState<HomeShell> {
   int _currentIndex = 0;
 
   static const _titles = ['Japa', 'Panchang', 'Compass', 'Sankalp', 'Settings'];
@@ -41,6 +44,24 @@ class _HomeShellState extends State<HomeShell> {
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() => _currentIndex = index);
+          if (index == 3) {
+            final mantra = ref.read(japaProvider).activeMantra;
+            if (mantra != null) {
+              if (mantra != null) {
+                ref.read(sankalpProvider).loadForMantra(mantra.id!);
+              }
+              ref.read(sankalpProvider).loadHistory();
+            }
+            if (index == 0) {
+              // Refresh sankalp badges when remaining to japa
+              final mantras = ref.read(japaProvider).mantras;
+              if (mantras.isNotEmpty) {
+                ref.read(sankalpProvider).loadSankalpMantraIds(
+                  mantras.where((m) => m.id != null).map((m) => m.id!).toList(),
+                );
+              }
+            }
+          }
         },
         destinations: const [
           NavigationDestination(

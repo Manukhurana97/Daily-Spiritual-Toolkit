@@ -8,6 +8,7 @@ class Sankalp {
   final DateTime endDate;
   final DateTime createdAt;
   final DateTime? completedAt;
+  final DateTime? canceledAt;
   final SankalpMode mode;
 
   const Sankalp({
@@ -18,10 +19,13 @@ class Sankalp {
     required this.endDate,
     required this.createdAt,
     this.completedAt,
+    this.canceledAt,
     this.mode = SankalpMode.daily,
   });
 
   bool get isComplete => completedAt != null;
+  bool get isCanceled => canceledAt != null;
+  bool get isActive => !isComplete & !isCanceled;
   int get totalDays => endDate.difference(startDate).inDays + 1;
 
   Map<String, dynamic> toMap() => {
@@ -45,10 +49,13 @@ class Sankalp {
     completedAt: map['completed_at'] != null
         ? DateTime.parse(map['completed_at'] as String)
         : null,
+    canceledAt: map['canceled_at'] != null
+        ? DateTime.parse(map['canceled_at'] as String)
+        : null,
     mode: map['mode'] == 'flexible' ? SankalpMode.flexible : SankalpMode.daily,
   );
 
-  Sankalp copyWith({DateTime? completedAt}) => Sankalp(
+  Sankalp copyWith({DateTime? completedAt, DateTime? canceledAt}) => Sankalp(
     id: id,
     mantraId: mantraId,
     totalGoal: totalGoal,
@@ -56,6 +63,7 @@ class Sankalp {
     endDate: endDate,
     createdAt: createdAt,
     completedAt: completedAt ?? this.completedAt,
+    canceledAt: canceledAt ?? this.canceledAt,
     mode: mode,
   );
 }

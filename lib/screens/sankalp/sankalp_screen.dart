@@ -33,7 +33,32 @@ class _SankalpScreenState extends ConsumerState<SankalpScreen> {
       if (mantra != null) {
         ref.read(sankalpProvider).loadForMantra(mantra.id!);
       }
+      ref.read(sankalpProvider).loadHistory();
     });
+  }
+
+  void _confirmCancel(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Cancel Sankalp?'),
+          content: const Text('This action cannot be undone. The sankalp will be marked as canceled in your history.'),
+          actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text("Keep going")
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    ref.read(sankalpProvider).cancelSankalp();
+                  },
+                  style: TextButton.styleFrom(foregroundColor: Colors.red),
+                  child: const Text("Cancel Sankalp")
+              ),
+          ],
+        )
+    );
   }
 
   @override
@@ -42,6 +67,12 @@ class _SankalpScreenState extends ConsumerState<SankalpScreen> {
     final sankalp = ref.watch(sankalpProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    if (sankalp.isLoading) {
+      return const SafeArea(child: Center(child: CircularProgressIndicator()));
+    }
+
+    final mantraName = sankalp.engine != null ? japa.mantras.where((m) => m.id == sankalp.engine!.sankalp.mantraId).map((m) => m.name).firstOrNull ?? 'Mantra' : '';
+
     return SafeArea(
       child: sankalp.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -49,12 +80,10 @@ class _SankalpScreenState extends ConsumerState<SankalpScreen> {
           ? _SankalpProgress(
               engine: sankalp.engine!,
               isDark: isDark,
-              mantraName:
-                  japa.mantras
-                      .where((m) => m.id == sankalp.engine!.sankalp.mantraId)
-                      .map((m) => m.name)
-                      .firstOrNull ??
-                  'Mantra',
+              mantraName: mantraName,
+              onCancel: () => _confirmCancel(context),
+              history: sankalp.hisotry,
+      allMantras: japa.mantras,
             )
           : _CreateSankalpForm(
               mantras: japa.mantras,
@@ -77,6 +106,8 @@ class _SankalpScreenState extends ConsumerState<SankalpScreen> {
                       mode: mode,
                     );
               },
+              history: sankalp.hisotry,
+              allMantra: japa.mantras,
             ),
     );
   }
@@ -86,11 +117,17 @@ class _SankalpProgress extends StatefulWidget {
   final SankalpEngine engine;
   final bool isDark;
   final String mantraName;
+  final VoidCallback onCancel;
+  final List<Sankalp> history;
+  final List<Mantra> allMantras;
 
   const _SankalpProgress({
     required this.engine,
     required this.isDark,
     required this.mantraName,
+    required this.onCancel,
+    required this.history,
+    required this.allMantras,
   });
 
   @override
@@ -103,6 +140,9 @@ class _SankalpProgressState extends State<_SankalpProgress> {
 
   SankalpEngine get engine => widget.engine;
   bool get isDark => widget.isDark;
+  bool get isFlexible => !engine.isDaily;
+
+  String _mantraNameForId(int id) => widget.allMantras.where((m) => m.id == id).map((m) => m.name).firstOrNull ?? 'Mantra';
 
   Future<void> _shareCertificate() async {
     setState(() => _isSharing = true);
@@ -122,7 +162,7 @@ class _SankalpProgressState extends State<_SankalpProgress> {
           files: [XFile(file.path)],
           subject: 'Sankalp Complete - Nitya Sadhana',
           text:
-              'I completed my Sankalp of ${NumberFormat('#,##,###').format(engine.sankalp.totalGoal)} chants! 🙏',
+              'I completed my Sankalp of ${NumberFormat('#,##,###').format(engine.sankalp.totalGoal)} chants of ${widget.mantraName}! 🙏 \n\n- via Nitya Sadhana',
         ),
       );
     } catch (e) {
@@ -167,34 +207,6 @@ class _SankalpProgressState extends State<_SankalpProgress> {
             ),
           ),
         ),
-        const SizedBox(height: 16),
-
-        // Progress ring
-        Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: AppColors.saffron.withValues(alpha: isDark ? 0.15 : 0.08),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.auto_awesome, size: 16, color: AppColors.saffron),
-                const SizedBox(width: 8),
-                Text(
-                  widget.mantraName,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.saffron,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
         const SizedBox(height: 16),
 
         // Progress ring
@@ -253,16 +265,51 @@ class _SankalpProgressState extends State<_SankalpProgress> {
         ),
         const SizedBox(height: 24),
 
+        // --- Completion Certificate ---
         if (engine.isComplete) ...[
           RepaintBoundary(
             key: _shareKey,
             child: Container(
               color: isDark ? AppColors.darkBg : AppColors.cream,
-              child: SectionCard(
+              padding: const EdgeInsets.all(4),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.darkCard : Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: AppColors.gold.withValues(alpha: 0.4),
+                    width: 2,
+                  )
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
                 child: Column(
                   children: [
+                    // App branding
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.spa_outlined, size: 40, color: AppColors.saffron),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Nitya Sadhana',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.saffron,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      width: 60,
+                      height: 1,
+                      color: AppColors.gold.withValues(alpha: 0.3),
+                    ),
+                    const SizedBox(height: 4),
                     const Icon(
-                      Icons.celebration_rounded,
+                      Icons.emoji_events_rounded,
                       size: 48,
                       color: AppColors.gold,
                     ),
@@ -270,41 +317,75 @@ class _SankalpProgressState extends State<_SankalpProgress> {
                     Text(
                       'Sankalp Complete!',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.w700,
                         color: isDark
                             ? AppColors.darkTextPrimary
                             : AppColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'You have fulfilled your vow. May your devotion bring blessings.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: isDark
-                            ? AppColors.darkTextSecondary
-                            : AppColors.textSecondary,
+                        letterSpacing: 0.3,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '${numberFormat.format(engine.sankalp.totalGoal)} chants Complete',
+                      widget.mantraName,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.saffron,
+                        color: AppColors.saffron
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 6),
                     Text(
-                      '${dateFormat.format(engine.sankalp.startDate)} - ${dateFormat.format(engine.sankalp.endDate)}',
+                      'You have fulfilled your vow. \nMay your devotion bring blessings.',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
+                        height: 1.5,
                         color: isDark
                             ? AppColors.darkTextSecondary
                             : AppColors.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.gold.withValues(alpha: isDark ? 0.15 : 0.08),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '${numberFormat.format(engine.sankalp.totalGoal)} chants',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.gold,
+                        ),
+                      ),
+                    ),
+                    if (!isFlexible) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        '${dateFormat.format(engine.sankalp.startDate)} - ${dateFormat.format(engine.sankalp.endDate)}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isDark
+                              ? AppColors.darkTextSecondary
+                              : AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 12),
+                    Container(
+                      width: 60,
+                      height: 1,
+                      color: AppColors.gold.withValues(alpha: 0.3),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      isFlexible ? 'Flexible Mode' : '${engine.sankalp.totalDays} Day Commitment',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -317,7 +398,7 @@ class _SankalpProgressState extends State<_SankalpProgress> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: OutlinedButton.icon(
-              label: Text(_isSharing ? 'Preparing...' : 'Shared Achievement'),
+              label: Text(_isSharing ? 'Preparing...' : 'Share Achievement'),
               onPressed: _isSharing ? null : _shareCertificate,
               icon: _isSharing
                   ? const SizedBox(
@@ -338,36 +419,7 @@ class _SankalpProgressState extends State<_SankalpProgress> {
           ),
         ],
 
-        if (!engine.isComplete) ...[
-          // Daily target card
-          SectionCard(
-            title: 'Daily Target',
-            child: Row(
-              children: [
-                Expanded(
-                  child: _StatTile(
-                    label: 'Rounds Today',
-                    value: '${engine.dailyRequiredRounds}',
-                    sub: '${numberFormat.format(engine.dailyRequired)} japs',
-                    color: AppColors.saffron,
-                    isDark: isDark,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _StatTile(
-                    label: 'Days Left',
-                    value: '${engine.remainingDays}',
-                    sub: 'of ${engine.sankalp.totalDays}',
-                    color: AppColors.teal,
-                    isDark: isDark,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-
+        // --- Active Sankalp Details ---
         if (!engine.isComplete) ...[
           // Mode badge
           Padding(
@@ -407,8 +459,8 @@ class _SankalpProgressState extends State<_SankalpProgress> {
           ),
 
           const SizedBox(height: 8),
-          // Today's progress (daily mode)
-          if (engine.isDaily) ...[
+          // Daily target card (always show for daily, simplified for flexible
+          if (engine.isDaily)
             SectionCard(
               title: "Today's Progress",
               child: Column(
@@ -479,29 +531,36 @@ class _SankalpProgressState extends State<_SankalpProgress> {
                 ],
               ),
             ),
-          ],
 
-          // Overall target card
-          SectionCard(
-            title: engine.isDaily ? 'Overall Target' : 'Target',
-            child: Row(
-              children: [
-                if (!engine.isDaily) ...[
+          // Days left card
+          if (engine.isDaily)
+            SectionCard(
+              title: 'Timeline',
+              child: Row(
+                children: [
                   Expanded(
-                    child: _StatTile(
-                      label: 'Rounds Needed',
-                      value: '${engine.dailyRequiredRounds}',
-                      sub:
-                          '${numberFormat.format(engine.dailyRequired)} japs/day',
-                      color: AppColors.saffron,
-                      isDark: isDark,
-                    ),
+                      child: _StatTile(
+                          label: 'Days Left',
+                          value: '${engine.remainingDays}',
+                          sub: 'of ${engine.sankalp.totalDays}',
+                          color: AppColors.teal,
+                          isDark: isDark
+                      )
                   ),
+
                   const SizedBox(width: 12),
+                    Expanded(
+                      child: _StatTile(
+                        label: 'Rounds/Days',
+                        value: '${engine.dailyRequiredRounds}',
+                        sub: '${numberFormat.format(engine.dailyRequired)} japs',
+                        color: AppColors.saffron,
+                        isDark: isDark,
+                      ),
+                    ),
                 ],
-              ],
+              ),
             ),
-          ),
         ],
 
         // Progress stats
@@ -530,25 +589,69 @@ class _SankalpProgressState extends State<_SankalpProgress> {
           ),
         ),
 
-        // Dates
-        SectionCard(
-          title: 'Duration',
-          child: Column(
-            children: [
-              _ProgressRow(
-                label: 'Start',
-                value: dateFormat.format(engine.sankalp.startDate),
-                isDark: isDark,
-              ),
-              const Divider(height: 16),
-              _ProgressRow(
-                label: 'End',
-                value: dateFormat.format(engine.sankalp.endDate),
-                isDark: isDark,
-              ),
-            ],
+        // Duration (hide for flexible)
+        if(engine.isDaily)
+          SectionCard(
+            title: 'Duration',
+            child: Column(
+              children: [
+                _ProgressRow(
+                  label: 'Start',
+                  value: dateFormat.format(engine.sankalp.startDate),
+                  isDark: isDark,
+                ),
+                const Divider(height: 16),
+                _ProgressRow(
+                  label: 'End',
+                  value: dateFormat.format(engine.sankalp.endDate),
+                  isDark: isDark,
+                ),
+              ],
+            ),
           ),
-        ),
+
+        // Cancel button (only for active / not completed)
+        if (!engine.isComplete) ...[
+          const SizedBox(height: 8),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: OutlinedButton.icon(
+                  onPressed: widget.onCancel,
+                  label: const Text('Cancel Sankalp'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.red,
+                  side: const BorderSide(color: Colors.red),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+          ),
+        ],
+
+        // History Section
+        if (widget.history.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'Sankalp History',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8,),
+          ...widget.history.map((s) => _HistoryTile(
+              sankalp: s,
+              mantraName: _mantraNameForId(s.mantraId),
+              isDark: isDark,
+            )
+          )
+        ]
       ],
     );
   }
@@ -649,6 +752,106 @@ class _ProgressRow extends StatelessWidget {
   }
 }
 
+class _HistoryTile extends StatelessWidget {
+  final Sankalp sankalp;
+  final String mantraName;
+  final bool isDark;
+  final bool noHorizontalMargin;
+
+  const _HistoryTile({
+    required this.sankalp,
+    required this.mantraName,
+    required this.isDark,
+    this.noHorizontalMargin = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final numberFormat = NumberFormat('#,##,###');
+    final dateFormat = DateFormat('d MMM yy');
+    final isCanceled = sankalp.isCanceled;
+    final statusColor = isCanceled ? Colors.red : AppColors.teal;
+    final statusIcon = isCanceled ? Icons.cancel_rounded : Icons.check_circle_rounded;
+    final statusText = isCanceled ? 'Canceled' : 'Completed';
+    final isFlexible = sankalp.mode == SankalpMode.flexible;
+    final finishDate = isCanceled ? sankalp.canceledAt : sankalp.completedAt;
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: noHorizontalMargin ? 0: 16, vertical: 6),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark ? AppColors.darkDivider : AppColors.divider,
+          width: 0.5,
+        )
+      ),
+      child: Row(
+        children: [
+          Icon(statusIcon, size: 28, color: statusColor,),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  mantraName,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 2,),
+                Text(
+                  '${numberFormat.format(sankalp.totalGoal)} chants . ${isFlexible ? 'Flexible' : '${sankalp.totalDays}  days'}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: statusColor.withValues(alpha: isDark ? 0.15: 0.08),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  statusText,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: statusColor,
+                  ),
+                ),
+              ),
+
+              if (finishDate != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  dateFormat.format(finishDate),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                  ),
+                )
+              ]
+            ],
+          )
+
+        ],
+      )
+    );
+  }
+}
+
 class _CreateSankalpForm extends StatefulWidget {
   final List<Mantra> mantras;
   final Mantra? activeMantra;
@@ -662,12 +865,16 @@ class _CreateSankalpForm extends StatefulWidget {
     SankalpMode mode,
   )
   onSubmit;
+  final List<Sankalp> history;
+  final List<Mantra> allMantra;
 
   const _CreateSankalpForm({
     required this.mantras,
     required this.activeMantra,
     required this.onAddMantra,
     required this.onSubmit,
+    required this.history,
+    required this.allMantra,
   });
 
   @override
@@ -744,7 +951,7 @@ class _CreateSankalpFormState extends State<_CreateSankalpForm> {
             ),
             const SizedBox(height: 16),
             TextField(
-              controller: mantraCtrl,
+              controller: nameCtrl,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: 'Short Name',
@@ -941,86 +1148,87 @@ class _CreateSankalpFormState extends State<_CreateSankalpForm> {
           ),
         ),
 
-        const SizedBox(height: 24),
-        Text(
-          'Duration (days)',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Slider(
-          value: _durationDays.toDouble(),
-          min: 7,
-          max: 120,
-          divisions: 113,
-          label: '$_durationDays days',
-          activeColor: AppColors.saffron,
-          onChanged: (v) => setState(() => _durationDays = v.round()),
-        ),
-        Text(
-          '$_durationDays days',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-          ),
-        ),
-
-        const SizedBox(height: 8),
-        Builder(
-          builder: (_) {
-            final goal = int.tryParse(_goalController.text) ?? 0;
-            final dailyNeeded = goal > 0 ? (goal / _durationDays).ceil() : 0;
-            final roundsNeeded = (dailyNeeded / 108).ceil();
-            return Text(
-              'You will need ~$roundsNeeded rounds ($dailyNeeded japs) per day',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
-                color: isDark
-                    ? AppColors.darkTextSecondary
-                    : AppColors.textSecondary,
-              ),
-            );
-          },
-        ),
-
-        // Mode selector
+        // Mode selector (placed BEFORE duration so we know if flexible)
         const SizedBox(height: 24),
         Text(
           'Completion Mode',
           style: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w600,
             color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
         ),
         const SizedBox(height: 8),
         _ModeOption(
-          title: 'Daily Target',
-          subtitle:
-              'Must complete a fixed amount each day. Progress is tracked daily',
-          icon: Icons.calendar_today_rounded,
-          selected: _mode == SankalpMode.daily,
-          color: AppColors.teal,
-          isDark: isDark,
-          onTap: () => setState(() => _mode = SankalpMode.daily),
+            title: 'Daily target',
+            subtitle: 'Must complete a fixed amount each day, Progress is tracked daily',
+            icon: Icons.calendar_today_rounded,
+            selected: _mode == SankalpMode.daily,
+            color: AppColors.teal,
+            isDark: isDark,
+            onTap: () => setState(() => _mode = SankalpMode.daily),
         ),
         const SizedBox(height: 8),
         _ModeOption(
-          title: 'Flexible (One-shot OK)',
-          subtitle:
-              'Complete at your own pace, You can finish the entire goal in one setting.',
-          icon: Icons.bolt_rounded,
-          selected: _mode == SankalpMode.flexible,
-          color: AppColors.saffron,
-          isDark: isDark,
-          onTap: () => setState(() => _mode = SankalpMode.flexible),
+            title: 'Flexible (One-shot OK)',
+            subtitle: 'Complete at your own pace, You can finish the entire goal in one settins',
+            icon: Icons.bolt_rounded,
+            selected: _mode == SankalpMode.flexible,
+            color: AppColors.saffron,
+            isDark: isDark,
+            onTap: () => setState(() => _mode = SankalpMode.flexible),
+
         ),
+
+        // Duration - only show for daily mode
+        if(_mode == SankalpMode.daily) ...[
+          const SizedBox(height: 24),
+          Text(
+            'Duration (days)',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Slider(
+            value: _durationDays.toDouble(),
+            min: 1,
+            max: 365,
+            divisions: 113,
+            label: '$_durationDays days',
+            activeColor: AppColors.saffron,
+            onChanged: (v) => setState(() => _durationDays = v.round()),
+          ),
+          Text(
+            '$_durationDays days',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+            ),
+          ),
+
+          const SizedBox(height: 8),
+          Builder(
+            builder: (_) {
+              final goal = int.tryParse(_goalController.text) ?? 0;
+              final dailyNeeded = goal > 0 ? (goal / _durationDays).ceil() : 0;
+              final roundsNeeded = (dailyNeeded / 108).ceil();
+              return Text(
+                'You will need ~$roundsNeeded rounds ($dailyNeeded japs) per day',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.textSecondary,
+                ),
+              );
+            },
+          ),
+        ],
 
         const SizedBox(height: 32),
         ElevatedButton(
@@ -1029,11 +1237,33 @@ class _CreateSankalpFormState extends State<_CreateSankalpForm> {
             final goal = int.tryParse(_goalController.text);
             if (goal == null || goal <= 0) return;
             final start = DateTime.now();
-            final end = start.add(Duration(days: max(1, _durationDays - 1)));
+            final end = _mode == SankalpMode.flexible
+             ? start.add(Duration(days: max(1, _durationDays - 1)))
+            : start.add(Duration(days: max(1, _durationDays - 1)));
             widget.onSubmit(_selectedMantra!.id!, goal, start, end, _mode);
           },
           child: const Text('Begin Sankalp'),
         ),
+
+        // History Section
+        if (widget.history.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          Text(
+            'Sankalp History',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          ...widget.history.map((s) => _HistoryTile(
+              sankalp: s,
+            mantraName: widget.allMantra.where((m) => m.id == s.mantraId).map((m) => m.name).firstOrNull ?? 'Mantra',
+            isDark: isDark,
+            noHorizontalMargin: true,
+          ))
+        ]
       ],
     );
   }

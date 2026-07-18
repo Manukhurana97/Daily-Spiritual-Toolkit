@@ -143,11 +143,14 @@ class PanchangCalculator {
     RiseSetTransitFlag rsmi,
   ) {
     try {
+      final localMidnight = DateTime(date.year, date.month, date.day);
+      final utc = localMidnight.toUtc();
+      final utcHour = utc.hour + utc.minute / 60.0 + utc.second / 3600.0;
       final jdStart = Sweph.swe_julday(
-        date.year,
-        date.month,
-        date.day,
-        0,
+        utc.year,
+        utc.month,
+        utc.day,
+        utcHour,
         CalendarType.SE_GREG_CAL,
       );
       final geoPos = GeoPosition(lng, lat, alt);
@@ -522,7 +525,7 @@ class PanchangCalculator {
     DateTime? sunset,
   ) {
     if (sunrise == null || sunset == null) return null;
-    final dayMs = sunrise.difference(sunrise).inMilliseconds;
+    final dayMs = sunset.difference(sunrise).inMilliseconds;
     final muhurata = dayMs ~/ 15; // 15 muhurtas in daytime
     final start = sunrise.add(Duration(milliseconds: 7 * muhurata));
     return AbhijitMuhurta(

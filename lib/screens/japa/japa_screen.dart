@@ -253,31 +253,40 @@ class _SadhanaModeChip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sadhana = ref.watch(sadhanaModeProvider);
 
-    return GestureDetector(
-      onTap: () {
-        if (sadhana.isActive) {
-          sadhana.deactivate();
-        } else {
-          sadhana.activate();
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(right: 2),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          decoration: BoxDecoration(
-            color: sadhana.isActive
-                ? AppColors.teal.withValues(alpha: 0.15)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            sadhana.isActive
-                ? Icons.do_not_disturb_on_rounded
-                : Icons.do_not_disturb_off_rounded,
-            size: 22,
-            color: sadhana.isActive ? AppColors.teal : AppColors.textSecondary,
+    return Tooltip(
+      message: sadhana.isActive ? 'Turn off sadhana Mode' : 'Sadhana Mode (DND)',
+      child: GestureDetector(
+        onTap: () {
+          if (sadhana.isActive) {
+            sadhana.deactivate();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Sadhana Mode off'), duration: Duration(seconds: 1), behavior: SnackBarBehavior.floating),
+            );
+          } else {
+            sadhana.activate();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Sadhana Mode on - notification silenced'), duration: Duration(seconds: 1), behavior: SnackBarBehavior.floating),
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(right: 2),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            decoration: BoxDecoration(
+              color: sadhana.isActive
+                  ? AppColors.teal.withValues(alpha: 0.15)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              sadhana.isActive
+                  ? Icons.do_not_disturb_on_rounded
+                  : Icons.do_not_disturb_off_rounded,
+              size: 22,
+              color: sadhana.isActive ? AppColors.teal : AppColors.textSecondary,
+            ),
           ),
         ),
       ),
@@ -696,7 +705,9 @@ class _StreakSectionState extends ConsumerState<_StreakSection> {
   void didUpdateWidget(covariant _StreakSection old) {
     super.didUpdateWidget(old);
     if (old.mantraId != widget.mantraId) {
-      ref.read(statsProvider).loadForMantra(widget.mantraId);
+      Future.microtask(() {
+        ref.read(statsProvider).loadForMantra(widget.mantraId);
+      });
     }
   }
 
