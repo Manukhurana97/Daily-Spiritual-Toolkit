@@ -4,6 +4,9 @@ class Mantra {
   final String? actualMantra;
   final String? targetDirection;
   final DateTime createdAt;
+  final int? tapSpeedMs;
+  final double? avgTapMs;
+  final int tapSampleCount;
 
   const Mantra({
     this.id,
@@ -11,6 +14,9 @@ class Mantra {
     this.actualMantra,
     this.targetDirection,
     required this.createdAt,
+    this.tapSpeedMs,
+    this.avgTapMs,
+    this.tapSampleCount = 0
   });
 
   Map<String, dynamic> toMap() => {
@@ -19,6 +25,9 @@ class Mantra {
         'actual_mantra': actualMantra,
         'target_direction': targetDirection,
         'created_at': createdAt.toIso8601String(),
+        'tap_speed_ms': tapSpeedMs,
+        'avg_tap_Ms': avgTapMs,
+        'tap_sample_count': tapSampleCount
       };
 
   factory Mantra.fromMap(Map<String, dynamic> map) => Mantra(
@@ -27,6 +36,9 @@ class Mantra {
         actualMantra: map['actual_mantra'] as String?,
         targetDirection: map['target_direction'] as String?,
         createdAt: DateTime.parse(map['created_at'] as String),
+        tapSpeedMs: map['tap_speed_ms'] as int?,
+        avgTapMs: (map['avg_tap_ms'] as num?)?.toDouble(),
+        tapSampleCount: (map['tap_sample_count'] as int?) ?? 0,
       );
 
   Mantra copyWith({
@@ -35,8 +47,12 @@ class Mantra {
     String? actualMantra,
     String? targetDirection,
     DateTime? createdAt,
+    int? tapSpeedMs,
+    double? avgTapMS,
+    int? tapSampleCount,
     bool clearActualMantra = false,
     bool clearTargetDirection = false,
+    bool clearTapSpeed = false,
   }) =>
       Mantra(
         id: id ?? this.id,
@@ -44,6 +60,9 @@ class Mantra {
         actualMantra: clearActualMantra ? null : (actualMantra ?? this.actualMantra),
         targetDirection: clearTargetDirection ? null : (targetDirection ?? this.targetDirection),
         createdAt: createdAt ?? this.createdAt,
+        tapSpeedMs: clearTapSpeed ? null : (tapSpeedMs ?? this.tapSpeedMs),
+        avgTapMs: avgTapMs ?? this.avgTapMs,
+        tapSampleCount: tapSampleCount ?? this.tapSampleCount,
       );
 
   @override

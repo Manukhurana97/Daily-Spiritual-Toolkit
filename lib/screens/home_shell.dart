@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nitya_sadhana/providers/japa_provider.dart';
-import 'package:nitya_sadhana/providers/sankalp_provider.dart';
+import 'package:nitya_sadhana/providers/panchang_provider.dart';
 import 'package:nitya_sadhana/screens/sankalp/sankalp_screen.dart';
 
 import '../core/theme/app_theme.dart';
+import '../providers/japa_provider.dart';
+import '../providers/sankalp_provider.dart';
 import 'japa/japa_screen.dart';
 import 'panchang/panchang_screen.dart';
 import 'compass/compass_screen.dart';
@@ -44,22 +45,25 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() => _currentIndex = index);
+          if (index == 1) {
+            ref.read(panchangProvider).refreshIfNeeded();
+          }
           if (index == 3) {
-            final mantra = ref.read(japaProvider).activeMantra;
+            final mantra = ref
+                .read(japaProvider)
+                .activeMantra;
             if (mantra != null) {
-              if (mantra != null) {
-                ref.read(sankalpProvider).loadForMantra(mantra.id!);
-              }
-              ref.read(sankalpProvider).loadHistory();
+              ref.read(sankalpProvider).loadForMantra(mantra.id!);
             }
-            if (index == 0) {
-              // Refresh sankalp badges when remaining to japa
-              final mantras = ref.read(japaProvider).mantras;
-              if (mantras.isNotEmpty) {
-                ref.read(sankalpProvider).loadSankalpMantraIds(
-                  mantras.where((m) => m.id != null).map((m) => m.id!).toList(),
-                );
-              }
+            ref.read(sankalpProvider).loadHistory();
+          }
+          if (index == 0) {
+            // Refresh sankalp badges when remaining to japa
+            final mantras = ref.read(japaProvider).mantras;
+            if (mantras.isNotEmpty) {
+              ref.read(sankalpProvider).loadSankalpMantraIds(
+                mantras.where((m) => m.id != null).map((m) => m.id!).toList(),
+              );
             }
           }
         },

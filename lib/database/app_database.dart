@@ -19,7 +19,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE mantras (
@@ -27,7 +27,11 @@ class AppDatabase {
             name TEXT NOT NULL,
             actual_mantra TEXT,
             target_direction TEXT,
-            created_at TEXT NOT NULL
+            created_at TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            tap_speed_ms INTEGER,
+            auv_tap_ms = REAL,
+            tap_sample_count Integer NOT NULL DEFAULT 0
           )
         ''');
         await db.execute('''
@@ -75,16 +79,25 @@ class AppDatabase {
         }
         if (oldVersion < 3) {
           try {
-            await db.execute("ALTER TABLE sankalp ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily");
+            await db.execute("ALTER TABLE sankalps ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily");
           } catch(_) {
             // column may already exist
           }
         }
         if (oldVersion < 4) {
           try {
-            await db.execute("ALTER TABLE sankalp ADD COLUMN canceled_at TEXT");
+            await db.execute("ALTER TABLE sankalps ADD COLUMN canceled_at TEXT");
           } catch(_) {
             // column may already exist
+          }
+        }
+        if (oldVersion < 5) {
+          try {
+            await db.execute('ALTER TABLE mantra ADD COLUMN tap_speed_ms INTEGER');
+            await db.execute('ALTER TABLE mantra ADD COLUMN avg_tap_ms REAL');
+            await db.execute('ALTER TABLE mantra ADD COLUMN tap_sample_count INTEGER NOT NULL DEFAULT 0');
+          } catch (_) {
+
           }
         }
       },
@@ -130,6 +143,21 @@ class AppDatabase {
   static Future<void> updateMantraFull(Mantra mantra) async {
     final db = await instance;
     await db.update('mantras', mantra.toMap(), where: 'id = ?', whereArgs: [mantra.id]);
+  }
+
+  static Future<void> updateMantraAdaptiveStats(int mantraId, double avgTapMs, int tapSampleCount) async {
+    final db = await instance;
+    await db.update('mantra', {
+      'avg_tap_ms': avgTapMs,
+      'tap_sample_count': tapSampleCount,
+    }, where: 'id = ?', whereArgs: [mantraId]);
+  }
+
+  static Future<void> updateMantraTapSpeed(int mantraId, int? tapSpeedMs) async {
+    final db = await instance;
+    await db.update('mantra', {
+      'tap_speed_ms': tapSpeedMs,
+    }, where: 'id = ?', whereArgs: [mantraId]);
   }
 
   // ── Japa Sessions ──
@@ -296,22 +324,22 @@ class AppDatabase {
       'SELECT COALESCE(SUM(count), 0) as total FROM japa_sessions WHERE mantra_id = ? AND started_at >= ? AND started_at <= ? ',
       [mantraId, startOfDay, endOfDay],
     );
-    return (result.first['total'] as int) ?? 0;
+    return (result.first['total'] as int?) ?? 0;
   }
 
   static Future<void> cancelSankalp(int id) async {
     final db = await instance;
-    await db.update('sankalp', {'canceled_at': DateTime.now().toIso8601String()}, where: 'id = ?', whereArgs: [id]);
+    await db.update('sankalps', {'canceled_at': DateTime.now().toIso8601String()}, where: 'id = ?', whereArgs: [id]);
   }
   static Future<List<Sankalp>> getSankalpHistory() async {
     final db = await instance;
-    final rows = await db.query('sankalp', where: 'completed_at NOT NULL OR canceled_at IS NOT NULL', orderBy: 'COALESCE(completed_at, canceled_at) DESC',);
+    final rows = await db.query('sankalps', where: 'completed_at IS NOT NULL OR canceled_at IS NOT NULL', orderBy: 'COALESCE(completed_at, canceled_at) DESC',);
     return rows.map(Sankalp.fromMap).toList();
   }
 
   static Future<bool> hasActiveSankalpForMantra(int mantraId) async {
     final db = await instance;
-    final rows = await db.query("sanlaps", where: 'mantra_id = ? and completed_at IS NOT NULL AND canceled_at IS NULL', whereArgs: [mantraId], limit: 1);
+    final rows = await db.query("sanlaps", where: 'mantra_id = ? AND completed_at IS NOT NULL AND canceled_at IS NULL', whereArgs: [mantraId], limit: 1);
     return rows.isNotEmpty;
   }
 

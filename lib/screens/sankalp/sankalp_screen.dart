@@ -82,7 +82,7 @@ class _SankalpScreenState extends ConsumerState<SankalpScreen> {
               isDark: isDark,
               mantraName: mantraName,
               onCancel: () => _confirmCancel(context),
-              history: sankalp.hisotry,
+              history: sankalp.history,
       allMantras: japa.mantras,
             )
           : _CreateSankalpForm(
@@ -106,7 +106,7 @@ class _SankalpScreenState extends ConsumerState<SankalpScreen> {
                       mode: mode,
                     );
               },
-              history: sankalp.hisotry,
+              history: sankalp.history,
               allMantra: japa.mantras,
             ),
     );

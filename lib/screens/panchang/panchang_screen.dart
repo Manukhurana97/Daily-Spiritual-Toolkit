@@ -14,8 +14,27 @@ class PanchangScreen extends ConsumerStatefulWidget {
   ConsumerState<PanchangScreen> createState() => _PanchangScreenState();
 }
 
-class _PanchangScreenState extends ConsumerState<PanchangScreen> {
+class _PanchangScreenState extends ConsumerState<PanchangScreen> with WidgetsBindingObserver{
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifeCycleState(AppLifecycleListener state) {
+    if(state == AppLifecycleState.resumed) {
+      ref.read(panchangProvider).refreshIfNeeded();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

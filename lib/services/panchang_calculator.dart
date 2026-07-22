@@ -207,11 +207,10 @@ class PanchangCalculator {
     final moonSign = _rashiNames[(moonLon / 30).floor().clamp(0, 11)];
 
     // Transitions from midnight to catch pre-sunrise change
-    final dayStartJd = _julianDay(DateTime(date.year, date.month, date.day));
-    final tithiTransition = _findTithiTransition(dayStartJd);
-    final nakshatraTransition = _findNakshatraTransition(dayStartJd);
-    final yogaTransition = _findYogaTransition(dayStartJd);
-    final karanaTransition = _findKaranaTransition(dayStartJd);
+    final tithiTransition = _findTithiTransition(calcJd);
+    final nakshatraTransition = _findNakshatraTransition(calcJd);
+    final yogaTransition = _findYogaTransition(calcJd);
+    final karanaTransition = _findKaranaTransition(calcJd);
 
     return PanchangResult(
       date: date,
@@ -474,7 +473,7 @@ class PanchangCalculator {
     if (e < 192) return 'Full Moon';
     if (e < 264) return 'Waning Gibbous';
     if (e < 276) return 'Last Quarter';
-    if (e < 348) return 'Waxing Crescent';
+    if (e < 348) return 'Waning Crescent';
     return 'New Moon';
   }
 

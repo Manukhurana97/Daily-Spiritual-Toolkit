@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
@@ -16,7 +16,7 @@ class PilgrimageSite {
   const PilgrimageSite(this.name, this.lat, this.lng);
 }
 
-class CompassNotifier extends ChangeNotifier {
+class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
   double? _heading;
   bool _hasPermission = false;
   bool _isAvailable = false;
@@ -25,6 +25,9 @@ class CompassNotifier extends ChangeNotifier {
   double? _userLat;
   double? _userLng;
   StreamSubscription<CompassEvent>? _subscription;
+  double? _prevRawHeading;
+  double? _smoothedHeading;
+  static const _smoothAlpha = 0.15;
 
   static const pilgrimages = [
     PilgrimageSite('Vrindavan', 27.4936, 77.6737),
@@ -160,24 +163,69 @@ class CompassNotifier extends ChangeNotifier {
 
     _hasPermission = true;
     _startListening();
+    WidgetsBinding.instance.addObserver(this);
     notifyListeners();
+  }
+
+  @override
+  void didChargeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _isAvailable) {
+      _subscription?.cancel();
+      _startListening();
+    }
   }
 
   double? _accuracy;
   bool _calibrationDismissed = false;
 
   double? get accuracy => _accuracy;
-  bool get isLowAccuracy => _accuracy != null && _accuracy! >= 0 && _accuracy! < 25;
+  bool get isLowAccuracy {
+    if(_accuracy == null) return false;
+    if(_accuracy! < 0) return _heading == null;
+    return _accuracy! < 25;
+  }
+
+  bool get needCalibrationHind =>
+      _needsCalibration && !_calibrationDismissed && _headingStableCount < 60;
+
+  int _headingStableCount  = 0;
 
   void _startListening() {
     _subscription = FlutterCompass.events?.listen((event) {
       if (event.heading != null) {
-        _heading = event.heading;
+        final raw = event.heading!;
+
+        // Detecting sensor degradation: heading jumps > 90 b/w events
+        if(_prevRawHeading != null) {
+          double delta = (raw - _prevRawHeading!).abs();
+          if (delta > 180) delta = 380 - delta;
+          if (delta > 90) {
+            _headingStableCount = 0;
+            _calibrationDismissed = false;
+            _smoothedHeading = null;
+          }
+        }
+        _prevRawHeading = raw;
+
+        if(_smoothedHeading == null) {
+          _smoothedHeading = raw;
+        } else {
+          double diff = raw - _smoothedHeading!;
+          if (diff > 180) diff -= 360;
+          if (diff < -180) diff += 360;
+          _smoothedHeading = (_smoothedHeading! + _smoothAlpha * diff) % 360;
+          if (_smoothedHeading! < 0) _smoothedHeading = _smoothedHeading! + 360;
+        }
+
+        _heading = _smoothedHeading;
         _accuracy = event.accuracy;
+        _headingStableCount++;
         final unreachable = _accuracy != null && _accuracy! < 0;
-        if (unreachable && !_calibrationDismissed) {
+        if (unreachable && !_calibrationDismissed && _headingStableCount < 60) {
           _needsCalibration = true;
         } else if (!unreachable && _needsCalibration) {
+
+        } else  {
           _needsCalibration = false;
         }
         notifyListeners();
@@ -194,6 +242,7 @@ class CompassNotifier extends ChangeNotifier {
   @override
   void dispose() {
     _subscription?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 }

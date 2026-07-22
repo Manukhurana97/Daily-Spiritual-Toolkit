@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
@@ -30,6 +31,14 @@ class JapaNotifier extends ChangeNotifier {
   bool _isLoading = true;
 
   final Map<int, _MantraSessionState> _suspendedSessions = {};
+
+  // Anti-span state
+  static const _botWindowSize = 12;
+  static const _hardFloorMs = 150;
+  static const _botCvThreshold = 0.05;
+  final List<int> _recentIntervals = [];
+  DateTime? _cooldownUnit;
+
 
   List<Mantra> get mantras => _mantras;
   Mantra? get activeMantra => _activeMantra;
@@ -75,6 +84,9 @@ class JapaNotifier extends ChangeNotifier {
   void selectMantra(Mantra mantra) {
     if (_activeMantra == mantra) return;
 
+    // Persist adaptive stats for outgoing mantra
+    _presistAdaptiveStats();
+
     if (_activeMantra != null && hasSession) {
       _suspendedSessions[_activeMantra!.id!] = _MantraSessionState(
         count: _currentCount,
@@ -84,6 +96,10 @@ class JapaNotifier extends ChangeNotifier {
     }
 
     _activeMantra = mantra;
+
+    // Reset anti-span sliding window on mantra switch
+    _recentIntervals.clear();
+    _cooldownUnit = null;
 
     final restored = _suspendedSessions.remove(mantra.id!);
     if (restored != null) {
@@ -101,41 +117,137 @@ class JapaNotifier extends ChangeNotifier {
   }
 
   /// Returns true if the tap was accepted, false if throttled.
-  /// Anti-spam interval is dynamic: short naams allow fast tapping,
-  /// long mantras enforce a realistic pace.
+  /// Three-layer anti-spam
+  /// 1. Auto-clicker patterns detection (CV of recent internals)
+  /// 2. Uses-configuration speed override (pre mantra)
+  /// 3. Adaptive EMA threshold (learn uses's pace over time)
   bool tap() {
     final now = DateTime.now();
 
+    // Layer 0: bot cooldown active
+    if (_cooldownUnit != null) {
+      if (now.isBefore(_cooldownUnit!)) return false;
+      _cooldownUnit = null;
+    }
+
     if (_lastTapTime != null) {
-      final mantraText = _activeMantra?.actualMantra ?? _activeMantra?.name ?? '';
-      final minInterval = AppConstants.antiSpanInterval(mantraText.length);
-      final elapsed = now.difference(_lastTapTime!);
-      if (elapsed < minInterval) {
-        return false;
-      }
+     final intervalMs = now.difference(_lastTapTime!).inMilliseconds;
+     if (intervalMs < _hardFloorMs) return false;
+
+     if (intervalMs > 5000) _recentIntervals.clear();
+
+     final thrashold = _getSpeedThreshold();
+     if (intervalMs < thrashold) return false;
+
+     _recentIntervals.add(intervalMs);
+     if (_recentIntervals.length > _botWindowSize) {
+       _recentIntervals.removeAt(0);
+     }
+
+     if(_isAutoClicker()) {
+       _cooldownUnit = now.add(const Duration(seconds: 3));
+       _recentIntervals.clear();
+       return false;
+     }
     }
 
     _sessionStart ??= now;
+    final prevTap = _lastTapTime;
     _lastTapTime = now;
     _currentCount++;
-    notifyListeners();
 
+    if (prevTap != null) {
+      _updateAdaptiveStats(now.difference(prevTap).inMilliseconds);
+    }
+
+    notifyListeners();
     return true;
+  }
+
+  bool _isAutoClicker() {
+    if (_recentIntervals.length < 6) return false;
+    final recent = _recentIntervals.sublist(max(0, _recentIntervals.length - 8));
+    final n = recent.length;
+    final mean = recent.reduce((a, b) => a + b) / n;
+    if (mean <= 0) return false;
+    double sumSqDiff = 0;
+    for (final i in recent) {
+      sumSqDiff += (i - mean) * (i - mean);
+    }
+    final stdDev = sqrt(sumSqDiff / n);
+    return (stdDev / mean) < _botCvThreshold;
+  }
+
+  int _getSpeedThreshold() {
+    if (_activeMantra == null) return 200;
+
+    final userSpeed = _activeMantra!.tapSpeedMs;
+    if (userSpeed != null) return userSpeed;
+
+    final avgMs = _activeMantra!.avgTapMs;
+    final samples = activeMantra!.tapSampleCount;
+    if (avgMs != null && samples >= 30) {
+      return (avgMs * 0.6).round().clamp(_hardFloorMs, 3000);
+    }
+
+    return 200;
+  }
+
+  void _updateAdaptiveStats(int intervalMs) {
+    if (_activeMantra == null) return;
+    if (intervalMs > 10000 || intervalMs < _hardFloorMs) return;
+
+    final mantra = _activeMantra!;
+    final oldAvg = mantra.avgTapMs ?? intervalMs.toDouble();
+    final oldCount = mantra.tapSampleCount;
+
+    final double newAvg;
+    if (oldCount < 10) {
+      newAvg = (oldAvg * oldCount + intervalMs) / (oldCount + 1);
+    } else {
+      const alpha = 0.05;
+      newAvg = oldAvg * (1 - alpha) + intervalMs * alpha;
+    }
+    final newCount = oldCount + 1;
+
+    final updated = mantra.copyWith(
+      avgTapMS: newAvg,
+      tapSampleCount: newCount,
+    );
+
+    final idx = _mantras.indexWhere((m) => m.id == mantra.id);
+    if (idx != -1) _mantras[idx] = updated;
+    _activeMantra = updated;
+
+    if (newCount % 10 == 0) {
+      AppDatabase.updateMantraAdaptiveStats(mantra.id!, newAvg, newCount);
+    }
+  }
+
+  void _presistAdaptiveStats() {
+    final mantra = _activeMantra;
+    if (mantra?.id == null || mantra!.tapSampleCount == 0) return;
+    AppDatabase.updateMantraAdaptiveStats(mantra.id!, mantra.avgTapMs ?? 0, mantra.tapSampleCount);
   }
 
   Future<void> resetCounter() async {
     _currentCount = 0;
     _sessionStart = null;
     _lastTapTime = null;
+    _recentIntervals.clear();
+    _cooldownUnit = null;
     notifyListeners();
   }
 
   Future<void> endSession() async {
     if (hasSession) {
+      _presistAdaptiveStats();
       await _saveCurrentSession();
       _currentCount = 0;
       _sessionStart = null;
       _lastTapTime = null;
+      _recentIntervals.clear();
+      _cooldownUnit = null;
       await _refreshStats();
       notifyListeners();
     }
@@ -193,6 +305,8 @@ class JapaNotifier extends ChangeNotifier {
     _currentCount = 0;
     _sessionStart = null;
     _lastTapTime = null;
+    _recentIntervals.clear();
+    _cooldownUnit = null;
     _suspendedSessions.clear();
     _stats = JapaStats.empty;
     await initialize();

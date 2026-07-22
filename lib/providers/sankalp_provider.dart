@@ -20,7 +20,7 @@ class SankalpNotifier extends ChangeNotifier {
   Sankalp? get activeSankalp => _activeSankalp;
   bool get isLoading => _isLoading;
   bool get hasActiveSankalp => _activeSankalp != null && !(_engine?.isComplete ?? false);
-  List<Sankalp> get hisotry => _history;
+  List<Sankalp> get history => _history;
   Set<int> get sankalpMantraIds => _sankalpMantraIds;
 
   bool mantraHasSankalp(int mantraId) => _sankalpMantraIds.contains(mantraId);

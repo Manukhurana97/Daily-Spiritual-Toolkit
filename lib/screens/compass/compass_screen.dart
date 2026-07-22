@@ -139,7 +139,9 @@ class CompassScreen extends ConsumerWidget {
                         child: Text(
                           compass.spiritualMode
                               ? 'Spiritual mode active — pilgrimage sites and Ishan Kon visible.'
-                              : 'Wave your phone in a figure-8 pattern to calibrate the compass.',
+                              : compass.isLowAccuracy
+                              ? 'Low accuracy detected - Wave your phone in a figure-8 pattern to calibrate.'
+                          : 'Compass is working. Tap the icon above for spiritual mode.',
                           style: const TextStyle(fontSize: 12, color: AppColors.teal, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -151,7 +153,7 @@ class CompassScreen extends ConsumerWidget {
           ),
         ),
 
-        if (compass.needsCalibration)
+        if (compass.needCalibrationHind)
           _CalibrationOverlay(onDismiss: () => compass.dismissCalibration()),
       ],
     );

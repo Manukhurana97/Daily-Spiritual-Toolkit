@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart';
 
 import '../models/panchang_data.dart';
 import '../services/panchang_calculator.dart';
@@ -23,6 +22,7 @@ class PanchangNotifier extends ChangeNotifier {
   bool _isLoading = true;
   String? _error;
   LocationTier _locationTier = LocationTier.fallback;
+  DateTime? _computedForDate;
 
   List<PanchangData> get days => _days;
   PanchangData? get today => _days.isNotEmpty ? _days[0] : null;
@@ -81,6 +81,7 @@ class PanchangNotifier extends ChangeNotifier {
         }
         return _resultToData(result, date, timeFormat, locationLabel, _locationTier);
       });
+      _computedForDate = DateTime(now.year, now.month, now.day);
       _error = null;
     } catch (e) {
       debugPrint('Panchang calculation error: $e');
@@ -100,6 +101,15 @@ class PanchangNotifier extends ChangeNotifier {
   DateTime? get todaySunset => _todaySunset;
   DateTime? _todaySunrise;
   DateTime? _todaySunset;
+
+  Future<void> refreshIfNeeded() async {
+    if (_isLoading) return;
+    final today = DateTime.now();
+    final todayDate = DateTime(today.year, today.month, today.day);
+    if (_computedForDate == null || todayDate != _computedForDate) {
+      await initialize();
+    }
+  }
 
   PanchangData _resultToData(
     PanchangResult result,
@@ -179,14 +189,18 @@ class PanchangNotifier extends ChangeNotifier {
     try {
       final client = HttpClient();
       client.connectionTimeout = const Duration(seconds: 5);
-      final request = await client.getUrl(Uri.parse('http://ip.api.com/json/?fields=status,city,lat,lon'));
+      final request = await client.getUrl(Uri.parse('http://ip-api.com/json/?fields=status,city,lat,lon'));
       final response = await request.close().timeout(const Duration(seconds: 5));
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) {
+        client.close();
+        return null;
+      }
       final body = await response.transform(utf8.decoder).join();
+      client.close();
       final json = jsonDecode(body) as Map<String, dynamic>;
       if (json['status'] != 'success') return null;
       final lat = (json['lat'] as num?)?.toDouble();
-      final lng = (json['lng'] as num?)?.toDouble();
+      final lng = (json['lon'] as num?)?.toDouble();
       if (lat == null || lng == null) return null;
       return {'lat': lat, 'lng': lng, 'city': json['city'] as String? ?? 'Unknown'};
     } catch (e) {
