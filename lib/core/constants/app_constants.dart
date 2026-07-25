@@ -6,7 +6,8 @@ class AppConstants {
       'Your daily spiritual toolkit — japa counter,\npanchang, and direction compass.';
 
   static const int defaultMalaSize = 108;
-  static const int maxMantras = 50;
+  static const int maxMantras = 50; // Premium limit
+  static const freeTierMantras = 3; // Free Tier Limit
 
   static const List<String> defaultMantras = ['Radha', 'Ram', 'Krishna'];
 

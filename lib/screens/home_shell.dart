@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nitya_sadhana/providers/panchang_provider.dart';
+import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
 import 'package:nitya_sadhana/screens/sankalp/sankalp_screen.dart';
+import 'package:nitya_sadhana/services/subscription_service.dart';
 
 import '../core/theme/app_theme.dart';
 import '../providers/japa_provider.dart';
@@ -44,6 +46,13 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
+          if (index == 3) {
+            final sub = ref.read(subscriptionProvider);
+            if (!sub.isPremium) {
+              PaywallScreen.show(context, featureTitle: 'Sankalp (Goals');
+              return;
+            }
+          }
           setState(() => _currentIndex = index);
           if (index == 1) {
             ref.read(panchangProvider).refreshIfNeeded();

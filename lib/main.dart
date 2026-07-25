@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
+import 'package:nitya_sadhana/services/subscription_service.dart';
 
 import 'app.dart';
 import 'providers/japa_provider.dart';
@@ -13,6 +14,7 @@ import 'services/notification_service.dart';
 
 final appInitializedProvider = FutureProvider<bool>((ref) {
   return Future.microtask(() async {
+    await ref.read(subscriptionProvider).initialize();
     await ref.read(settingsProvider).initialize();
     await NotificationService.init();
     await ref.read(japaProvider).initialize();

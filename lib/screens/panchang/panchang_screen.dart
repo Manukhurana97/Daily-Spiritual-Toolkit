@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
+import 'package:nitya_sadhana/services/subscription_service.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../models/panchang_data.dart';
@@ -56,11 +58,20 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> with WidgetsBin
       child: Column(
         children: [
           // ── Day selector strip ──────────────────────────────────
-          _DaySelector(
-            days: days,
-            selectedIndex: _selectedIndex,
-            onTap: (i) => setState(() => _selectedIndex = i),
-          ),
+          Consumer(builder: (context, ref, _) {
+            final sub = ref.watch(subscriptionProvider);
+            return _DaySelector(
+              days: days,
+              selectedIndex: _selectedIndex,
+              onTap: (i) {
+                if (!sub.isPremium && i > 0) {
+                  PaywallScreen.show(context, featureTitle: '7-Day panchang');
+                  return;
+                }
+                setState(() => _selectedIndex = i);
+              }
+            );
+          }),
 
           // ── Scrollable detail area ──────────────────────────────
           Expanded(
@@ -380,12 +391,14 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> with WidgetsBin
 class _DaySelector extends StatelessWidget {
   final List<PanchangData> days;
   final int selectedIndex;
+  final int maxDays;
   final ValueChanged<int> onTap;
 
   const _DaySelector({
     required this.days,
     required this.selectedIndex,
     required this.onTap,
+    this.maxDays = 7,
   });
 
   @override
@@ -402,6 +415,7 @@ class _DaySelector extends StatelessWidget {
           final date = DateTime.parse(days[i].date);
           final isSelected = i == selectedIndex;
           final isToday = i == 0;
+          final isLocked = i >= maxDays;
 
           return GestureDetector(
             onTap: () => onTap(i),
@@ -432,27 +446,33 @@ class _DaySelector extends StatelessWidget {
                       ]
                     : null,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    isToday ? 'Today' : DateFormat('EEE').format(date),
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: isSelected ? Colors.white70 : (isDark ?  AppColors.darkTextSecondary : AppColors.textSecondary),
+              child: Opacity(
+                  opacity: isLocked ? 0.45 : 1.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isLocked)
+                      Icon(Icons.lock_rounded, size: 11, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary)
+                    else
+                      Text(
+                        isToday ? 'Today' : DateFormat('EEE').format(date),
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected ? Colors.white70 : (isDark ?  AppColors.darkTextSecondary : AppColors.textSecondary),
+                        ),
+                      ),
+                    const SizedBox(height: 2),
+                    Text(
+                      DateFormat('d MMM').format(date),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: isSelected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    DateFormat('d MMM').format(date),
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: isSelected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

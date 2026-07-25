@@ -30,6 +30,13 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("debug")
+            // Shrink optimize and obfuscate native native/java code
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt")
+                "proguard-rules.pro"
+            )
         }
     }
 }

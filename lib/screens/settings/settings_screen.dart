@@ -1,9 +1,11 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
+import 'package:nitya_sadhana/services/subscription_service.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
@@ -23,6 +25,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final japa = ref.watch(japaProvider);
+    final sub = ref.watch(subscriptionProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
@@ -50,10 +53,27 @@ class SettingsScreen extends ConsumerWidget {
                     isDark: isDark,
                   );
                 }),
-                if (japa.mantras.length < AppConstants.maxMantras)
+                if (japa.mantras.length < sub.maxMantras)
                   _AddMantraButton(
-                    onTap: () => _showAddMantraDialog(context, ref),
+                    onTap: () {
+                      if (!sub.isPremium && japa.mantras.length >= FreeTierLimits.maxMantra) {
+                        PaywallScreen.show(context, featureTitle: 'Unlimited Mantra');
+                        return;
+                      }
+                      _showAddMantraDialog(context, ref);
+                    },
                   ),
+                if (!sub.isPremium && japa.mantras.length >= FreeTierLimits.maxMantra)
+                  Padding(
+                      padding: const EdgeInsetsGeometry.only(top: 8),
+                    child: Text(
+                      'Free tier: ${FreeTierLimits.maxMantra} mantras. Upgrade for unlimited.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                      ),
+                    ),
+                  )
               ],
             ),
           ),
@@ -169,7 +189,11 @@ class SettingsScreen extends ConsumerWidget {
           ),
 
           // ── Notifications ──
-          SectionCard(
+          _PremiumSection(
+            isPremium: sub.isPremium,
+            featureTitle: 'Smart Notifications',
+            isDark: isDark,
+            child: SectionCard(
             title: 'Notifications',
             child: Column(
               children: [
@@ -252,14 +276,22 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ],
             ),
+            )
           ),
 
           // Sadhana Mode (DND
-          _SadhanaModeSetting(isDark: isDark),
+          _PremiumSection(
+            isPremium: sub.isPremium,
+            featureTitle: 'Sadhana Mode',
+            isDark: isDark,
+            child: _SadhanaModeSetting(isDark: isDark),
+          ),
 
           // ── Background Sound ──
-          SectionCard(
-            title: 'Background Sound',
+          _PremiumSection(
+            isPremium: sub.isPremium,
+            featureTitle: 'Background Sound',
+            isDark: isDark,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -295,6 +327,7 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+
 
           // ── Data ──
           SectionCard(
@@ -361,6 +394,39 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
 
+          // Subscription
+          SectionCard(
+            title: 'Subscription',
+              child: Column(
+                children: [
+                  _SettingRow(
+                      icon: sub.isPremium ? Icons.workspace_premium_rounded : Icons.lock_outline_rounded,
+                      title: sub.isPremium ? 'Premium Action' : 'Free Tier',
+                    isDark: isDark,
+                    trailing: sub.isPremium
+                    ? const Icon(Icons.check_circle_rounded, color: AppColors.teal, size: 20,)
+                    : ElevatedButton (
+                          onPressed: () => PaywallScreen.show(context),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                        ),
+                      child: const Text('Upgrade'),
+                      ),
+                  ),
+                  // DEV ONLY: Toggle premium for testing (removed in release builds)
+                  if (kDebugMode)
+                    TextButton(
+                      onPressed: () => ref.read(subscriptionProvider).devTogglePremium(),
+                      child: Text(
+                        'DEV Toggle Premium (${sub.isPremium ? "ON" : "OFF"})',
+                        style: const TextStyle(fontSize: 11, color: Colors.grey),
+                      ),
+                    )
+                ],
+              ),
+          ),
+
           // ── About ──
           SectionCard(
             title: 'About',
@@ -402,7 +468,7 @@ class SettingsScreen extends ConsumerWidget {
                       SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'No ads. Your data stays on device.',
+                          'Your data stays on device. No tracking',
                           style: TextStyle(fontSize: 12, color: AppColors.teal, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -1200,6 +1266,77 @@ class _SadhanaModeSec extends ConsumerState<_SadhanaModeSetting> {
           ],
         ],
       ),
+    );
+  }
+}
+
+// Premium Gate Overlay
+
+class _PremiumSelection extends StatelessWidget {
+  final bool isPremium;
+  final String featureTitle;
+  final bool isDark;
+  final Widget child;
+
+  const _PremiumSelection({
+    required this.isPremium,
+    required this.featureTitle,
+    required this.isDark,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isPremium) return child;
+
+    return Stack(
+      children: [
+        Opacity(
+            opacity: 0.4,
+          child: IgnorePointer(child: child),
+        ),
+        Positioned.fill(
+            child: GestureDetector(
+              onTap: () => PaywallScreen.show(context, featureTitle: featureTitle),
+              child: Container(
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? AppColors.darkCard.withValues(alpha: 0.95)
+                        : Colors.white.withValues(alpha: 0.95),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 8,
+                      )
+                    ]
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.lock_rounded, size: 16, color: AppColors.saffron),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Unlock $featureTitle',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.saffron,
+                        ),
+                      ),
+                      const SizedBox(width: 4,),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: AppColors.saffron),
+                    ],
+                  ),
+                ),
+              ),
+            )
+        )
+      ],
     );
   }
 }

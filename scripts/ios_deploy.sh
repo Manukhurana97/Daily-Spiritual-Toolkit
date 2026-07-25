@@ -7,8 +7,12 @@ PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 echo "==> Building iOS release..."
 cd "$PROJECT_DIR"
-flutter build ios --release --no-codesign 2>/dev/null || true
-flutter build ios --release 2>/dev/null || true
+flutter build ios --release --no-codesign \
+  --obfuscate --split-debug-info="$PROJECT_DIR/build/debug-info" \
+  2>/dev/null || true
+flutter build ios --release \
+  --obfuscate --split-debug-info="$PROJECT_DIR/build/debug-info" \
+  2>/dev/null || true
 
 APP_PATH=""
 for dir in "build/ios/iphoneos" "build/ios/Release-iphoneos"; do
