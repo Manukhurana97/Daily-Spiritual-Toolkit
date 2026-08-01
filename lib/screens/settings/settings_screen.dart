@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
+import 'package:nitya_sadhana/services/ad_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
 
@@ -14,6 +17,7 @@ import '../../providers/japa_provider.dart';
 import '../../providers/panchang_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../services/audio_service.dart';
+import '../../services/auth_service.dart';
 import '../../services/export_service.dart';
 import '../../services/notification_service.dart';
 import '../../widgets/section_card.dart';
@@ -53,7 +57,7 @@ class SettingsScreen extends ConsumerWidget {
                     isDark: isDark,
                   );
                 }),
-                if (japa.mantras.length < sub.maxMantras)
+                if (japa.mantras.length < sub.maxMantra)
                   _AddMantraButton(
                     onTap: () {
                       if (!sub.isPremium && japa.mantras.length >= FreeTierLimits.maxMantra) {
@@ -358,40 +362,138 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
 
-          // ── Language ──
-          SectionCard(
-            title: 'Language',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'App language follows your system language by default.',
-                  style: TextStyle(fontSize: 13, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkCard : AppColors.cream,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.language_rounded, size: 20, color: AppColors.teal),
-                      const SizedBox(width: 10),
-                      Text(
-                        settings.locale == 'system' ? 'System Default' : settings.locale,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+          // Account
+          Consumer(
+              builder: (context, ref, _) {
+                final auth = ref.watch(authServiceProvider);
+                return SectionCard(
+                    title: 'Account',
+                    child: auth.isSignedIn
+                      ? Column(
+                          children: [
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: auth.photoUrl != null
+                                    ? NetworkImage(auth.photoUrl!)
+                                  : null,
+                                  backgroundColor: isDark ? AppColors.darkCard : AppColors.cream,
+                                  child: auth.photoUrl == null
+                                  ? Icon(Icons.person_rounded, color: AppColors.saffron, size: 24,)
+                                      : null,
+                                ),
+                                const SizedBox(width: 12,),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      if (auth.displayName != null && auth.displayName!.isNotEmpty)
+                                        Text(
+                                          auth.displayName!,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                                          ),
+                                        ),
+                                      if (auth.email != null)
+                                        Text(
+                                          auth.email!,
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                                          ),
+                                        )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 12,),
+                            SizedBox(
+                              width: double.infinity,
+                              child: OutlinedButton.icon(
+                                  onPressed: () async {
+                                    final confirm = await showDialog<bool>(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                          title: const Text('Sign Out'),
+                                          content: const Text('Are you sure you want sign out?'),
+                                          actions: [
+                                            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+                                            TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Sign Out')),
+                                          ],
+                                        )
+                                    );
+                                    if (confirm == true) {
+                                      await auth.signOut();
+                                    }
+                                  },
+                                  icon: const Icon(Icons.logout_rounded, size: 18),
+                                  label: const Text('Sign Out'),
+                                style: OutlinedButton.styleFrom(
+                                    foregroundColor: AppColors.deepMaroon
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                        : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Sign in to sync purchases across devices',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                        const SizedBox(height: 12,),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                              onPressed: auth.isLoading ? null : () => auth.signInWithGoogle(),
+                              icon: const Icon(Icons.g_mobiledata_rounded, size: 24),
+                              label: const Text('Continue with Google'),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                          ),
+                        ),
+                        if (Platform.isIOS) ...[
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                                onPressed: auth.isLoading ? null : () => auth.signInWithApple(),
+                                icon: const Icon(Icons.apple_rounded, size: 22),
+                                label: const Text("Continue with Apple"),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: isDark ? Colors.white : Colors.black,
+                                foregroundColor: isDark ? Colors.black : Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                              ),
+                            ),
+                          ),
+                          if (auth.isLoading)
+                            const Padding(
+                                padding: EdgeInsets.only(top: 12),
+                              child: Center(child: CircularProgressIndicator(strokeWidth: 2,),),
+                            ),
+                          if (auth.error != null)
+                            Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                              child: Text(
+                                auth.error!,
+                                style: TextStyle(fontSize: 12, color: Colors.red.shade700),
+                              ),
+                            )
+                        ]
+                      ],
+                    )
+                );
+              }
           ),
 
           // Subscription
@@ -443,7 +545,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Version 1.5.0',
+                  'Version 2.0.0',
                   style: TextStyle(fontSize: 13, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                 ),
                 const SizedBox(height: 12),
@@ -478,6 +580,10 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+
+          // Banner Ad (free users only)
+          if (!sub.isPremium)
+            const _BannerAdWidget(),
         ],
       ),
     );
@@ -848,7 +954,8 @@ class _SwitchRow extends StatelessWidget {
             Switch(
               value: value,
               onChanged: enabled ? onChanged : null,
-              activeColor: AppColors.saffron,
+              activeTrackColor: AppColors.saffron.withValues(alpha: 0.5),
+              thumbColor: WidgetStatePropertyAll(AppColors.saffron),
             ),
           ],
         ),
@@ -1014,7 +1121,7 @@ class _SadhanaModeSetting extends ConsumerStatefulWidget {
 }
 
 class _SadhanaModeSec extends ConsumerState<_SadhanaModeSetting> {
-  int _timerMinutes = 0; // 0 = no Timer
+  final int _timerMinutes = 0; // 0 = no Timer
 
   void _showIosFocusGuide(BuildContext context) {
     final isDark = widget.isDark;
@@ -1272,13 +1379,13 @@ class _SadhanaModeSec extends ConsumerState<_SadhanaModeSetting> {
 
 // Premium Gate Overlay
 
-class _PremiumSelection extends StatelessWidget {
+class _PremiumSection extends StatelessWidget {
   final bool isPremium;
   final String featureTitle;
   final bool isDark;
   final Widget child;
 
-  const _PremiumSelection({
+  const _PremiumSection({
     required this.isPremium,
     required this.featureTitle,
     required this.isDark,
@@ -1337,6 +1444,43 @@ class _PremiumSelection extends StatelessWidget {
             )
         )
       ],
+    );
+  }
+}
+
+class _BannerAdWidget extends ConsumerStatefulWidget {
+  const _BannerAdWidget();
+
+  @override
+  ConsumerState<_BannerAdWidget> createState() => _BannerAdWidgetState();
+}
+
+class _BannerAdWidgetState extends ConsumerState<_BannerAdWidget> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(adProviderService).loadBanner();
+  }
+
+  @override
+  void dispose() {
+    ref.read(adProviderService).disposeBanner();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final adService = ref.watch(adProviderService);
+    if (!adService.isBannerReady || adService._bannerAd == null) {
+      return const SizedBox.shrink();
+    }
+    
+    return Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 16),
+      width: adService._bannerAd!.size.width.toDouble(),
+      height: adService._bannerAd!.size.height.toDouble(),
+      child: AdWidget(ad: adService._bannerAd!),
     );
   }
 }

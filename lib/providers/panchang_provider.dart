@@ -155,6 +155,8 @@ class PanchangNotifier extends ChangeNotifier {
       auspiciousNote: _generateNote(result, brahmaMuhurta: brahmaMuhurta),
       locationLabel: locationLabel,
       brahmaMuhurta: brahmaMuhurta,
+      masaPurnimant: result.masa.purnimantName,
+      masaAmant: result.masa.amantName,
       accuracyTier: tier,
     );
   }

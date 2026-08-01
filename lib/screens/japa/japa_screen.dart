@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nitya_sadhana/providers/settings_provider.dart';
 import 'package:nitya_sadhana/providers/stats_provider.dart';
+import 'package:nitya_sadhana/services/ad_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/widgets/section_card.dart';
 import 'package:nitya_sadhana/widgets/streak_chart.dart';
@@ -201,6 +202,7 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
                           onTap: () {
                             japa.endSession();
                             ref.read(audioServiceProvider).stop();
+                            ref.read(adsProviderService).showJapaSessionAd();
                           },
                         ),
                         const SizedBox(width: 12),

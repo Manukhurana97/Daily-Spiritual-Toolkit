@@ -1,2 +1,5 @@
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"
+
+// AdMob App Id - override via --dart-define ADMOB_APP_ID_IOS=ca_app_pub_xxx
+ADMOB_APP_ID_IOS=ca-app-pub-3940256099942544~1458002511

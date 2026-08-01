@@ -13,8 +13,17 @@
 # - kotlin Serialization (used by Revenue Cat) -
 -keepattributes *Annotation*
 -keep class kotlin.Metadata { *; }
---dontwarn kotlin.**
+-dontwarn kotlin.**
+
+# - Firebase + Google Sign-In -
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**
+-keep class com.google.android.gms.auth.** { *; }
+
+# - Google Mobile Abs (AdMob) -
+-keep class com.google.android.gms.ads.** { *; }
+-dontwarn com.google.android.gms.ads.**
 
 # - General -
 -keepattributes SourceFile,LineNumberTable
--renamesourcefuleattribute SourceFile
+-renamesourcefileattribute SourceFile

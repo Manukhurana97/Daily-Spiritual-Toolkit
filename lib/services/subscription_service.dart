@@ -28,9 +28,9 @@ class SubscriptionService extends ChangeNotifier {
   bool _isPremium = false;
   bool _isInitialized = false;
 
-  static const _revenueCatApiKeyAndroid = '';
-  static const _revenueCatApiKeyIos = '';
-  static const _entitlementId = 'premium';
+  static const _revenueCatApiKeyAndroid = String.fromEnvironment('REVENUECAT_ANDROID_KEY');
+  static const _revenueCatApiKeyIos = String.fromEnvironment('REVENUECAT_IOS_KEY');
+  static const _entitlementId = String.fromEnvironment('REVENUECAT_ENTITLEMENT_ID', defaultValue: 'premium');
 
   // Offline grace period: 3 days for premium and 7 days for super premium
   static const _gracePeriodDays = 3;

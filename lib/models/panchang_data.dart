@@ -35,6 +35,8 @@ class PanchangData {
   final String auspiciousNote;
   final String? locationLabel;
   final String? brahmaMuhurta;
+  final String? masaPurnimant;
+  final String? masaAmant;
   final LocationTier accuracyTier;
 
   const PanchangData({
@@ -68,6 +70,8 @@ class PanchangData {
     required this.auspiciousNote,
     this.locationLabel,
     this.brahmaMuhurta,
+    this.masaPurnimant,
+    this.masaAmant,
     this.accuracyTier = LocationTier.fallback,
   });
 

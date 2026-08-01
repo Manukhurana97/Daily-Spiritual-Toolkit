@@ -153,7 +153,7 @@ class CompassScreen extends ConsumerWidget {
           ),
         ),
 
-        if (compass.needCalibrationHind)
+        if (compass.needsCalibration)
           _CalibrationOverlay(onDismiss: () => compass.dismissCalibration()),
       ],
     );

@@ -205,6 +205,7 @@ class PanchangCalculator {
     final abhijitMuhurta = _calculateAbhijitMuhurta(sunrise, sunset);
     final sunSign = _rashiNames[(sunLon / 30).floor().clamp(0, 11)];
     final moonSign = _rashiNames[(moonLon / 30).floor().clamp(0, 11)];
+    final masa = calculateMasa(sunLon, tithi);
 
     // Transitions from midnight to catch pre-sunrise change
     final tithiTransition = _findTithiTransition(calcJd);
@@ -228,6 +229,7 @@ class PanchangCalculator {
       abhijitMuhurta: abhijitMuhurta,
       sunSign: sunSign,
       moonSign: moonSign,
+      masa: masa,
       tithiTransition: tithiTransition,
       nakshatraTransition: nakshatraTransition,
       yogaTransition: yogaTransition,
@@ -647,6 +649,39 @@ class PanchangCalculator {
     'Kumbha',
     'Meena',
   ];
+
+  // Hindi month names (solar month -> lunar month mapping)
+  static const _masaName = [
+    'Chaitra',
+    'Vaishakha',
+    'Jyeshtha',
+    'Ashadha',
+    'Shravana',
+    'Bhadrapada',
+    'Ashwin',
+    'Kartika',
+    'Margashirsha',
+    'Pausha',
+    'Magha',
+    'Phalguna',
+  ];
+
+  static MasaResult calculateMasa(double sunLon, TithiResult tithi) {
+    final solarIdx = (sunLon / 30).floor().clamp(0, 11);
+
+    int purnimantIdx = solarIdx;
+    if (!tithi.isWaxing) {
+      purnimantIdx = (solarIdx + 1) % 12;
+    }
+
+    final amantIdx = solarIdx;
+    return MasaResult(
+        purnimantName: _masaName[purnimantIdx],
+        amantName: _masaName[amantIdx],
+        purnimantIndex: purnimantIdx,
+        amantIndex: amantIdx
+    );
+  }
 }
 
 // --- Result Models ---
@@ -667,6 +702,7 @@ class PanchangResult {
   final AbhijitMuhurta? abhijitMuhurta;
   final String sunSign;
   final String moonSign;
+  final MasaResult masa;
   final TransitionInfo tithiTransition;
   final TransitionInfo nakshatraTransition;
   final TransitionInfo yogaTransition;
@@ -688,6 +724,7 @@ class PanchangResult {
     required this.abhijitMuhurta,
     required this.sunSign,
     required this.moonSign,
+    required this.masa,
     required this.tithiTransition,
     required this.nakshatraTransition,
     required this.yogaTransition,
@@ -754,4 +791,19 @@ class AbhijitMuhurta {
   final DateTime end;
 
   const AbhijitMuhurta({required this.start, required this.end});
+}
+
+class MasaResult {
+  final String purnimantName;
+  final String amantName;
+  final int purnimantIndex;
+  final int amantIndex;
+
+  const MasaResult({
+    required this.purnimantName,
+    required this.amantName,
+    required this.purnimantIndex,
+    required this.amantIndex,
+  });
+  String name({required bool purnimant}) => purnimant ? purnimantName : amantName;
 }

@@ -1,7 +1,12 @@
 
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/services/ad_service.dart';
+import 'package:nitya_sadhana/services/auth_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
 
@@ -21,12 +26,23 @@ final appInitializedProvider = FutureProvider<bool>((ref) {
     await ref.read(panchangProvider).initialize();
     ref.read(compassProvider).initialize();
     await ref.read(sadhanaModeProvider).initialize();
+    await ref.read(authServiceProvider).initialize();
+    await ref.read(adProviderService).initialize();
     return true;
   });
 });
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // App Check - auto-selects debug for dev, production attestation for release
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+    appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.deviceCheck,
+  );
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

@@ -1,7 +1,7 @@
 name: nitya_sadhana
 description: "Nitya Sadhana – Your daily spiritual toolkit: japa counter, panchang, and direction compass."
 publish_to: 'none'
-version: 1.5.0+2
+version: 2.0.0+1
 
 environment:
   sdk: ^3.10.0
@@ -25,8 +25,19 @@ dependencies:
   # Audio
   audioplayers: ^6.7.1
 
-  # Sybscriptions
+  # Subscriptions
   purchases_flutter: ^8.9.0
+
+  # Ads
+  google_mobile_ads: ^5.3.0
+
+  # Firebase + Auth
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.7.0
+  firebase_app_check: ^0.3.2+10
+  google_sign_in: ^6.3.0
+  sign_in_with_apple: ^6.1.4
+  crypto: ^3.0.6
 
   # Notifications
   flutter_local_notifications: ^22.0.1
@@ -53,6 +64,7 @@ flutter_launcher_icons:
   adaptive_icon_foreground: "assets/app_icon.jpeg"
 
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:

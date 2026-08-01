@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nitya_sadhana/providers/settings_provider.dart';
 import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
 
@@ -32,7 +33,7 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> with WidgetsBin
   }
 
   @override
-  void didChangeAppLifeCycleState(AppLifecycleListener state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) {
     if(state == AppLifecycleState.resumed) {
       ref.read(panchangProvider).refreshIfNeeded();
     }
@@ -331,6 +332,102 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> with WidgetsBin
                   ),
                 ),
 
+                // Hindi month
+                if (data.masaPurnimant != null)
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final settings = ref.watch(settingsProvider);
+                      final masaName = settings.isPurnimant
+                      ? data.masaPurnimant!
+                          : (data.masaAmant ?? data.masaPurnimant!);
+                      return SectionCard(
+                        title: 'Hindu Month',
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? AppColors.saffron.withValues(alpha: 0.15)
+                                        : AppColors.saffronLight,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Icon(
+                                    Icons.calendar_month_rounded,
+                                    color: AppColors.saffron,
+                                    size: 20,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                    child: Text(
+                                      masaName,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: isDark
+                                          ? AppColors.darkTextPrimary
+                                            : AppColors.textPrimary,
+                                      ),
+                                    ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Text(
+                                  'System: ',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: isDark
+                                      ? AppColors.darkTextSecondary
+                                        : AppColors.textSecondary,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Expanded(
+                                  child: SegmentedButton<String>(
+                                    segments: const [
+                                      ButtonSegment(
+                                        value: 'purnimant',
+                                        label: Text('Purnimant'),
+                                      ),ButtonSegment(
+                                        value: 'anant',
+                                        label: Text('Anant'),
+                                      ),
+                                    ], selected: {settings.masaSystem},
+                                    onSelectionChanged: (v) =>
+                                      settings.setMasaSystem(v.first),
+                                    style: ButtonStyle(
+                                      visualDensity: VisualDensity.compact,
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              settings.isPurnimant
+                                  ? 'North India - month end at Purnima'
+                                  : 'South/West India - month end at Amavasya',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: isDark
+                                  ? AppColors.darkTextSecondary
+                                    : AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        )
+                      );
+                    }
+                  ),
+
+
                 // Auspicious Note
                 if (data.auspiciousNote.isNotEmpty)
                   SectionCard(
@@ -574,7 +671,7 @@ class _DateHeader extends StatelessWidget {
             const SizedBox(height: 8),
             _AccuracyInfoRow(
               label: 'Time Accuracy',
-              value: tierLabel,
+              value: accuracy,
               valueColor: tierColor,
               isDark: isDark,
             ),

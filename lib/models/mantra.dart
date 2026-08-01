@@ -26,7 +26,7 @@ class Mantra {
         'target_direction': targetDirection,
         'created_at': createdAt.toIso8601String(),
         'tap_speed_ms': tapSpeedMs,
-        'avg_tap_Ms': avgTapMs,
+        'avg_tap_ms': avgTapMs,
         'tap_sample_count': tapSampleCount
       };
 

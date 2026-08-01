@@ -5,13 +5,21 @@ DEVICE_ID="${1:-00008140-00020CEC3C8A801C}"
 BUNDLE_ID="com.mk.naamJap.app"
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
+SECRETS="$PROJECT_DIR/config/secrets.json"
+DART_DEFINE_FLAG=""
+if [ -f "SECRETS" ]; then
+  DART_DEFINE_FLAG="--dart-define-from-file=$SECRETS"
+fi
+
 echo "==> Building iOS release..."
 cd "$PROJECT_DIR"
 flutter build ios --release --no-codesign \
   --obfuscate --split-debug-info="$PROJECT_DIR/build/debug-info" \
+  $DART_DEFINE_FLAG \
   2>/dev/null || true
 flutter build ios --release \
   --obfuscate --split-debug-info="$PROJECT_DIR/build/debug-info" \
+  $DART_DEFINE_FLAG \
   2>/dev/null || true
 
 APP_PATH=""
