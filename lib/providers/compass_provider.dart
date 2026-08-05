@@ -168,7 +168,7 @@ class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   @override
-  void didChargeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed && _isAvailable) {
       _subscription?.cancel();
       _startListening();

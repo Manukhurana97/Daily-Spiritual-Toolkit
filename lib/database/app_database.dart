@@ -28,10 +28,9 @@ class AppDatabase {
             actual_mantra TEXT,
             target_direction TEXT,
             created_at TEXT NOT NULL,
-            created_at TEXT NOT NULL,
             tap_speed_ms INTEGER,
-            auv_tap_ms = REAL,
-            tap_sample_count Integer NOT NULL DEFAULT 0
+            avg_tap_ms REAL,
+            tap_sample_count INTEGER NOT NULL DEFAULT 0
           )
         ''');
         await db.execute('''
@@ -79,7 +78,7 @@ class AppDatabase {
         }
         if (oldVersion < 3) {
           try {
-            await db.execute("ALTER TABLE sankalps ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily");
+            await db.execute("ALTER TABLE sankalps ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily'");
           } catch(_) {
             // column may already exist
           }
@@ -93,9 +92,9 @@ class AppDatabase {
         }
         if (oldVersion < 5) {
           try {
-            await db.execute('ALTER TABLE mantra ADD COLUMN tap_speed_ms INTEGER');
-            await db.execute('ALTER TABLE mantra ADD COLUMN avg_tap_ms REAL');
-            await db.execute('ALTER TABLE mantra ADD COLUMN tap_sample_count INTEGER NOT NULL DEFAULT 0');
+            await db.execute('ALTER TABLE mantras ADD COLUMN tap_speed_ms INTEGER');
+            await db.execute('ALTER TABLE mantras ADD COLUMN avg_tap_ms REAL');
+            await db.execute('ALTER TABLE mantras ADD COLUMN tap_sample_count INTEGER NOT NULL DEFAULT 0');
           } catch (_) {
 
           }
@@ -145,12 +144,14 @@ class AppDatabase {
     await db.update('mantras', mantra.toMap(), where: 'id = ?', whereArgs: [mantra.id]);
   }
 
-  static Future<void> updateMantraAdaptiveStats(int mantraId, double avgTapMs, int tapSampleCount) async {
+  static Future<void> updateMantraAdaptiveStats(int id, double avgTapMs, int tapSampleCount) async {
     final db = await instance;
-    await db.update('mantra', {
-      'avg_tap_ms': avgTapMs,
-      'tap_sample_count': tapSampleCount,
-    }, where: 'id = ?', whereArgs: [mantraId]);
+    await db.update(
+        'mantras',
+        {'avg_tap_ms': avgTapMs, 'tap_sample_count': tapSampleCount,},
+        where: 'id = ?',
+        whereArgs: [id],
+    );
   }
 
   static Future<void> updateMantraTapSpeed(int mantraId, int? tapSpeedMs) async {
@@ -339,7 +340,7 @@ class AppDatabase {
 
   static Future<bool> hasActiveSankalpForMantra(int mantraId) async {
     final db = await instance;
-    final rows = await db.query("sanlaps", where: 'mantra_id = ? AND completed_at IS NOT NULL AND canceled_at IS NULL', whereArgs: [mantraId], limit: 1);
+    final rows = await db.query("sankalps", where: 'mantra_id = ? AND completed_at IS NULL AND canceled_at IS NULL', whereArgs: [mantraId], limit: 1);
     return rows.isNotEmpty;
   }
 

@@ -85,8 +85,8 @@ class AdService extends ChangeNotifier {
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          _isInterstitialReady = false;
-          _interstitialAd = null;
+          _isInterstitialReady = true;
+          _interstitialAd = ad;
 
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
@@ -153,7 +153,7 @@ class AdService extends ChangeNotifier {
   
   bool showPanchangAd() {
     if (!_shouldShowAd) return false;
-    if (!_panchangAdShownThisSession) return false;
+    if (_panchangAdShownThisSession) return false;
     
     _panchangAdShownThisSession = true;
     
@@ -165,7 +165,7 @@ class AdService extends ChangeNotifier {
   }
   
   void loadBanner() {
-    if (_shouldShowAd) return;
+    if (!_shouldShowAd) return;
     if (_isBannerReally) return;
     
     final adUnitId = defaultTargetPlatform == TargetPlatform.android

@@ -38,6 +38,8 @@ class PanchangData {
   final String? masaPurnimant;
   final String? masaAmant;
   final LocationTier accuracyTier;
+  final DateTime? sunriseDateTime;
+  final DateTime? sunsetDateTime;
 
   const PanchangData({
     required this.date,
@@ -73,6 +75,8 @@ class PanchangData {
     this.masaPurnimant,
     this.masaAmant,
     this.accuracyTier = LocationTier.fallback,
+    this.sunriseDateTime,
+    this.sunsetDateTime,
   });
 
   static PanchangData placeholder(String date, {String? locationLabel}) =>

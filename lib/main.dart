@@ -28,9 +28,45 @@ final appInitializedProvider = FutureProvider<bool>((ref) {
     await ref.read(sadhanaModeProvider).initialize();
     await ref.read(authServiceProvider).initialize();
     await ref.read(adProviderService).initialize();
+
+    // Auto-reschedule muhurta notifications if a new day has started
+    _refreshMuhurtaNotifications(ref);
+
     return true;
   });
 });
+
+/// Reschedule Brahma Muhurta / Sandhya Kaal for the next 7 days
+/// Called on every app launch after panchang + settings are ready.
+/// Only re-schedule if the dats has changed since last schedule.
+Future<void> _refreshMuhurtaNotifications(Ref ref) async {
+  try {
+    final needsRefresh = await NotificationService.needsRefresh();
+    if(!needsRefresh) return;
+
+    final settings = ref.read(settingsProvider);
+    final sub = ref.read(subscriptionProvider);
+    final panchang = ref.read(panchangProvider);
+
+    // Premium-only feature
+    if (!sub.isPremium) return;
+
+    final hasBrahma = settings.brahmaMuhurtaNotif;
+    final hasSandhya = settings.sandhyaKaalNotif;
+    if (!hasBrahma && !hasSandhya) return;
+
+    if (panchang.days.isEmpty) return;
+
+    await NotificationService.scheduleWeek(
+      days: panchang.days,
+      brahmaMuhurta: hasBrahma,
+      sandhyaKaal: hasSandhya,
+      sound: settings.notifSound,
+    );
+  } catch (e) {
+    debugPrint('[main] Failed to refresh muhurta notifications: $e');
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

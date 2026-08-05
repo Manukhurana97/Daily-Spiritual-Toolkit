@@ -204,7 +204,7 @@ class SettingsScreen extends ConsumerWidget {
                 _SwitchRow(
                   icon: Icons.wb_twilight_rounded,
                   title: 'Brahma Muhurta',
-                  subtitle: '1.5 hours before sunrise',
+                  subtitle: '1.5 hours before sunrise (7-day schedule)',
                   value: settings.brahmaMuhurtaNotif,
                   enabled: true,
                   isDark: isDark,
@@ -212,20 +212,14 @@ class SettingsScreen extends ConsumerWidget {
                     await settings.setBrahmaMuhurtaNotif(v);
                     if (v) {
                       await NotificationService.requestPermission();
-                      final sunrise = ref.read(panchangProvider).todaySunrise;
-                      if (sunrise != null) {
-                        await NotificationService.scheduleBrahmaMuhurta(sunrise, sound: settings.notifSound);
-                      }
-                    } else {
-                      await NotificationService.cancelBrahmaMuhurta();
-                    }
+                      await _rescheduleWeek(ref, settings);
                   },
                 ),
                 const Divider(height: 4),
                 _SwitchRow(
                   icon: Icons.nights_stay_rounded,
                   title: 'Sandhya Kaal',
-                  subtitle: 'At sunset time',
+                  subtitle: 'At sunset time  (7-day schedule)',
                   value: settings.sandhyaKaalNotif,
                   enabled: true,
                   isDark: isDark,
@@ -233,13 +227,8 @@ class SettingsScreen extends ConsumerWidget {
                     await settings.setSandhyaKaalNotif(v);
                     if (v) {
                       await NotificationService.requestPermission();
-                      final sunset = ref.read(panchangProvider).todaySunset;
-                      if (sunset != null) {
-                        await NotificationService.scheduleSandhyaKaal(sunset, sound: settings.notifSound);
-                      }
-                    } else {
-                      await NotificationService.cancelSandhyaKaal();
                     }
+                    await _rescheduleWeek(ref, settings);
                   },
                 ),
 
@@ -264,16 +253,7 @@ class SettingsScreen extends ConsumerWidget {
                         onChanged: (v) async {
                             if (v == null) return;
                             await settings.setNotifSound(v);
-                            // Reschedule with new sound
-                          final panchang = ref.read(panchangProvider);
-                          if (settings.brahmaMuhurtaNotif && panchang.todaySunrise != null) {
-                            await NotificationService.cancelBrahmaMuhurta();
-                            await NotificationService.scheduleBrahmaMuhurta(panchang.todaySunrise!, sound: v);
-                          }
-                          if (settings.sandhyaKaalNotif && panchang.todaySunset != null) {
-                            await NotificationService.cancelSandhyaKaal();
-                            await NotificationService.scheduleSandhyaKaal(panchang.todaySunset!, sound: v);
-                          }
+                            await _rescheduleWeek(ref, settings);
                         },
                       ),
                   ),
@@ -616,6 +596,27 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _rescheduleWeek(WidgetRef ref, SettingsNotifier settings) async {
+    final panchang = ref.read(panchangProvider);
+    if(panchang.days.isEmpty) return;
+
+    final hasBrahma = settings.brahmaMuhurtaNotif;
+    final hasSandhya = settings.sandhyaKaalNotif;
+
+    if(!hasBrahma && !hasSandhya) {
+      await NotificationService.cancelBrahmaMuhurta();
+      await NotificationService.cancelSandhyaKaal();
+      return;
+    }
+
+    await NotificationService.scheduleWeek(
+      days: panchang.days,
+      brahmaMuhurta: hasBrahma,
+      sandhyaKaal: hasSandhya,
+      sound: settings.notifSound,
     );
   }
 
@@ -1471,16 +1472,17 @@ class _BannerAdWidgetState extends ConsumerState<_BannerAdWidget> {
   @override
   Widget build(BuildContext context) {
     final adService = ref.watch(adProviderService);
-    if (!adService.isBannerReady || adService._bannerAd == null) {
+    final banner = adService.bannerId;
+    if (!adService.isBannerReady || banner == null) {
       return const SizedBox.shrink();
     }
     
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 16),
-      width: adService._bannerAd!.size.width.toDouble(),
-      height: adService._bannerAd!.size.height.toDouble(),
-      child: AdWidget(ad: adService._bannerAd!),
+      width: banner.size.width.toDouble(),
+      height: banner.size.height.toDouble(),
+      child: AdWidget(ad: banner),
     );
   }
 }

@@ -202,7 +202,7 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
                           onTap: () {
                             japa.endSession();
                             ref.read(audioServiceProvider).stop();
-                            ref.read(adsProviderService).showJapaSessionAd();
+                            ref.read(adProviderService).showJapaSessionAd();
                           },
                         ),
                         const SizedBox(width: 12),

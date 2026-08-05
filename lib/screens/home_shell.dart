@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nitya_sadhana/providers/panchang_provider.dart';
+import 'package:nitya_sadhana/providers/settings_provider.dart';
 import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
 import 'package:nitya_sadhana/screens/sankalp/sankalp_screen.dart';
+import 'package:nitya_sadhana/services/notification_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
 
 import '../core/theme/app_theme.dart';
@@ -13,7 +15,7 @@ import 'panchang/panchang_screen.dart';
 import 'compass/compass_screen.dart';
 import 'settings/settings_screen.dart';
 
-class HomeShell extends ConsumerStatefulWidget {
+class HomeShell extends ConsumerStatefulWidget with WidgetsBindingObserver{
   const HomeShell({super.key});
 
   @override
@@ -24,6 +26,55 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   int _currentIndex = 0;
 
   static const _titles = ['Japa', 'Panchang', 'Compass', 'Sankalp', 'Settings'];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.initState();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _refreshMuhurtaOnResume();
+    }
+  }
+
+  Future<void> _refreshMuhurtaOnResume() async {
+    try {
+      final needsRefresh = await NotificationService.needsRefresh();
+      if (!needsRefresh) return;
+
+      final settings = ref.read(settingsProvider);
+      final sub = ref.read(subscriptionProvider);
+      if (!sub.isPremium) return;
+
+      final hasBrahma = settings.brahmaMuhurtaNotif;
+      final hasSandhya = settings.sandhyaKaalNotif;
+      if (!hasBrahma && !hasSandhya) return;
+
+      // Refresh panchang first (recalculate sunrise/sunset for new location/day)
+      await ref.read(panchangProvider).refreshIfNeeded();
+      final panchang = ref.read(panchangProvider);
+      if(panchang.days.isEmpty) return;
+
+      await NotificationService.scheduleWeek(
+        days: panchang.days,
+        brahmaMuhurta: hasBrahma,
+        sandhyaKaal: hasSandhya,
+        sound: settings.notifSound,
+      );
+      debugPrint('[HomeShell] Muhurta notifications refreshed on resume');
+    } catch (e) {
+      debugPrint('[HomeShell] Failed to refresh muhurta on resume: $e');
+    }
+  }
 
   static const _screens = [
     JapaScreen(),

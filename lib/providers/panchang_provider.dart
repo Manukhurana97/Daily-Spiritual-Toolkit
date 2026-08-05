@@ -158,6 +158,8 @@ class PanchangNotifier extends ChangeNotifier {
       masaPurnimant: result.masa.purnimantName,
       masaAmant: result.masa.amantName,
       accuracyTier: tier,
+      sunriseDateTime: result.sunrise,
+      sunsetDateTime: result.sunset,
     );
   }
 
