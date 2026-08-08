@@ -257,6 +257,20 @@ class NotificationService {
     );
   }
 
+  static DarwinNotificationDetails _iosDetails(String sound) {
+    if (sound == 'default') {
+      return const DarwinNotificationDetails(
+        presentAlert: true,
+        presentSound: true,
+      );
+    }
+    return DarwinNotificationDetails(
+      presentSound: true,
+      presentAlert: true,
+      sound: '$sound.aiff',
+    );
+  }
+
   static AndroidNotificationDetails _androidDetails({
     required String channelId,
     required String channelName,
@@ -283,10 +297,5 @@ class NotificationService {
       playSound: true,
       sound: RawResourceAndroidNotificationSound(sound),
     );
-  }
-
-  static DarwinNotificationDetails _iosDetails(String sound) {
-    if (sound == 'default') return const DarwinNotificationDetails();
-    return DarwinNotificationDetails(sound: '$sound.mp3');
   }
 }

@@ -9,6 +9,7 @@ import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
 import 'package:nitya_sadhana/services/ad_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
+import 'package:path/path.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
@@ -49,6 +50,9 @@ class SettingsScreen extends ConsumerWidget {
                     name: mantra.name,
                     actualMantra: mantra.actualMantra,
                     direction: mantra.targetDirection,
+                    activeDaysDisplay: mantra.activeDayDisplay,
+                    bestTimesDisplay: mantra.bestTimeDisplay,
+                    bestTime: mantra.bestTime,
                     isDefault: isDefault,
                     canDelete: japa.mantras.length > 1,
                     onSetDefault: () => settings.setDefaultMantraId(mantra.id),
@@ -213,6 +217,7 @@ class SettingsScreen extends ConsumerWidget {
                     if (v) {
                       await NotificationService.requestPermission();
                       await _rescheduleWeek(ref, settings);
+                    }
                   },
                 ),
                 const Divider(height: 4),
@@ -644,77 +649,131 @@ class SettingsScreen extends ConsumerWidget {
     final nameCtrl = TextEditingController(text: mantra.name);
     final mantraCtrl = TextEditingController(text: mantra.actualMantra ?? '');
     final dirCtrl = TextEditingController(text: mantra.targetDirection ?? '');
+    final selectedDays = <String>{...mantra.activeDayList};
+    var bestTime = mantra.bestTime;
 
     showDialog(
       context: context,
       builder: (ctx) {
-        final isDark = Theme.of(ctx).brightness == Brightness.dark;
-        return AlertDialog(
-          title: const Text('Edit Mantra'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: nameCtrl,
-                  autofocus: true,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(
-                    labelText: 'Mantra Name *',
-                    hintText: 'e.g Radha',
-                    border: const OutlineInputBorder(),
-                    labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                  ),
-                ),
-                const SizedBox(height: 14),
-                TextField(
-                  controller: mantraCtrl,
-                  textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      labelText: 'Description / Actual Mantra',
-                      hintText: 'e.g Full mantra text or notes',
-                      border: const OutlineInputBorder(),
-                      helperText: 'optional - full text or description',
-                      helperMaxLines: 2,
+        return StatefulBuilder(
+          builder: (ctx, setDialogState) {
+            final isDark = Theme.of(ctx).brightness == Brightness.dark;
+            return AlertDialog(
+              title: const Text('Edit Mantra'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: nameCtrl,
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        labelText: 'Mantra Name *',
+                        hintText: 'e.g Radha',
+                        border: const OutlineInputBorder(),
+                        labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                      ),
                     ),
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: mantraCtrl,
+                      textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          labelText: 'Description / Actual Mantra',
+                          hintText: 'e.g Full mantra text or notes',
+                          border: const OutlineInputBorder(),
+                          helperText: 'optional - full text or description',
+                          helperMaxLines: 2,
+                        ),
+                    ),
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: dirCtrl,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        labelText: 'Facing Direction',
+                        hintText: 'e.g East, West, North-east',
+                        border: const OutlineInputBorder(),
+                        helperText: 'Optional - direction to face during japa',
+                        helperMaxLines: 2,
+                        labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary)
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Text('Active Day', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
+                    const SizedBox(height: 6),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 4,
+                      children: Mantra.allDayCodes.map((day) {
+                        final selected = selectedDays.contains(day);
+                        return FilterChip(
+                            label: Text(Mantra.dayLabels[day]!, style: TextStyle(fontSize: 12, color: selected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary))),
+                            selected: selected,
+                            onSelected: (v) => setDialogState(() {
+                              v ? selectedDays.add(day) : selectedDays.remove(day);
+                            }),
+                          selectedColor: AppColors.saffron,
+                          checkmarkColor: Colors.white,
+                          visualDensity: VisualDensity.compact,
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 18),
+                    Text('Best Time', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
+                    const SizedBox(height: 6),
+                    SegmentedButton<String>(
+                        segments: const [
+                          ButtonSegment(value: 'morning', icon: Icon(Icons.wb_sunny_rounded, size: 16,), label: Text('Morning', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'anytime', icon: Icon(Icons.wb_sunny_rounded, size: 16,), label: Text('Anytime', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'evening', icon: Icon(Icons.wb_sunny_rounded, size: 16,), label: Text('Evening', style: TextStyle(fontSize: 12))),
+                        ],
+                        selected: {bestTime},
+                        onSelectionChanged: (v) => setDialogState(() => bestTime = v.first),
+                      style: ButtonStyle(
+                        visualDensity: VisualDensity.compact,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    )
+                  ],
                 ),
-                const SizedBox(height: 14),
-                TextField(
-                  controller: dirCtrl,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(
-                    labelText: 'Facing Direction',
-                    hintText: 'e.g East, West, North-east',
-                    border: const OutlineInputBorder(),
-                    helperText: 'Optional - direction to face during japa',
-                    helperMaxLines: 2,
-                    labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary)
-                  ),
-                )
+              ),
+              actions: [
+                TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                TextButton(
+                    onPressed: () {
+                      final name = nameCtrl.text.trim();
+                      if (name.isEmpty) return;
+                      if (selectedDays.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Select at least one day '), behavior: SnackBarBehavior.floating),
+                        );
+                        return;
+                      }
+                      final activeDays = selectedDays.length == 7
+                        ? 'all'
+                      : Mantra.allDayCodes.where(selectedDays.contains).join(',');
+                      ref.read(japaProvider).updateMantraDetails(
+                          mantra.copyWith(
+                            name: name,
+                            actualMantra: mantraCtrl.text.trim().isEmpty ? null : mantraCtrl.text.trim(),
+                            targetDirection: dirCtrl.text.trim().isEmpty ? null : dirCtrl.text.trim(),
+                            clearActualMantra: mantraCtrl.text.trim().isEmpty,
+                            clearTargetDirection: dirCtrl.text.trim().isEmpty,
+                            activeDays: activeDays,
+                            bestTime: bestTime
+                          )
+                      );
+                      Navigator.pop(ctx);
+                    },
+                  child: const Text('Save'),
+                ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-            TextButton(
-                onPressed: () {
-                  final name = nameCtrl.text.trim();
-                  if (name.isEmpty) return;
-                  ref.read(japaProvider).updateMantraDetails(
-                      mantra.copyWith(
-                        name: name,
-                        actualMantra: mantraCtrl.text.trim().isEmpty ? null : mantraCtrl.text.trim(),
-                        targetDirection: dirCtrl.text.trim().isEmpty ? null : dirCtrl.text.trim(),
-                        clearActualMantra: mantraCtrl.text.trim().isEmpty,
-                        clearTargetDirection: dirCtrl.text.trim().isEmpty,
-                      )
-                  );
-                  Navigator.pop(ctx);
-                }, child: const Text('Save'),
-            ),
-          ],
+            );
+          }
         );
-      }
+      },
     );
   }
 
@@ -722,76 +781,82 @@ class SettingsScreen extends ConsumerWidget {
     final nameCtrl = TextEditingController();
     final mantraCtrl = TextEditingController();
     final dirCtrl = TextEditingController();
+    final selectedDays = <String>{...Mantra.allDayCodes};
+    var bestTime = 'anyTime';
 
     showDialog(
       context: context,
       builder: (ctx) {
-        final isDark = Theme.of(ctx).brightness == Brightness.dark;
-        return AlertDialog(
-        title: const Text('Add Mantra'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nameCtrl,
-                autofocus: true,
-                textCapitalization: TextCapitalization.words,
-                decoration: InputDecoration(
-                    labelText: 'Mantra Name *',
-                    hintText: 'e.g. Om Namah Shivaya',
-                    border: const OutlineInputBorder(),
-                    labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                ),
+        return StatefulBuilder(
+            builder: (ctx, setDialogState) {
+            final isDark = Theme.of(ctx).brightness == Brightness.dark;
+            return AlertDialog(
+            title: const Text('Add Mantra'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: nameCtrl,
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                        labelText: 'Mantra Name *',
+                        hintText: 'e.g. Om Namah Shivaya',
+                        border: const OutlineInputBorder(),
+                        labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  TextField(
+                    controller: mantraCtrl,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                      labelText: 'Full Mantra Text',
+                      hintText: 'e.g/ Om Namah Bhagsvate Vasudevaya',
+                      labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  TextField(
+                    controller: dirCtrl,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      labelText: 'Facing Direction',
+                      hintText: 'e.g East, West, North-East',
+                      helperText: 'Optional - direction to face during japa',
+                      helperMaxLines: 2,
+                      labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 14),
-              TextField(
-                controller: mantraCtrl,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  labelText: 'Full Mantra Text',
-                  hintText: 'e.g/ Om Namah Bhagsvate Vasudevaya',
-                  labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(
+                onPressed: () {
+                  final name = nameCtrl.text.trim();
+                  if (name.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating,)
+                    );
+                    return;
+                  }
+                  ref.read(japaProvider).addMantra(
+                    name,
+                    actualMantra: mantraCtrl.text.trim().isEmpty ? null: mantraCtrl.text.trim(),
+                    targetDirection: dirCtrl.text.trim().isEmpty ? null: dirCtrl.text.trim(),
+                  );
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Add'),
               ),
-              const SizedBox(height: 14),
-              TextField(
-                controller: dirCtrl,
-                textCapitalization: TextCapitalization.words,
-                decoration: InputDecoration(
-                  labelText: 'Facing Direction',
-                  hintText: 'e.g East, West, North-East',
-                  helperText: 'Optional - direction to face during japa',
-                  helperMaxLines: 2,
-                  labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                ),
-              )
             ],
-          ),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              final name = nameCtrl.text.trim();
-              if (name.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating,)
-                );
-                return;
-              }
-              ref.read(japaProvider).addMantra(
-                name,
-                actualMantra: mantraCtrl.text.trim().isEmpty ? null: mantraCtrl.text.trim(),
-                targetDirection: dirCtrl.text.trim().isEmpty ? null: dirCtrl.text.trim(),
-              );
-              Navigator.pop(ctx);
-            },
-            child: const Text('Add'),
-          ),
-        ],
-      );
+          );
+            }
+        );
       }
     );
   }
@@ -801,6 +866,9 @@ class _MantraTile extends StatelessWidget {
   final String name;
   final String? actualMantra;
   final String? direction;
+  final String activeDaysDisplay;
+  final String bestTimesDisplay;
+  final String bestTime;
   final bool isDefault;
   final bool canDelete;
   final VoidCallback onSetDefault;
@@ -812,6 +880,9 @@ class _MantraTile extends StatelessWidget {
     required this.name,
     this.actualMantra,
     this.direction,
+    required this.activeDaysDisplay,
+    required this.bestTimesDisplay,
+    required this.bestTime,
     required this.isDefault,
     required this.canDelete,
     required this.onSetDefault,
@@ -820,8 +891,19 @@ class _MantraTile extends StatelessWidget {
     required this.isDark,
   });
 
+  IconData get _bestTimeIcon {
+    switch (bestTime) {
+      case 'morning': return Icons.wb_sunny_rounded;
+      case 'evening': return Icons.nights_stay_rounded;
+      default: return Icons.access_time_rounded;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final subtitleParts = <String>[];
+    if (direction != null) subtitleParts.add('Face $direction');
+    if (activeDaysDisplay != 'Every day') subtitleParts.add(activeDaysDisplay);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Container(
@@ -849,10 +931,22 @@ class _MantraTile extends StatelessWidget {
                       color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                     ),
                   ),
-                  if (direction != null)
+                  if (subtitleParts.isNotEmpty)
                     Text(
-                      'Face ${direction!}',
+                      subtitleParts.join(' . '),
                       style: TextStyle(fontSize: 11, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    ),
+                  if (bestTime != 'anytime')
+                    Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(_bestTimeIcon, size: 12, color: bestTime == 'morning' ? Colors.orange : Colors.indigo),
+                            const SizedBox(width: 3,),
+                            Text(bestTimesDisplay, style: TextStyle(fontSize: 11, color: bestTime == 'morning' ? Colors.orange : Colors.indigo)),
+                          ],
+                        ),
                     ),
                 ],
               ),

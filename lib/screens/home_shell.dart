@@ -29,8 +29,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
+    super.dispose();
   }
 
   @override

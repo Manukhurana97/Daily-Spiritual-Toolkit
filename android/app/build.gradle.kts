@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -27,41 +29,46 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        val admodAppId = project.findProperties("AD_MOB_Ap_ID_ANDROID")?.toString()
-        ? : "ca-app-pub-3940256099942544~3347511713"
-        manifestPlaceholders["ANMOB_APP_ID"] = admobAppId
+        val admobAppId =
+            project.findProperty("AD_MOB_APP_ID_ANDROID")?.toString()
+                ?: "ca-app-pub-3940256099942544~3347511713"
+
+        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
     }
 
-    val keyPorpsFile = rootProject.file("key.properties")
-    val hasReleasekey = keyPropsFile.exists();
+    val keyPropsFile = rootProject.file("key.properties")
+    val hasReleaseKey = keyPropsFile.exists()
 
-    if (hasReleasekey) {
-        val keyProps = java.util.Properties().apply {
-            keyPropsFile.inputStream().use { load(it) }
+    if (hasReleaseKey) {
+        val keyProps = Properties()
+
+        keyPropsFile.inputStream().use { input ->
+            keyProps.load(input)
         }
+
         signingConfigs {
             create("release") {
-                storeFile = file(keyProps["storeFile"] as String)
-                storePassword = keyProps["storePassword"] as String
-                keyAlias = keyProps["keyAlias"] as String
-                keyPassword = keyProps["keyPassword"] as String
+                storeFile = file(keyProps.getProperty("storeFile"))
+                storePassword = keyProps.getProperty("storePassword")
+                keyAlias = keyProps.getProperty("keyAlias")
+                keyPassword = keyProps.getProperty("keyPassword")
             }
         }
     }
 
-
     buildTypes {
         release {
-            signingConfig = if (hasReleasekey) {
+            signingConfig = if (hasReleaseKey) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
             }
-            // Shrink optimize and obfuscate native native/java code
+
             isMinifyEnabled = true
             isShrinkResources = true
+
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt")
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }

@@ -18,90 +18,58 @@ class AppDatabase {
     final path = p.join(dbPath, 'naam_jap.db');
 
     return openDatabase(
-      path,
-      version: 5,
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE mantras (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            actual_mantra TEXT,
-            target_direction TEXT,
-            created_at TEXT NOT NULL,
-            tap_speed_ms INTEGER,
-            avg_tap_ms REAL,
-            tap_sample_count INTEGER NOT NULL DEFAULT 0
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE japa_sessions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            mantra_id INTEGER NOT NULL,
-            count INTEGER NOT NULL,
-            started_at TEXT NOT NULL,
-            ended_at TEXT NOT NULL,
-            FOREIGN KEY (mantra_id) REFERENCES mantras(id)
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE sankalps (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            mantra_id INTEGER NOT NULL,
-            total_goal INTEGER NOT NULL,
-            start_date TEXT NOT NULL,
-            end_date TEXT NOT NULL,
-            created_at TEXT NOT NULL,
-            completed_at TEXT,
-            canceled_at TEXT,
-            mode TEXT NOT NULL DEFAULT 'daily',
-            FOREIGN KEY (mantra_id) REFERENCES mantras(id)
-          )
-        ''');
-      },
-      onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) {
-          await db.execute('ALTER TABLE mantras ADD COLUMN actual_mantra TEXT');
-          await db.execute('ALTER TABLE mantras ADD COLUMN target_direction TEXT');
-          await db.execute('''
-            CREATE TABLE sankalps (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              mantra_id INTEGER NOT NULL,
-              total_goal INTEGER NOT NULL,
-              start_date TEXT NOT NULL,
-              end_date TEXT NOT NULL,
-              created_at TEXT NOT NULL,
-              completed_at TEXT,
-              mode TEXT NOT NULL DEFAULT 'daily',
-              FOREIGN KEY (mantra_id) REFERENCES mantras(id)
-            )
-          ''');
+        path,
+        version: 1,
+        onCreate: (db, version) => _createTable(db),
+        onUpgrade: (db, oldVersion, newVersion) async {
+          await db.execute("DROP TABLE IF EXISTS sankalps");
+          await db.execute("DROP TABLE IF EXISTS mantras");
+          await db.execute("DROP TABLE IF EXISTS mantras");
         }
-        if (oldVersion < 3) {
-          try {
-            await db.execute("ALTER TABLE sankalps ADD COLUMN mode TEXT NOT NULL DEFAULT 'daily'");
-          } catch(_) {
-            // column may already exist
-          }
-        }
-        if (oldVersion < 4) {
-          try {
-            await db.execute("ALTER TABLE sankalps ADD COLUMN canceled_at TEXT");
-          } catch(_) {
-            // column may already exist
-          }
-        }
-        if (oldVersion < 5) {
-          try {
-            await db.execute('ALTER TABLE mantras ADD COLUMN tap_speed_ms INTEGER');
-            await db.execute('ALTER TABLE mantras ADD COLUMN avg_tap_ms REAL');
-            await db.execute('ALTER TABLE mantras ADD COLUMN tap_sample_count INTEGER NOT NULL DEFAULT 0');
-          } catch (_) {
-
-          }
-        }
-      },
     );
   }
+
+    static Future<void> _createTable(Database db) async {
+      await db.execute('''
+        CREATE TABLE mantras (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          actual_mantra TEXT,
+          target_direction TEXT,
+          created_at TEXT NOT NULL,
+          tap_speed_ms INTEGER,
+          avg_tap_ms REAL,
+          tap_sample_count INTEGER NOT NULL DEFAULT 0,
+          active_days TEXT NOT NULL DEFAULT 'all',
+          best_time TEXT NOT NULL DEFAULT 'anytime'
+        )
+      ''');
+      await db.execute('''
+        CREATE TABLE mantras (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          mantra_id INTEGER NOT NULL,
+          count INTEGER NOT NULL,
+          started_at TEXT NOT NULL,
+          ended_at TEXT NOT NULL,
+          FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+          actual_mantra TEXT
+        )
+      ''');
+      await db.execute('''
+        CREATE TABLE sankalps (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          mantra_id INTEGER NOT NULL,
+          total_goal INTEGER NOT NULL,
+          start_date TEXT NOT NULL,
+          end_date TEXT NOT NULL,
+          created_at TEXT NOT NULL,
+          completed_at TEXT,
+          canceled_at TEXT,
+          mode TEXT NOT NULL DEFAULT 'daily',
+          FOREIGN KEY (mantra_id) REFERENCES mantras(id)
+        )
+      ''');
+    }
 
   // ── Mantras ──
 
@@ -114,14 +82,18 @@ class AppDatabase {
   static Future<Mantra> insertMantra(
       String name, {
         String? actualMantra,
-        String? targetDirection
+        String? targetDirection,
+        String activeDays = 'all',
+        String bestTime = 'anytime',
       }) async {
     final db = await instance;
     final mantra = Mantra(
         name: name,
         actualMantra: actualMantra,
         targetDirection: targetDirection,
-        createdAt: DateTime.now()
+        createdAt: DateTime.now(),
+        activeDays: activeDays,
+        bestTime: bestTime,
     );
     final id = await db.insert('mantras', mantra.toMap());
     return mantra.copyWith(id: id);

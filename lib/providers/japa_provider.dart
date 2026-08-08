@@ -257,6 +257,8 @@ class JapaNotifier extends ChangeNotifier {
       String name, {
         String? actualMantra,
         String? targetDirection,
+        String activeDays = 'all',
+        String bestTime = 'anytime',
       }) async {
     final trimmed = name.trim();
     if (trimmed.isEmpty) return false;
@@ -266,6 +268,8 @@ class JapaNotifier extends ChangeNotifier {
       trimmed,
       actualMantra: actualMantra?.trim(),
       targetDirection: targetDirection?.trim(),
+      activeDays: activeDays,
+      bestTime: bestTime
     );
     _mantras.add(mantra);
     notifyListeners();
