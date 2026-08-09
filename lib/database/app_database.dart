@@ -57,8 +57,8 @@ class AppDatabase {
           count INTEGER NOT NULL,
           started_at TEXT NOT NULL,
           ended_at TEXT NOT NULL,
-          FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-          actual_mantra TEXT
+          actual_mantra TEXT,
+          FOREIGN KEY (mantra_id) REFERENCES mantras(id)
         )
       ''');
       await db.execute('''
