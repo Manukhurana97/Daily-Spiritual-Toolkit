@@ -15,28 +15,28 @@ import 'panchang/panchang_screen.dart';
 import 'compass/compass_screen.dart';
 import 'settings/settings_screen.dart';
 
-class HomeShell extends ConsumerStatefulWidget with WidgetsBindingObserver{
+class HomeShell extends ConsumerStatefulWidget{
   const HomeShell({super.key});
 
   @override
   ConsumerState<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends ConsumerState<HomeShell> {
+class _HomeShellState extends ConsumerState<HomeShell> with WidgetsBindingObserver{
   int _currentIndex = 0;
 
   static const _titles = ['Japa', 'Panchang', 'Compass', 'Sankalp', 'Settings'];
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addObserver(this);
-    super.dispose();
   }
 
   @override
   void dispose() {
-    super.initState();
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override

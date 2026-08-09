@@ -9,7 +9,6 @@ import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
 import 'package:nitya_sadhana/services/ad_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
-import 'package:path/path.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
@@ -725,9 +724,9 @@ class SettingsScreen extends ConsumerWidget {
                     const SizedBox(height: 6),
                     SegmentedButton<String>(
                         segments: const [
-                          ButtonSegment(value: 'morning', icon: Icon(Icons.wb_sunny_rounded, size: 16,), label: Text('Morning', style: TextStyle(fontSize: 12))),
-                          ButtonSegment(value: 'anytime', icon: Icon(Icons.wb_sunny_rounded, size: 16,), label: Text('Anytime', style: TextStyle(fontSize: 12))),
-                          ButtonSegment(value: 'evening', icon: Icon(Icons.wb_sunny_rounded, size: 16,), label: Text('Evening', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'morning', icon: Icon(Icons.wb_sunny_rounded, size: 16), label: Text('Morning', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'anytime', icon: Icon(Icons.access_time_rounded, size: 16), label: Text('Anytime', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'evening', icon: Icon(Icons.nights_stay_rounded, size: 16), label: Text('Evening', style: TextStyle(fontSize: 12))),
                         ],
                         selected: {bestTime},
                         onSelectionChanged: (v) => setDialogState(() => bestTime = v.first),
@@ -782,79 +781,80 @@ class SettingsScreen extends ConsumerWidget {
     final mantraCtrl = TextEditingController();
     final dirCtrl = TextEditingController();
     final selectedDays = <String>{...Mantra.allDayCodes};
-    var bestTime = 'anyTime';
+    var bestTime = 'anytime';
 
     showDialog(
       context: context,
       builder: (ctx) {
         return StatefulBuilder(
-            builder: (ctx, setDialogState) {
+          builder: (ctx, setDialogState) {
             final isDark = Theme.of(ctx).brightness == Brightness.dark;
             return AlertDialog(
-            title: const Text('Add Mantra'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: nameCtrl,
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                        labelText: 'Mantra Name *',
-                        hintText: 'e.g. Om Namah Shivaya',
-                        border: const OutlineInputBorder(),
+              title: const Text('Add Mantra'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      controller: nameCtrl,
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                          labelText: 'Mantra Name *',
+                          hintText: 'e.g. Om Namah Shivaya',
+                          border: const OutlineInputBorder(),
+                          labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: mantraCtrl,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                        labelText: 'Full Mantra Text',
+                        hintText: 'e.g/ Om Namah Bhagsvate Vasudevaya',
                         labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
-                  TextField(
-                    controller: mantraCtrl,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      labelText: 'Full Mantra Text',
-                      hintText: 'e.g/ Om Namah Bhagsvate Vasudevaya',
-                      labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  TextField(
-                    controller: dirCtrl,
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                      labelText: 'Facing Direction',
-                      hintText: 'e.g East, West, North-East',
-                      helperText: 'Optional - direction to face during japa',
-                      helperMaxLines: 2,
-                      labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                    ),
-                  )
-                ],
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: dirCtrl,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        labelText: 'Facing Direction',
+                        hintText: 'e.g East, West, North-East',
+                        helperText: 'Optional - direction to face during japa',
+                        helperMaxLines: 2,
+                        labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-              TextButton(
-                onPressed: () {
-                  final name = nameCtrl.text.trim();
-                  if (name.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating,)
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                TextButton(
+                  onPressed: () {
+                    final name = nameCtrl.text.trim();
+                    if (name.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating,)
+                      );
+                      return;
+                    }
+                    ref.read(japaProvider).addMantra(
+                      name,
+                      actualMantra: mantraCtrl.text.trim().isEmpty ? null: mantraCtrl.text.trim(),
+                      targetDirection: dirCtrl.text.trim().isEmpty ? null: dirCtrl.text.trim(),
                     );
-                    return;
-                  }
-                  ref.read(japaProvider).addMantra(
-                    name,
-                    actualMantra: mantraCtrl.text.trim().isEmpty ? null: mantraCtrl.text.trim(),
-                    targetDirection: dirCtrl.text.trim().isEmpty ? null: dirCtrl.text.trim(),
-                  );
-                  Navigator.pop(ctx);
-                },
-                child: const Text('Add'),
-              ),
-            ],
-          );
+                    Navigator.pop(ctx);
+                  },
+                  child: const Text('Add'),
+                ),
+              ],
+            );
             }
         );
       }
