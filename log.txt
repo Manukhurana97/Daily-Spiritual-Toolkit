@@ -74,64 +74,54 @@ If no such version exists, report the issue to the plugin. If necessary, here is
 an issue against a plugin: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers#report-incompatible-kotlin-gradle-plugin-usage-to-plugin-authors
 
 If you are a plugin author, please migrate your plugin to Built-in Kotlin using this guide: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
-Running Gradle task 'assembleDebug'...                             18.5s
+Running Gradle task 'assembleDebug'...                             11.2s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...          12.0s
-I/FlutterActivityAndFragmentDelegate(15264): If you are attempting to set --enable-dart-profiling via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --enable-dart-profiling or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
-D/FlutterJNI(15264): Beginning load of flutter...
-D/FlutterJNI(15264): flutter (null) was loaded normally!
-I/flutter (15264): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
-D/FlutterGeolocator(15264): Attaching Geolocator to activity
-D/FlutterRenderer(15264): Width is zero. 0,0
-I/flutter (15264): [2026-08-09T13:28:32.290326] [INFO] ========== APP STARTED ==========
-I/flutter (15264):
-I/flutter (15264): [2026-08-09T13:28:32.324065] [INFO] Log file: /data/user/0/com.manukhurana.naam_jap/app_flutter/log.txt
-I/flutter (15264):
-I/SurfaceView(15264): 109972219 onAttachedToWindow
-D/FlutterRenderer(15264): Width is zero. 0,0
-D/WindowOnBackDispatcher(15264):  predictive settings is disabled for com.manukhurana.naam_jap
-D/WindowOnBackDispatcher(15264):  predictive settings is disabled for com.manukhurana.naam_jap
-D/ViewRootImplExtImpl(15264): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=0, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258291200, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
-D/VRI[MainActivity](15264): relayoutWindow result, sizeChanged:true, surfaceControlChanged:true, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(0, 0), mWidth:-1, mHeight:-1, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-W/VRI[MainActivity](15264): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(0, 0), format:-3, blastBufferQueue:null
-E/hurana.naam_jap(15264): [perfctl] 15264 15264 FPSGO ver:0
-E/hurana.naam_jap(15264): [perfctl] 0 0 0 0
-D/BufferQueueConsumer(15264): [](id:3ba000000000,api:0,p:-1,c:15264) connect: controlledByApp=false
-D/BufferQueueConsumer(15264): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0(BLAST Consumer)0](id:3ba000000000,api:0,p:-1,c:15264) setMaxAcquiredBufferCount: 5
-D/HWUI    (15264): createSurface new attribs array
-D/libEGL  (15264): this is from skia gles
-D/FlutterJNI(15264): Sending viewport metrics to the engine.
-D/SurfaceView(15264): 109972219, SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity], layerid: 21402 createBlastSurfaceControls
-D/BufferQueueConsumer(15264): [](id:3ba000000001,api:0,p:-1,c:15264) connect: controlledByApp=false
-D/BufferQueueConsumer(15264): [68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1(BLAST Consumer)1](id:3ba000000001,api:0,p:-1,c:15264) setMaxAcquiredBufferCount: 5
-I/SurfaceView(15264): 109972219 visibleChanged -- surfaceCreated
-D/Surface (15264): Surface::dispatchSetGameApi
-D/Surface (15264): dispatchSetGameApi pid[15264] tid[21641] GameApi[1]
-D/Surface (15264): dispatchSetGameApi res:0
-D/vulkan  (15264): set game api vulkan successfully
-D/BLASTBufferQueue(15264): 68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getBufferCacheFlag 0
-D/BLASTBufferQueue(15264): 68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getMaxAcquireBufferCount 5
-D/BLASTBufferQueue(15264): 68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getOrignalMaxAcquireBufferCount 5
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 38
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(15264): Invalid base format! req_base_format = 0x0, req_format = 0x38
-E/mali_gralloc(15264): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 3b
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(15264): Invalid base format! req_base_format = 0x0, req_format = 0x3b
-E/mali_gralloc(15264): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 38
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(15264): Invalid base format! req_base_format = 0x0, req_format = 0x38
-E/mali_gralloc(15264): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 3b
-E/mali_gralloc(15264): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(15264): Invalid base format! req_base_format = 0x0, req_format = 0x3b
-E/mali_gralloc(15264): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
-D/BLASTBufferQueue(15264): 68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getBufferCacheFlag 0
-D/BLASTBufferQueue(15264): 68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getMaxAcquireBufferCount 5
-D/BLASTBufferQueue(15264): 68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getOrignalMaxAcquireBufferCount 5
-Syncing files to device RMX3944...                                  70ms
+Installing build/app/outputs/flutter-apk/app-debug.apk...           5.1s
+I/FlutterActivityAndFragmentDelegate(26962): If you are attempting to set --enable-dart-profiling via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --enable-dart-profiling or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+D/FlutterJNI(26962): Beginning load of flutter...
+D/FlutterJNI(26962): flutter (null) was loaded normally!
+I/flutter (26962): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+D/FlutterGeolocator(26962): Attaching Geolocator to activity
+D/FlutterRenderer(26962): Width is zero. 0,0
+I/flutter (26962): [2026-08-09T14:37:23.811633] [INFO] ========== APP STARTED ==========
+I/flutter (26962):
+D/FlutterRenderer(26962): Width is zero. 0,0
+D/BufferQueueConsumer(26962): [](id:695200000000,api:0,p:-1,c:26962) connect: controlledByApp=false
+D/BufferQueueConsumer(26962): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0(BLAST Consumer)0](id:695200000000,api:0,p:-1,c:26962) setMaxAcquiredBufferCount: 5
+D/HWUI    (26962): createSurface new attribs array
+D/libEGL  (26962): this is from skia gles
+D/FlutterJNI(26962): Sending viewport metrics to the engine.
+D/SurfaceView(26962): 268002442, SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity], layerid: 21463 createBlastSurfaceControls
+D/BufferQueueConsumer(26962): [](id:695200000001,api:0,p:-1,c:26962) connect: controlledByApp=false
+D/BufferQueueConsumer(26962): [ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1(BLAST Consumer)1](id:695200000001,api:0,p:-1,c:26962) setMaxAcquiredBufferCount: 5
+I/SurfaceView(26962): 268002442 visibleChanged -- surfaceCreated
+D/Surface (26962): Surface::dispatchSetGameApi
+D/Surface (26962): dispatchSetGameApi pid[26962] tid[29631] GameApi[1]
+D/Surface (26962): dispatchSetGameApi res:0
+D/vulkan  (26962): set game api vulkan successfully
+D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getBufferCacheFlag 0
+D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getMaxAcquireBufferCount 5
+D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getOrignalMaxAcquireBufferCount 5
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 38
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
+E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x38
+E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 3b
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
+E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x3b
+E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 38
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
+E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x38
+E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 3b
+E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
+E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x3b
+E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getBufferCacheFlag 0
+D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getMaxAcquireBufferCount 5
+D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getOrignalMaxAcquireBufferCount 5
+Syncing files to device RMX3944...                                  82ms
 
 Flutter run key commands.
 r Hot reload. 🔥🔥🔥
@@ -141,417 +131,405 @@ d Detach (terminate "flutter run" but leave application running).
 c Clear the screen
 q Quit (terminate the application on the device).
 
-A Dart VM Service on RMX3944 is available at: http://127.0.0.1:61582/x9sVQ3_Snv8=/
-The Flutter DevTools debugger and profiler on RMX3944 is available at: http://127.0.0.1:61582/x9sVQ3_Snv8=/devtools/?uri=ws://127.0.0.1:61582/x9sVQ3_Snv8=/ws
-D/SurfaceView(15264): 109972219 handleSyncNoBuffer
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/FlutterGeolocator(15264): Creating service.
-D/FlutterGeolocator(15264): Binding to location service.
-I/flutter (15264): [2026-08-09T13:28:32.733009] [INFO] ========== APP STARTING ==========
-I/flutter (15264):
-I/flutter (15264): [2026-08-09T13:28:32.745766] [INFO] Initializing Firebase...
-I/flutter (15264):
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
-I/DynamicFramerate [FRTCConfigManager](15264): initFrameRateConfig:
-I/DynamicFramerate [FRTCConfigManager](15264):  levelsFor120hz: [120, 60]
-I/DynamicFramerate [FRTCConfigManager](15264):  thresholdsFor120hz: [200]
-I/DynamicFramerate [FRTCConfigManager](15264):  levelsFor90hz: [90]
-I/DynamicFramerate [FRTCConfigManager](15264):  thresholdsFor90hz: []
-I/DynamicFramerate [FRTCConfigManager](15264): FRTCConfigManager: FRTC_CAPABILITY = 120, package name = com.manukhurana.naam_jap, WINDOW_ANIMATION_SPEED_RATE = 10, SCROLL_ANIMATION_SPEED_RATE = 20, PACKAGE_ENABLE = false
-I/DynamicFramerate [DynamicFrameRateController](15264): init info: mPackageName = com.manukhurana.naam_jap, mIsEnabled = false
-D/FlutterGeolocator(15264): Geolocator foreground service connected
-D/FlutterGeolocator(15264): Initializing Geolocator services
-D/FlutterGeolocator(15264): Flutter engine connected. Connected engine count 1
-D/WindowLayoutComponentImpl(15264): app addWindowLayoutInfoListener activity:com.manukhurana.naam_jap.MainActivity@b25ba68 consumer :androidx.window.layout.adapter.extensions.MulticastConsumer@553f130
-D/WindowLayoutComponentImpl(15264): Register WindowLayoutInfoListener on Context=com.manukhurana.naam_jap.MainActivity@b25ba68, of which baseContext=android.app.ContextImpl@35a81a9
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/FlutterJNI(15264): Sending viewport metrics to the engine.
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-I/flutter (15264): [2026-08-09T13:28:33.078544] [INFO] Firebase initialized successfully
-I/flutter (15264):
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/com.google.firebase.appcheck.debug.internal.DebugAppCheckProvider(15264): Enter this debug secret into the allow list in the Firebase Console for your project: e853acbb-4a72-41ef-9ac2-617bc5fb8f7f
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-I/flutter (15264): [2026-08-09T13:28:33.114174] [INFO] Firebase App Check initialized
-I/flutter (15264):
-I/flutter (15264): [2026-08-09T13:28:33.122977] [INFO] System UI configured
-I/flutter (15264):
-
-══╡ EXCEPTION CAUGHT BY FLUTTER FRAMEWORK ╞═════════════════════════════════════════════════════════
-The following assertion was thrown during runApp:
-Zone mismatch.
-The Flutter bindings were initialized in a different zone than is now being used. This will likely
-cause confusion and bugs as any zone-specific configuration will inconsistently use the
-configuration of the original binding initialization zone or this zone based on hard-to-predict
-factors such as which zone was active when a particular callback was set.
-It is important to use the same zone when calling `ensureInitialized` on the binding as when calling
-`runApp` later.
-To make this warning fatal, set BindingBase.debugZoneErrorsAreFatal to true before the bindings are
-initialized (i.e. as the first statement in `void main() { }`).
-
-When the exception was thrown, this was the stack:
-#0      BindingBase.debugCheckZone.<anonymous closure> (package:flutter/src/foundation/binding.dart:520:31)
-#1      BindingBase.debugCheckZone (package:flutter/src/foundation/binding.dart:526:6)
-#2      _runWidget (package:flutter/src/widgets/binding.dart:1949:18)
-#3      runApp (package:flutter/src/widgets/binding.dart:1885:3)
-#4      main.<anonymous closure> (package:nitya_sadhana/main.dart:152:9)
-<asynchronous suspension>
-════════════════════════════════════════════════════════════════════════════════════════════════════
-
-I/flutter (15264): [2026-08-09T13:28:33.233123] [ERROR] Flutter framework error
-I/flutter (15264): Error: Zone mismatch.
-I/flutter (15264): The Flutter bindings were initialized in a different zone than is now being used. This will likely cause confusion and bugs as any zone-specific configuration will inconsistently use the configuration of the original binding initialization zone or this zone based on hard-to-predict factors such as which zone was active when a particular callback was set.
-I/flutter (15264): It is important to use the same zone when calling `ensureInitialized` on the binding as when calling `runApp` later.
-I/flutter (15264): To make this warning fatal, set BindingBase.debugZoneErrorsAreFatal to true before the bindings are initialized (i.e. as the first statement in `void main() { }`).
-I/flutter (15264): StackTrace:
-I/flutter (15264): #0      BindingBase.debugCheckZone.<anonymous closure> (package:flutter/src/foundation/binding.dart:520:31)
-I/flutter (15264): #1      BindingBase.debugCheckZone (package:flutter/src/foundation/binding.dart:526:6)
-I/flutter (15264): #2      _runWidget (package:flutter/src/widgets/binding.dart:1949:18)
-I/flutter (15264): #3      runApp (package:flutter/src/widgets/binding.dart:1885:3)
-I/flutter (15264): #4      main.<anonymous closure> (package:nitya_sadhana/main.dart:152:9)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264):
-I/flutter (15264):
-I/flutter (15264): [2026-08-09T13:28:33.244435] [INFO] Flutter application started
-I/flutter (15264):
-I/hurana.naam_jap(15264): Compiler allocated 7207KB to compile void android.view.ViewRootImpl.performTraversals()
-I/GrallocExtra(15264): gralloc_extra_query:is_SW3D 0
-D/BLASTBufferQueue(15264): [68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=318022752587570(auto) mPendingTransactions.size=0 graphicBufferId=65558380806154 transform=0
-D/LibMBrainProxy(15264): Init Paramters
-W/ServiceManagerCppClient(15264): Failed to get isDeclared for vendor.mediatek.hardware.mbrain.IMBrain/default: Status(-1, EX_SECURITY): 'SELinux denied for service.'
-I/Choreographer(15264): Skipped 83 frames!  The application may be doing too much work on its main thread.
-D/ViewRootImplExtImpl(15264): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
-D/VRI[MainActivity](15264): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-W/VRI[MainActivity](15264): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@d5ae092
-D/FlutterJNI(15264): Sending viewport metrics to the engine.
-W/VRI[MainActivity](15264): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/SurfaceView(15264): 109972219 finishedDrawing
-D/SurfaceView(15264): 109972219 performDrawFinished mAttachedToWindow true
-D/ViewRootImplExtImpl(15264): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
-D/VRI[MainActivity](15264): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-W/VRI[MainActivity](15264): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@d5ae092
-D/FlutterJNI(15264): Sending viewport metrics to the engine.
-I/SurfaceControl(15264):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xd4d29bf,currentBufferRatio=1.0,desiredRatio=1.0
-D/SurfaceView(15264): 109972219 dispatchDraw mDrawFinished true isAboveParent false (mPrivateFlags & PFLAG_SKIP_DRAW) 128
-D/SurfaceView(15264): 109972219 clearSurfaceViewPort mCornerRadius 0.0
-D/BLASTBufferQueue(15264): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=318022863760801(auto) mPendingTransactions.size=0 graphicBufferId=65558380806162 transform=0
-D/VRI[MainActivity](15264): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
-D/ExtensionsLoader(15264): createInstance(64bit) : createExtendedFactory
-D/ExtensionsLoader(15264): Opened libSchedAssistExtImpl.so
-D/VRI[MainActivity](15264): draw finished. seqId=0
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-D/VRI[MainActivity](15264): onFocusEvent true
-D/InsetsController(15264): hide(ime(), fromIme=false)
-I/ImeTracker(15264): com.manukhurana.naam_jap:d3ceeb35: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-D/OplusScrollToTopManager(15264): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{2dccfcc V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-D/ProfileInstaller(15264): Installing profile for com.manukhurana.naam_jap
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-W/hurana.naam_jap(15264): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
-W/FinalizerDaemon(15264): type=1400 audit(0.0:30337): avc:  denied  { getopt } for  path="/dev/socket/usap_pool_primary" scontext=u:r:untrusted_app:s0:c225,c257,c512,c768 tcontext=u:r:zygote:s0 tclass=unix_stream_socket permissive=0 app=com.manukhurana.naam_jap
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-E/MethodChannel#purchases_flutter(15264): Failed to handle method call
-E/MethodChannel#purchases_flutter(15264): java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-E/MethodChannel#purchases_flutter(15264):       at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-E/MethodChannel#purchases_flutter(15264):       at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.handleCallback(Handler.java:1027)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Handler.dispatchMessage(Handler.java:108)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loopOnce(Looper.java:302)
-E/MethodChannel#purchases_flutter(15264):       at android.os.Looper.loop(Looper.java:412)
-E/MethodChannel#purchases_flutter(15264):       at android.app.ActivityThread.main(ActivityThread.java:9998)
-E/MethodChannel#purchases_flutter(15264):       at java.lang.reflect.Method.invoke(Native Method)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-E/MethodChannel#purchases_flutter(15264):       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-I/flutter (15264): [2026-08-09T13:29:12.956478] [ERROR] Application initialization failed
-I/flutter (15264): Error: PlatformException(error, API key must be set. Get this from the RevenueCat web app, null, java.lang.IllegalArgumentException: API key must be set. Get this from the RevenueCat web app
-I/flutter (15264):      at com.revenuecat.purchases.PurchasesFactory.validateConfiguration(PurchasesFactory.kt:425)
-I/flutter (15264):      at com.revenuecat.purchases.PurchasesFactory.createPurchases(PurchasesFactory.kt:76)
-I/flutter (15264):      at com.revenuecat.purchases.PurchasesFactory.createPurchases$default(PurchasesFactory.kt:67)
-I/flutter (15264):      at com.revenuecat.purchases.Purchases$Companion.configure(Purchases.kt:1059)
-I/flutter (15264):      at com.revenuecat.purchases.hybridcommon.CommonKt.configure(common.kt:616)
-I/flutter (15264):      at com.revenuecat.purchases.hybridcommon.CommonKt.configure$default(common.kt:585)
-I/flutter (15264):      at com.revenuecat.purchases.hybridcommon.CommonKt.configure(Unknown Source:47)
-I/flutter (15264):      at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.setupPurchases(PurchasesFlutterPlugin.java:372)
-I/flutter (15264):      at com.revenuecat.purchases_flutter.PurchasesFlutterPlugin.onMethodCall(PurchasesFlutterPlugin.java:123)
-I/flutter (15264):      at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
-I/flutter (15264):      at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
-I/flutter (15264):      at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
-I/flutter (15264):      at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
-I/flutter (15264):      at android.os.Handler.handleCallback(Handler.java:1027)
-I/flutter (15264):      at android.os.Handler.dispatchMessage(Handler.java:108)
-I/flutter (15264):      at android.os.Looper.loopOnce(Looper.java:302)
-I/flutter (15264):      at android.os.Looper.loop(Looper.java:412)
-I/flutter (15264):      at android.app.ActivityThread.main(ActivityThread.java:9998)
-I/flutter (15264):      at java.lang.reflect.Method.invoke(Native Method)
-I/flutter (15264):      at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:613)
-I/flutter (15264):      at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1074)
-I/flutter (15264): )
-I/flutter (15264): StackTrace:
-I/flutter (15264): #0      StandardMethodCodec.decodeEnvelope (package:flutter/src/services/message_codecs.dart:653:7)
-I/flutter (15264): #1      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:366:18)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264): #2      Purchases.configure (package:purchases_flutter/purchases_flutter.dart:171:5)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264): #3      SubscriptionService.initialize (package:nitya_sadhana/services/subscription_service.dart:75:5)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264): #4      appInitializedProvider.<anonymous closure>.<anonymous closure> (package:nitya_sadhana/main.dart:24:5)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264): #5      ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:232:17)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264): #6      ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:237:29)
-I/flutter (15264): <asynchronous suspension>
-I/flutter (15264):
-I/flutter (15264):
+A Dart VM Service on RMX3944 is available at: http://127.0.0.1:63813/ispeBXzYtC4=/
+The Flutter DevTools debugger and profiler on RMX3944 is available at: http://127.0.0.1:63813/ispeBXzYtC4=/devtools/?uri=ws://127.0.0.1:63813/ispeBXzYtC4=/ws
+I/hurana.naam_jap(26962): Compiler allocated 7207KB to compile void android.view.ViewRootImpl.performTraversals()
+D/SurfaceView(26962): 268002442 handleSyncNoBuffer
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/FlutterGeolocator(26962): Creating service.
+D/FlutterGeolocator(26962): Binding to location service.
+I/flutter (26962): [2026-08-09T14:37:24.512258] [INFO] Log file: /data/user/0/com.manukhurana.naam_jap/app_flutter/log.txt
+I/flutter (26962):
+I/Choreographer(26962): Skipped 36 frames!  The application may be doing too much work on its main thread.
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
+I/flutter (26962): [2026-08-09T14:37:24.551420] [INFO] ========== APP STARTING ==========
+I/flutter (26962):
+I/flutter (26962): [2026-08-09T14:37:24.553106] [INFO] Initializing Firebase...
+I/flutter (26962):
+I/DynamicFramerate [FRTCConfigManager](26962): initFrameRateConfig:
+I/DynamicFramerate [FRTCConfigManager](26962):  levelsFor120hz: [120, 60]
+I/DynamicFramerate [FRTCConfigManager](26962):  thresholdsFor120hz: [200]
+I/DynamicFramerate [FRTCConfigManager](26962):  levelsFor90hz: [90]
+I/DynamicFramerate [FRTCConfigManager](26962):  thresholdsFor90hz: []
+I/DynamicFramerate [FRTCConfigManager](26962): FRTCConfigManager: FRTC_CAPABILITY = 120, package name = com.manukhurana.naam_jap, WINDOW_ANIMATION_SPEED_RATE = 10, SCROLL_ANIMATION_SPEED_RATE = 20, PACKAGE_ENABLE = false
+I/DynamicFramerate [DynamicFrameRateController](26962): init info: mPackageName = com.manukhurana.naam_jap, mIsEnabled = false
+D/FlutterGeolocator(26962): Geolocator foreground service connected
+D/FlutterGeolocator(26962): Initializing Geolocator services
+D/FlutterGeolocator(26962): Flutter engine connected. Connected engine count 1
+D/WindowLayoutComponentImpl(26962): app addWindowLayoutInfoListener activity:com.manukhurana.naam_jap.MainActivity@cda3705 consumer :androidx.window.layout.adapter.extensions.MulticastConsumer@8b717ad
+D/WindowLayoutComponentImpl(26962): Register WindowLayoutInfoListener on Context=com.manukhurana.naam_jap.MainActivity@cda3705, of which baseContext=android.app.ContextImpl@bf9fae2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/FlutterJNI(26962): Sending viewport metrics to the engine.
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+I/flutter (26962): [2026-08-09T14:37:24.677839] [INFO] Firebase initialized successfully
+I/flutter (26962):
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/com.google.firebase.appcheck.debug.internal.DebugAppCheckProvider(26962): Enter this debug secret into the allow list in the Firebase Console for your project: e853acbb-4a72-41ef-9ac2-617bc5fb8f7f
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+I/flutter (26962): [2026-08-09T14:37:24.714701] [INFO] Firebase App Check initialized
+I/flutter (26962):
+I/flutter (26962): [2026-08-09T14:37:24.722736] [INFO] System UI configured
+I/flutter (26962):
+I/flutter (26962): [2026-08-09T14:37:24.736401] [INFO] Flutter application started
+I/flutter (26962):
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+I/GrallocExtra(26962): gralloc_extra_query:is_SW3D 0
+D/BLASTBufferQueue(26962): [ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=322154039693432(auto) mPendingTransactions.size=0 graphicBufferId=115800908234762 transform=0
+I/Choreographer(26962): Skipped 64 frames!  The application may be doing too much work on its main thread.
+D/LibMBrainProxy(26962): Init Paramters
+D/ViewRootImplExtImpl(26962): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+W/ServiceManagerCppClient(26962): Failed to get isDeclared for vendor.mediatek.hardware.mbrain.IMBrain/default: Status(-1, EX_SECURITY): 'SELinux denied for service.'
+D/VRI[MainActivity](26962): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
+W/VRI[MainActivity](26962): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@2fa461d
+D/FlutterJNI(26962): Sending viewport metrics to the engine.
+W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
+D/SurfaceView(26962): 268002442 finishedDrawing
+D/SurfaceView(26962): 268002442 performDrawFinished mAttachedToWindow true
+D/ViewRootImplExtImpl(26962): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+D/VRI[MainActivity](26962): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
+W/VRI[MainActivity](26962): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@2fa461d
+D/FlutterJNI(26962): Sending viewport metrics to the engine.
+I/SurfaceControl(26962):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xe4273de,currentBufferRatio=1.0,desiredRatio=1.0
+D/SurfaceView(26962): 268002442 dispatchDraw mDrawFinished true isAboveParent false (mPrivateFlags & PFLAG_SKIP_DRAW) 128
+D/SurfaceView(26962): 268002442 clearSurfaceViewPort mCornerRadius 0.0
+D/BLASTBufferQueue(26962): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=322154219737970(auto) mPendingTransactions.size=0 graphicBufferId=115800908234770 transform=0
+D/VRI[MainActivity](26962): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
+D/ExtensionsLoader(26962): createInstance(64bit) : createExtendedFactory
+D/ExtensionsLoader(26962): Opened libSchedAssistExtImpl.so
+D/VRI[MainActivity](26962): draw finished. seqId=0
+D/VRI[MainActivity](26962): onFocusEvent true
+D/InsetsController(26962): hide(ime(), fromIme=false)
+I/ImeTracker(26962): com.manukhurana.naam_jap:8a014eb1: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+D/OplusScrollToTopManager(26962): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{c86092a V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+D/ProfileInstaller(26962): Installing profile for com.manukhurana.naam_jap
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+W/hurana.naam_jap(26962): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
+I/hurana.naam_jap(26962): Background concurrent mark compact GC freed 7258KB AllocSpace bytes, 17(576KB) LOS objects, 62% free, 3645KB/9789KB, paused 533us,5.283ms total 72.446ms
+W/FinalizerDaemon(26962): type=1400 audit(0.0:30383): avc:  denied  { getopt } for  path="/dev/socket/usap_pool_primary" scontext=u:r:untrusted_app:s0:c225,c257,c512,c768 tcontext=u:r:zygote:s0 tclass=unix_stream_socket permissive=0 app=com.manukhurana.naam_jap
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
+E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(26962):           count INTEGER NOT NULL,
+E/SQLiteLog(26962):           started_at TEXT NOT NUL
+I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args [] during open, closing...
+I/flutter (26962): [2026-08-09T14:38:04.772379] [ERROR] Application initialization failed
+I/flutter (26962): Error: DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )) sql '        CREATE TABLE mantras (
+I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (26962):           mantra_id INTEGER NOT NULL,
+I/flutter (26962):           count INTEGER NOT NULL,
+I/flutter (26962):           started_at TEXT NOT NULL,
+I/flutter (26962):           ended_at TEXT NOT NULL,
+I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (26962):           actual_mantra TEXT
+I/flutter (26962):         )
+I/flutter (26962):       ' args []
+I/flutter (26962): StackTrace:
+I/flutter (26962): #0      wrapDatabaseException (package:sqflite_platform_interface/src/platform_exception.dart:12:7)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #1      SqfliteDatabaseMixin.txnSynchronized (package:sqflite_common/src/database_mixin.dart:556:16)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #2      AppDatabase._createTable (package:nitya_sadhana/database/app_database.dart:47:7)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #3      SqfliteDatabaseMixin.doOpen.<anonymous closure> (package:sqflite_common/src/database_mixin.dart:1148:19)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #4      SqfliteDatabaseMixinExt._txnTransaction (package:sqflite_common/src/database_mixin.dart:390:16)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #5      BasicLock.synchronized (package:synchronized/src/basic_lock.dart:38:16)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #6      SqfliteDatabaseMixin.txnSynchronized (package:sqflite_common/src/database_mixin.dart:591:14)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #7      SqfliteDatabaseMixin.doOpen (package:sqflite_common/src/database_mixin.dart:1137:13)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #8      SqfliteDatabaseOpenHelper.openDatabase (package:sqflite_common/src/database.dart:46:7)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #9      SqfliteDatabaseFactoryMixin.openDatabase.<anonymous closure> (package:sqflite_common/src/factory_mixin.dart:115:18)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #10     ReentrantLock.synchronized.<anonymous closure> (package:synchronized/src/reentrant_lock.dart:40:18)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #11     BasicLock.synchronized (package:synchronized/src/basic_lock.dart:38:16)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #12     AppDatabase.instance (package:nitya_sadhana/database/app_database.dart:12:13)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #13     AppDatabase.getMantras (package:nitya_sadhana/database/app_database.dart:77:16)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #14     JapaNotifier.initialize (package:nitya_sadhana/providers/japa_provider.dart:68:16)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #15     appInitializedProvider.<anonymous closure>.<anonymous closure> (package:nitya_sadhana/main.dart:27:5)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #16     ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:232:17)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962): #17     ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:237:29)
+I/flutter (26962): <asynchronous suspension>
+I/flutter (26962):
+I/flutter (26962):

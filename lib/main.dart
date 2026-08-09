@@ -92,27 +92,26 @@ Future<void> _refreshMuhurtaNotifications(Ref ref) async {
 }
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize file logger first.
-  await AppLogger.init();
-
-  AppLogger.info('========== APP STARTING ==========');
-
-  // Capture Flutter framework errors.
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
-
-    AppLogger.error(
-      'Flutter framework error',
-      error: details.exception,
-      stackTrace: details.stack,
-    );
-  };
-
-  // Catch uncaught asynchronous errors.
   runZonedGuarded(
-        () async {
+      () async {
+        WidgetsFlutterBinding.ensureInitialized();
+
+      // Initialize file logger first.
+      await AppLogger.init();
+
+      AppLogger.info('========== APP STARTING ==========');
+
+      // Capture Flutter framework errors.
+      FlutterError.onError = (FlutterErrorDetails details) {
+        FlutterError.presentError(details);
+
+        AppLogger.error(
+          'Flutter framework error',
+          error: details.exception,
+          stackTrace: details.stack,
+        );
+      };
+
       try {
         AppLogger.info('Initializing Firebase...');
 

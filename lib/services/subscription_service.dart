@@ -64,14 +64,26 @@ class SubscriptionService extends ChangeNotifier {
 
   // Initialize subscription status
   Future<void> initialize() async {
-    await Purchases.setLogLevel(LogLevel.debug);
-    PurchasesConfiguration configuration;
-    if (Platform.isAndroid) {
-      configuration = PurchasesConfiguration(_revenueCatApiKeyAndroid);
-    } else {
-      configuration = PurchasesConfiguration(_revenueCatApiKeyIos);
+    final apiKey = Platform.isAndroid ? _revenueCatApiKeyAndroid : _revenueCatApiKeyIos;
+
+    // Skip RevenueCar if API key is not configured (dev/testing
+    if (apiKey.isEmpty) {
+      debugPrint('[SubscriptionService] No RevenueCat API key - running as free tier');
+      _isPremium = false;
+      _isInitialized = true;
+      notifyListeners();
+      return;
     }
 
+    await Purchases.setLogLevel(LogLevel.debug);
+    // PurchasesConfiguration configuration;
+    // if (Platform.isAndroid) {
+    //   configuration = PurchasesConfiguration(_revenueCatApiKeyAndroid);
+    // } else {
+    //   configuration = PurchasesConfiguration(_revenueCatApiKeyIos);
+    // }
+
+    final configuration = PurchasesConfiguration(apiKey);
     await Purchases.configure(configuration);
 
     try {
@@ -86,7 +98,7 @@ class SubscriptionService extends ChangeNotifier {
       }
     } catch (e) {
       // Offline - check grace period
-      debugPrint('[SubscriptionSubscription] Offline, checking grace period');
+      debugPrint('[SubscriptionService] Offline, checking grace period');
       _isPremium = await _checkOfflineGrace();
     }
 

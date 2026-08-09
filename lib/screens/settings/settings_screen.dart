@@ -828,26 +828,72 @@ class SettingsScreen extends ConsumerWidget {
                         helperMaxLines: 2,
                         labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                       ),
+                    ),
+                    const SizedBox(height: 18),
+                    Text('Active Days', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
+                    const SizedBox(height: 6),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 4,
+                      children: Mantra.allDayCodes.map((day) {
+                        final selected = selectedDays.contains(day);
+                        return FilterChip(
+                          label: Text(Mantra.dayLabels[day]!, style: TextStyle(fontSize: 12, color: selected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary))),
+                          selected: selected,
+                          onSelected: (v) => setDialogState(() {
+                            v ? selectedDays.add(day) : selectedDays.remove(day);
+                          }),
+                          selectedColor: AppColors.saffron,
+                          checkmarkColor: Colors.white,
+                          visualDensity: VisualDensity.compact,
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 18),
+                    Text('Best Time', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
+                    const SizedBox(height: 6),
+                    SegmentedButton(
+                        segments: const [
+                          ButtonSegment(value: 'morning', icon: Icon(Icons.wb_sunny_rounded, size: 16), label: Text('Morning', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'anytime', icon: Icon(Icons.access_time_rounded, size: 16), label: Text('Anytime', style: TextStyle(fontSize: 12))),
+                          ButtonSegment(value: 'evening', icon: Icon(Icons.nights_stay_rounded, size: 16), label: Text('Evening', style: TextStyle(fontSize: 12))),
+                        ],
+                        selected: {bestTime},
+                        onSelectionChanged: (v) =>  setDialogState(() => bestTime = v.first),
+                        style: ButtonStyle(
+                          visualDensity: VisualDensity.compact,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap
+                        ),
                     )
                   ],
                 ),
               ),
               actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
                 TextButton(
                   onPressed: () {
                     final name = nameCtrl.text.trim();
                     if (name.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating,)
+                        const SnackBar(content: Text('Mantra name is required'), behavior: SnackBarBehavior.floating),
                       );
                       return;
                     }
+                    if (selectedDays.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Select at least one day'), behavior: SnackBarBehavior.floating),
+                      );
+                      return;
+                    }
+                    final activeDays = selectedDays.length == 7
+                      ? 'all'
+                      : Mantra.allDayCodes.where(selectedDays.contains).join(',');
                     ref.read(japaProvider).addMantra(
                       name,
-                      actualMantra: mantraCtrl.text.trim().isEmpty ? null: mantraCtrl.text.trim(),
-                      targetDirection: dirCtrl.text.trim().isEmpty ? null: dirCtrl.text.trim(),
+                      actualMantra: mantraCtrl.text.trim().isEmpty ? null : mantraCtrl.text.trim(),
+                      targetDirection: dirCtrl.text.trim().isEmpty ? null : dirCtrl.text.trim(),
+                      activeDays: activeDays,
+                      bestTime: bestTime
                     );
                     Navigator.pop(ctx);
                   },
@@ -855,9 +901,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ],
             );
-            }
+            },
         );
-      }
+      },
     );
   }
 }
