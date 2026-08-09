@@ -74,54 +74,40 @@ If no such version exists, report the issue to the plugin. If necessary, here is
 an issue against a plugin: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers#report-incompatible-kotlin-gradle-plugin-usage-to-plugin-authors
 
 If you are a plugin author, please migrate your plugin to Built-in Kotlin using this guide: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
-Running Gradle task 'assembleDebug'...                             11.2s
+Running Gradle task 'assembleDebug'...                             10.2s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...           5.1s
-I/FlutterActivityAndFragmentDelegate(26962): If you are attempting to set --enable-dart-profiling via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --enable-dart-profiling or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
-D/FlutterJNI(26962): Beginning load of flutter...
-D/FlutterJNI(26962): flutter (null) was loaded normally!
-I/flutter (26962): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
-D/FlutterGeolocator(26962): Attaching Geolocator to activity
-D/FlutterRenderer(26962): Width is zero. 0,0
-I/flutter (26962): [2026-08-09T14:37:23.811633] [INFO] ========== APP STARTED ==========
-I/flutter (26962):
-D/FlutterRenderer(26962): Width is zero. 0,0
-D/BufferQueueConsumer(26962): [](id:695200000000,api:0,p:-1,c:26962) connect: controlledByApp=false
-D/BufferQueueConsumer(26962): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0(BLAST Consumer)0](id:695200000000,api:0,p:-1,c:26962) setMaxAcquiredBufferCount: 5
-D/HWUI    (26962): createSurface new attribs array
-D/libEGL  (26962): this is from skia gles
-D/FlutterJNI(26962): Sending viewport metrics to the engine.
-D/SurfaceView(26962): 268002442, SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity], layerid: 21463 createBlastSurfaceControls
-D/BufferQueueConsumer(26962): [](id:695200000001,api:0,p:-1,c:26962) connect: controlledByApp=false
-D/BufferQueueConsumer(26962): [ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1(BLAST Consumer)1](id:695200000001,api:0,p:-1,c:26962) setMaxAcquiredBufferCount: 5
-I/SurfaceView(26962): 268002442 visibleChanged -- surfaceCreated
-D/Surface (26962): Surface::dispatchSetGameApi
-D/Surface (26962): dispatchSetGameApi pid[26962] tid[29631] GameApi[1]
-D/Surface (26962): dispatchSetGameApi res:0
-D/vulkan  (26962): set game api vulkan successfully
-D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getBufferCacheFlag 0
-D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getMaxAcquireBufferCount 5
-D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getOrignalMaxAcquireBufferCount 5
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 38
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x38
-E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 3b
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x3b
-E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 38
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x38
-E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 3b
-E/mali_gralloc(26962): ERROR: Format allocation info not found for format: 0
-E/hurana.naam_jap(26962): Invalid base format! req_base_format = 0x0, req_format = 0x3b
-E/mali_gralloc(26962): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
-D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getBufferCacheFlag 0
-D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getMaxAcquireBufferCount 5
-D/BLASTBufferQueue(26962): ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1 getOrignalMaxAcquireBufferCount 5
-Syncing files to device RMX3944...                                  82ms
+Installing build/app/outputs/flutter-apk/app-debug.apk...           4.6s
+I/FlutterActivityAndFragmentDelegate(29533): If you are attempting to set --enable-dart-profiling via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --enable-dart-profiling or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+D/FlutterJNI(29533): Beginning load of flutter...
+D/FlutterJNI(29533): flutter (null) was loaded normally!
+I/flutter (29533): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+D/FlutterGeolocator(29533): Attaching Geolocator to activity
+D/FlutterRenderer(29533): Width is zero. 0,0
+D/FlutterRenderer(29533): Width is zero. 0,0
+D/FlutterJNI(29533): Sending viewport metrics to the engine.
+I/flutter (29533): [2026-08-09T14:57:29.852421] [INFO] ========== APP STARTED ==========
+I/flutter (29533):
+D/FlutterGeolocator(29533): Creating service.
+D/FlutterGeolocator(29533): Binding to location service.
+D/FlutterGeolocator(29533): Geolocator foreground service connected
+D/FlutterGeolocator(29533): Initializing Geolocator services
+D/FlutterGeolocator(29533): Flutter engine connected. Connected engine count 1
+D/FlutterJNI(29533): Sending viewport metrics to the engine.
+I/flutter (29533): [2026-08-09T14:57:29.940926] [INFO] Log file: /data/user/0/com.manukhurana.naam_jap/app_flutter/log.txt
+I/flutter (29533):
+I/flutter (29533): [2026-08-09T14:57:29.957241] [INFO] ========== APP STARTING ==========
+I/flutter (29533):
+I/flutter (29533): [2026-08-09T14:57:29.959353] [INFO] Initializing Firebase...
+I/flutter (29533):
+I/flutter (29533): [2026-08-09T14:57:30.150763] [INFO] Firebase initialized successfully
+I/flutter (29533):
+I/flutter (29533): [2026-08-09T14:57:30.184557] [INFO] Firebase App Check initialized
+I/flutter (29533):
+I/flutter (29533): [2026-08-09T14:57:30.210182] [INFO] System UI configured
+I/flutter (29533):
+I/flutter (29533): [2026-08-09T14:57:30.237823] [INFO] Flutter application started
+I/flutter (29533):
+Syncing files to device RMX3944...                                  49ms
 
 Flutter run key commands.
 r Hot reload. 🔥🔥🔥
@@ -131,405 +117,359 @@ d Detach (terminate "flutter run" but leave application running).
 c Clear the screen
 q Quit (terminate the application on the device).
 
-A Dart VM Service on RMX3944 is available at: http://127.0.0.1:63813/ispeBXzYtC4=/
-The Flutter DevTools debugger and profiler on RMX3944 is available at: http://127.0.0.1:63813/ispeBXzYtC4=/devtools/?uri=ws://127.0.0.1:63813/ispeBXzYtC4=/ws
-I/hurana.naam_jap(26962): Compiler allocated 7207KB to compile void android.view.ViewRootImpl.performTraversals()
-D/SurfaceView(26962): 268002442 handleSyncNoBuffer
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/FlutterGeolocator(26962): Creating service.
-D/FlutterGeolocator(26962): Binding to location service.
-I/flutter (26962): [2026-08-09T14:37:24.512258] [INFO] Log file: /data/user/0/com.manukhurana.naam_jap/app_flutter/log.txt
-I/flutter (26962):
-I/Choreographer(26962): Skipped 36 frames!  The application may be doing too much work on its main thread.
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
-I/flutter (26962): [2026-08-09T14:37:24.551420] [INFO] ========== APP STARTING ==========
-I/flutter (26962):
-I/flutter (26962): [2026-08-09T14:37:24.553106] [INFO] Initializing Firebase...
-I/flutter (26962):
-I/DynamicFramerate [FRTCConfigManager](26962): initFrameRateConfig:
-I/DynamicFramerate [FRTCConfigManager](26962):  levelsFor120hz: [120, 60]
-I/DynamicFramerate [FRTCConfigManager](26962):  thresholdsFor120hz: [200]
-I/DynamicFramerate [FRTCConfigManager](26962):  levelsFor90hz: [90]
-I/DynamicFramerate [FRTCConfigManager](26962):  thresholdsFor90hz: []
-I/DynamicFramerate [FRTCConfigManager](26962): FRTCConfigManager: FRTC_CAPABILITY = 120, package name = com.manukhurana.naam_jap, WINDOW_ANIMATION_SPEED_RATE = 10, SCROLL_ANIMATION_SPEED_RATE = 20, PACKAGE_ENABLE = false
-I/DynamicFramerate [DynamicFrameRateController](26962): init info: mPackageName = com.manukhurana.naam_jap, mIsEnabled = false
-D/FlutterGeolocator(26962): Geolocator foreground service connected
-D/FlutterGeolocator(26962): Initializing Geolocator services
-D/FlutterGeolocator(26962): Flutter engine connected. Connected engine count 1
-D/WindowLayoutComponentImpl(26962): app addWindowLayoutInfoListener activity:com.manukhurana.naam_jap.MainActivity@cda3705 consumer :androidx.window.layout.adapter.extensions.MulticastConsumer@8b717ad
-D/WindowLayoutComponentImpl(26962): Register WindowLayoutInfoListener on Context=com.manukhurana.naam_jap.MainActivity@cda3705, of which baseContext=android.app.ContextImpl@bf9fae2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/FlutterJNI(26962): Sending viewport metrics to the engine.
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-I/flutter (26962): [2026-08-09T14:37:24.677839] [INFO] Firebase initialized successfully
-I/flutter (26962):
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/com.google.firebase.appcheck.debug.internal.DebugAppCheckProvider(26962): Enter this debug secret into the allow list in the Firebase Console for your project: e853acbb-4a72-41ef-9ac2-617bc5fb8f7f
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-I/flutter (26962): [2026-08-09T14:37:24.714701] [INFO] Firebase App Check initialized
-I/flutter (26962):
-I/flutter (26962): [2026-08-09T14:37:24.722736] [INFO] System UI configured
-I/flutter (26962):
-I/flutter (26962): [2026-08-09T14:37:24.736401] [INFO] Flutter application started
-I/flutter (26962):
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-I/GrallocExtra(26962): gralloc_extra_query:is_SW3D 0
-D/BLASTBufferQueue(26962): [ff9648a SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=322154039693432(auto) mPendingTransactions.size=0 graphicBufferId=115800908234762 transform=0
-I/Choreographer(26962): Skipped 64 frames!  The application may be doing too much work on its main thread.
-D/LibMBrainProxy(26962): Init Paramters
-D/ViewRootImplExtImpl(26962): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
-W/ServiceManagerCppClient(26962): Failed to get isDeclared for vendor.mediatek.hardware.mbrain.IMBrain/default: Status(-1, EX_SECURITY): 'SELinux denied for service.'
-D/VRI[MainActivity](26962): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-W/VRI[MainActivity](26962): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@2fa461d
-D/FlutterJNI(26962): Sending viewport metrics to the engine.
-W/VRI[MainActivity](26962): performTraversals: cancelAndRedraw, mLastPerformTraversalsSkipDrawReasonpredraw_io.flutter.embedding.android.FlutterActivityAndFragmentDelegate$2
-D/SurfaceView(26962): 268002442 finishedDrawing
-D/SurfaceView(26962): 268002442 performDrawFinished mAttachedToWindow true
-D/ViewRootImplExtImpl(26962): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
-D/VRI[MainActivity](26962): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
-W/VRI[MainActivity](26962): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@2fa461d
-D/FlutterJNI(26962): Sending viewport metrics to the engine.
-I/SurfaceControl(26962):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xe4273de,currentBufferRatio=1.0,desiredRatio=1.0
-D/SurfaceView(26962): 268002442 dispatchDraw mDrawFinished true isAboveParent false (mPrivateFlags & PFLAG_SKIP_DRAW) 128
-D/SurfaceView(26962): 268002442 clearSurfaceViewPort mCornerRadius 0.0
-D/BLASTBufferQueue(26962): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=322154219737970(auto) mPendingTransactions.size=0 graphicBufferId=115800908234770 transform=0
-D/VRI[MainActivity](26962): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
-D/ExtensionsLoader(26962): createInstance(64bit) : createExtendedFactory
-D/ExtensionsLoader(26962): Opened libSchedAssistExtImpl.so
-D/VRI[MainActivity](26962): draw finished. seqId=0
-D/VRI[MainActivity](26962): onFocusEvent true
-D/InsetsController(26962): hide(ime(), fromIme=false)
-I/ImeTracker(26962): com.manukhurana.naam_jap:8a014eb1: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-D/OplusScrollToTopManager(26962): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{c86092a V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-D/ProfileInstaller(26962): Installing profile for com.manukhurana.naam_jap
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-W/hurana.naam_jap(26962): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
-I/hurana.naam_jap(26962): Background concurrent mark compact GC freed 7258KB AllocSpace bytes, 17(576KB) LOS objects, 62% free, 3645KB/9789KB, paused 533us,5.283ms total 72.446ms
-W/FinalizerDaemon(26962): type=1400 audit(0.0:30383): avc:  denied  { getopt } for  path="/dev/socket/usap_pool_primary" scontext=u:r:untrusted_app:s0:c225,c257,c512,c768 tcontext=u:r:zygote:s0 tclass=unix_stream_socket permissive=0 app=com.manukhurana.naam_jap
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [SubscriptionService] No RevenueCat API key - running as free tier
-E/SQLiteLog(26962): (1) table mantras already exists in "CREATE TABLE mantras (
-E/SQLiteLog(26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-E/SQLiteLog(26962):           mantra_id INTEGER NOT NULL,
-E/SQLiteLog(26962):           count INTEGER NOT NULL,
-E/SQLiteLog(26962):           started_at TEXT NOT NUL
-I/flutter (26962): error DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args [] during open, closing...
-I/flutter (26962): [2026-08-09T14:38:04.772379] [ERROR] Application initialization failed
-I/flutter (26962): Error: DatabaseException(table mantras already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )) sql '        CREATE TABLE mantras (
-I/flutter (26962):           id INTEGER PRIMARY KEY AUTOINCREMENT,
-I/flutter (26962):           mantra_id INTEGER NOT NULL,
-I/flutter (26962):           count INTEGER NOT NULL,
-I/flutter (26962):           started_at TEXT NOT NULL,
-I/flutter (26962):           ended_at TEXT NOT NULL,
-I/flutter (26962):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
-I/flutter (26962):           actual_mantra TEXT
-I/flutter (26962):         )
-I/flutter (26962):       ' args []
-I/flutter (26962): StackTrace:
-I/flutter (26962): #0      wrapDatabaseException (package:sqflite_platform_interface/src/platform_exception.dart:12:7)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #1      SqfliteDatabaseMixin.txnSynchronized (package:sqflite_common/src/database_mixin.dart:556:16)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #2      AppDatabase._createTable (package:nitya_sadhana/database/app_database.dart:47:7)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #3      SqfliteDatabaseMixin.doOpen.<anonymous closure> (package:sqflite_common/src/database_mixin.dart:1148:19)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #4      SqfliteDatabaseMixinExt._txnTransaction (package:sqflite_common/src/database_mixin.dart:390:16)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #5      BasicLock.synchronized (package:synchronized/src/basic_lock.dart:38:16)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #6      SqfliteDatabaseMixin.txnSynchronized (package:sqflite_common/src/database_mixin.dart:591:14)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #7      SqfliteDatabaseMixin.doOpen (package:sqflite_common/src/database_mixin.dart:1137:13)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #8      SqfliteDatabaseOpenHelper.openDatabase (package:sqflite_common/src/database.dart:46:7)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #9      SqfliteDatabaseFactoryMixin.openDatabase.<anonymous closure> (package:sqflite_common/src/factory_mixin.dart:115:18)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #10     ReentrantLock.synchronized.<anonymous closure> (package:synchronized/src/reentrant_lock.dart:40:18)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #11     BasicLock.synchronized (package:synchronized/src/basic_lock.dart:38:16)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #12     AppDatabase.instance (package:nitya_sadhana/database/app_database.dart:12:13)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #13     AppDatabase.getMantras (package:nitya_sadhana/database/app_database.dart:77:16)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #14     JapaNotifier.initialize (package:nitya_sadhana/providers/japa_provider.dart:68:16)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #15     appInitializedProvider.<anonymous closure>.<anonymous closure> (package:nitya_sadhana/main.dart:27:5)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #16     ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:232:17)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962): #17     ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:237:29)
-I/flutter (26962): <asynchronous suspension>
-I/flutter (26962):
-I/flutter (26962):
+A Dart VM Service on RMX3944 is available at: http://127.0.0.1:64482/eJGhCJROfpA=/
+The Flutter DevTools debugger and profiler on RMX3944 is available at: http://127.0.0.1:64482/eJGhCJROfpA=/devtools/?uri=ws://127.0.0.1:64482/eJGhCJROfpA=/ws
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+I/GrallocExtra(29533): gralloc_extra_query:is_SW3D 0
+D/BLASTBufferQueue(29533): [68e0afb SurfaceView[com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#1](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=323359730057196(auto) mPendingTransactions.size=0 graphicBufferId=126843269152778 transform=0
+D/LibMBrainProxy(29533): Init Paramters
+W/ServiceManagerCppClient(29533): Failed to get isDeclared for vendor.mediatek.hardware.mbrain.IMBrain/default: Status(-1, EX_SECURITY): 'SELinux denied for service.'
+D/SurfaceView(29533): 109972219 finishedDrawing
+D/SurfaceView(29533): 109972219 performDrawFinished mAttachedToWindow true
+I/hurana.naam_jap(29533): Compiler allocated 7207KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer(29533): Skipped 82 frames!  The application may be doing too much work on its main thread.
+D/ViewRootImplExtImpl(29533): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=false, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+D/VRI[MainActivity](29533): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
+W/VRI[MainActivity](29533): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@30a4a63
+D/FlutterJNI(29533): Sending viewport metrics to the engine.
+I/SurfaceControl(29533):  setExtendedRangeBrightness sc=Surface(name=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity)/@0xd4d29bf,currentBufferRatio=1.0,desiredRatio=1.0
+D/SurfaceView(29533): 109972219 dispatchDraw mDrawFinished true isAboveParent false (mPrivateFlags & PFLAG_SKIP_DRAW) 128
+D/SurfaceView(29533): 109972219 clearSurfaceViewPort mCornerRadius 0.0
+D/BLASTBufferQueue(29533): [VRI[MainActivity][com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity]#0](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=323359931166965(auto) mPendingTransactions.size=0 graphicBufferId=126843269152786 transform=0
+D/VRI[MainActivity](29533): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
+D/ExtensionsLoader(29533): createInstance(64bit) : createExtendedFactory
+D/ExtensionsLoader(29533): Opened libSchedAssistExtImpl.so
+D/VRI[MainActivity](29533): draw finished. seqId=0
+I/HWUI    (29533): Davey! duration=1445ms; Flags=1, FrameTimelineVsyncId=38490855, IntendedVsync=323358486750608, Vsync=323359861883064, InputEventId=0, HandleInputStart=323359879198119, AnimationStart=323359879199273, PerformTraversalsStart=323359879247888, DrawStart=323359913931965, FrameDeadline=323358506750608, FrameStartTime=323359878420196, FrameInterval=16769908, WorkloadTarget=20000000, SyncQueued=323359915730657, SyncStart=323359916315350, IssueDrawCommandsStart=323359916705734, SwapBuffers=323359926907888, FrameCompleted=323359932615042, DequeueBufferDuration=7884307, QueueBufferDuration=414153, GpuCompleted=323359932615042, SwapBuffersCompleted=323359931744580, DisplayPresentTime=483403174248, CommandSubmissionCompleted=323359926907888,
+D/ViewRootImplExtImpl(29533): wrapConfigInfoIntoFlags rotation=0, smallestScreenWidthDp=360, residentWS=false, scenario=0, bounds=Rect(0, 0 - 1080, 2400), relayoutAsync=true, flags=0, newFlags=1258302720, title=com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity
+D/VRI[MainActivity](29533): relayoutWindow result, sizeChanged:false, surfaceControlChanged:false, transformHintChanged:false, mSurfaceSize:Point(1080, 2400), mLastSurfaceSize:Point(1080, 2400), mWidth:1080, mHeight:2400, requestedWidth:1080, requestedHeight:2400, transformHint:0, installOrientation:0, displayRotation:0, isSurfaceValid:true, attr.flag:-2122252032, tmpFrames:ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][1080,2400]}, relayoutAsync:true, mSyncSeqId:0
+W/VRI[MainActivity](29533): updateBlastSurfaceIfNeeded, surfaceSize:Point(1080, 2400), lastSurfaceSize:Point(1080, 2400), format:-3, blastBufferQueue:android.graphics.BLASTBufferQueue@30a4a63
+D/FlutterJNI(29533): Sending viewport metrics to the engine.
+D/VRI[MainActivity](29533): onFocusEvent true
+D/InsetsController(29533): hide(ime(), fromIme=false)
+I/ImeTracker(29533): com.manukhurana.naam_jap:bfe33696: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+D/OplusScrollToTopManager(29533): com.manukhurana.naam_jap/com.manukhurana.naam_jap.MainActivity,This com.android.internal.policy.DecorView{c58e31b V.E...... R....... 0,0-1080,2400 aid=0 alpha=1.0 viewInfo = }[MainActivity] change focus to true
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+D/ProfileInstaller(29533): Installing profile for com.manukhurana.naam_jap
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+W/hurana.naam_jap(29533): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+W/FinalizerDaemon(29533): type=1400 audit(0.0:30386): avc:  denied  { getopt } for  path="/dev/socket/usap_pool_primary" scontext=u:r:untrusted_app:s0:c225,c257,c512,c768 tcontext=u:r:zygote:s0 tclass=unix_stream_socket permissive=0 app=com.manukhurana.naam_jap
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [SubscriptionService] No RevenueCat API key - running as free tier
+E/SQLiteLog(29533): (1) near "actual_mantra": syntax error in "CREATE TABLE japa_sessions (
+E/SQLiteLog(29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+E/SQLiteLog(29533):           mantra_id INTEGER NOT NULL,
+E/SQLiteLog(29533):           count INTEGER NOT NULL,
+E/SQLiteLog(29533):           started_at
+I/flutter (29533): error DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args [] during open, closing...
+I/flutter (29533): [2026-08-09T14:58:10.671175] [ERROR] Application initialization failed
+I/flutter (29533): Error: DatabaseException(near "actual_mantra": syntax error (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )) sql '        CREATE TABLE japa_sessions (
+I/flutter (29533):           id INTEGER PRIMARY KEY AUTOINCREMENT,
+I/flutter (29533):           mantra_id INTEGER NOT NULL,
+I/flutter (29533):           count INTEGER NOT NULL,
+I/flutter (29533):           started_at TEXT NOT NULL,
+I/flutter (29533):           ended_at TEXT NOT NULL,
+I/flutter (29533):           FOREIGN KEY (mantra_id) REFERENCES mantras(id),
+I/flutter (29533):           actual_mantra TEXT
+I/flutter (29533):         )
+I/flutter (29533):       ' args []
+I/flutter (29533): StackTrace:
+I/flutter (29533): #0      wrapDatabaseException (package:sqflite_platform_interface/src/platform_exception.dart:12:7)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #1      SqfliteDatabaseMixin.txnSynchronized (package:sqflite_common/src/database_mixin.dart:556:16)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #2      AppDatabase._createTable (package:nitya_sadhana/database/app_database.dart:53:7)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #3      SqfliteDatabaseMixin.doOpen.<anonymous closure> (package:sqflite_common/src/database_mixin.dart:1148:19)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #4      SqfliteDatabaseMixinExt._txnTransaction (package:sqflite_common/src/database_mixin.dart:390:16)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #5      BasicLock.synchronized (package:synchronized/src/basic_lock.dart:38:16)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #6      SqfliteDatabaseMixin.txnSynchronized (package:sqflite_common/src/database_mixin.dart:591:14)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #7      SqfliteDatabaseMixin.doOpen (package:sqflite_common/src/database_mixin.dart:1137:13)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #8      SqfliteDatabaseOpenHelper.openDatabase (package:sqflite_common/src/database.dart:46:7)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #9      SqfliteDatabaseFactoryMixin.openDatabase.<anonymous closure> (package:sqflite_common/src/factory_mixin.dart:115:18)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #10     ReentrantLock.synchronized.<anonymous closure> (package:synchronized/src/reentrant_lock.dart:40:18)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #11     BasicLock.synchronized (package:synchronized/src/basic_lock.dart:38:16)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #12     AppDatabase.instance (package:nitya_sadhana/database/app_database.dart:12:13)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #13     AppDatabase.getMantras (package:nitya_sadhana/database/app_database.dart:83:16)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #14     JapaNotifier.initialize (package:nitya_sadhana/providers/japa_provider.dart:68:16)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #15     appInitializedProvider.<anonymous closure>.<anonymous closure> (package:nitya_sadhana/main.dart:27:5)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #16     ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:232:17)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533): #17     ElementWithFuture.handleFuture.<anonymous closure>.<anonymous closure> (package:riverpod/src/core/element.dart:237:29)
+I/flutter (29533): <asynchronous suspension>
+I/flutter (29533):
+I/flutter (29533):

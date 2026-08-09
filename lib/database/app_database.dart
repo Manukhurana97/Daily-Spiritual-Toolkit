@@ -17,14 +17,20 @@ class AppDatabase {
     final dbPath = await getDatabasesPath();
     final path = p.join(dbPath, 'naam_jap.db');
 
+    assert(() {
+      deleteDatabase(path);
+      return true;
+    }());
+
     return openDatabase(
         path,
         version: 1,
         onCreate: (db, version) => _createTable(db),
         onUpgrade: (db, oldVersion, newVersion) async {
           await db.execute("DROP TABLE IF EXISTS sankalps");
+          await db.execute("DROP TABLE IF EXISTS japa_sessions");
           await db.execute("DROP TABLE IF EXISTS mantras");
-          await db.execute("DROP TABLE IF EXISTS mantras");
+          await _createTable(db);
         }
     );
   }
@@ -45,7 +51,7 @@ class AppDatabase {
         )
       ''');
       await db.execute('''
-        CREATE TABLE mantras (
+        CREATE TABLE japa_sessions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           mantra_id INTEGER NOT NULL,
           count INTEGER NOT NULL,
