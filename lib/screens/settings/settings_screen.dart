@@ -43,7 +43,7 @@ class SettingsScreen extends ConsumerWidget {
             title: 'My Mantras',
             child: Column(
               children: [
-                ...japa.mantras.map((mantra) {
+                ...(sub.isPremium ? japa.mantras : japa.mantras.take(FreeTierLimits.maxMantra)).map((mantra) {
                   final isDefault = mantra.id == settings.defaultMantraId;
                   return _MantraTile(
                     name: mantra.name,
@@ -56,7 +56,7 @@ class SettingsScreen extends ConsumerWidget {
                     canDelete: japa.mantras.length > 1,
                     onSetDefault: () => settings.setDefaultMantraId(mantra.id),
                     onDelete: () => _confirmDelete(context, ref, mantra),
-                    onEdit: () => _showEditMantraDialog(context, ref, mantra),
+                    onEdit: () => _showEditMantraDialog(context, ref, mantra, isPremium: sub.isPremium),
                     isDark: isDark,
                   );
                 }),
@@ -67,7 +67,7 @@ class SettingsScreen extends ConsumerWidget {
                         PaywallScreen.show(context, featureTitle: 'Unlimited Mantra');
                         return;
                       }
-                      _showAddMantraDialog(context, ref);
+                      _showAddMantraDialog(context, ref, isPremium: sub.isPremium);
                     },
                   ),
                 if (!sub.isPremium && japa.mantras.length >= FreeTierLimits.maxMantra)
@@ -280,39 +280,42 @@ class SettingsScreen extends ConsumerWidget {
             isPremium: sub.isPremium,
             featureTitle: 'Background Sound',
             isDark: isDark,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(''
-                    'Play soothing sounds during japa. Tap the music icon on the japa screen to choose.',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+            child: SectionCard(
+              title: 'Background Sound',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      'Play soothing sounds during japa. Tap the music icon on the japa screen to choose.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8,),
-                Consumer(
-                    builder: (_, ref, __) {
-                      final audio = ref.watch(audioServiceProvider);
-                      return Column(
-                        children: [
-                          _SettingRow(
-                              icon: Icons.volume_up_rounded,
-                              title: 'Volume',
-                              isDark: isDark,
-                              trailing: SizedBox(
-                                width: 120,
-                                child: Slider(
-                                  value: audio.volume,
-                                  onChanged: (v) => audio.setVolume(v),
-                                  activeColor: AppColors.saffron,
+                  const SizedBox(height: 8,),
+                  Consumer(
+                      builder: (_, ref, __) {
+                        final audio = ref.watch(audioServiceProvider);
+                        return Column(
+                          children: [
+                            _SettingRow(
+                                icon: Icons.volume_up_rounded,
+                                title: 'Volume',
+                                isDark: isDark,
+                                trailing: SizedBox(
+                                  width: 120,
+                                  child: Slider(
+                                    value: audio.volume,
+                                    onChanged: (v) => audio.setVolume(v),
+                                    activeColor: AppColors.saffron,
+                                  ),
                                 ),
-                              ),
-                          ),
-                        ],
-                      );
-                    }),
-              ],
+                            ),
+                          ],
+                        );
+                      }),
+                  ],
+                ),
             ),
           ),
 
@@ -644,7 +647,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showEditMantraDialog(BuildContext context, WidgetRef ref, Mantra mantra) {
+  void _showEditMantraDialog(BuildContext context, WidgetRef ref, Mantra mantra, {bool isPremium = false}) {
     final nameCtrl = TextEditingController(text: mantra.name);
     final mantraCtrl = TextEditingController(text: mantra.actualMantra ?? '');
     final dirCtrl = TextEditingController(text: mantra.targetDirection ?? '');
@@ -699,6 +702,7 @@ class SettingsScreen extends ConsumerWidget {
                         labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary)
                       ),
                     ),
+                    if (isPremium) ...[
                     const SizedBox(height: 18),
                     Text('Active Day', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
                     const SizedBox(height: 6),
@@ -734,7 +738,22 @@ class SettingsScreen extends ConsumerWidget {
                         visualDensity: VisualDensity.compact,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                    )
+                    ),
+                  ] else ...[
+                    const SizedBox(height: 12),
+                      InkWell(
+                        onTap: () => PaywallScreen.show(context, featureTitle: 'Active Days & Best Time'),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.lock_rounded, size: 14, color: AppColors.saffron),
+                            const SizedBox(width: 6),
+                            Text('Active Days & Best Time', style: TextStyle(fontSize: 12, color: AppColors.saffron, fontWeight: FontWeight.w600)),
+                            const Spacer(),
+                            const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: AppColors.saffron),
+                          ],
+                        ),
+                      )
+                    ]
                   ],
                 ),
               ),
@@ -744,15 +763,15 @@ class SettingsScreen extends ConsumerWidget {
                     onPressed: () {
                       final name = nameCtrl.text.trim();
                       if (name.isEmpty) return;
-                      if (selectedDays.isEmpty) {
+                      if (isPremium && selectedDays.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Select at least one day '), behavior: SnackBarBehavior.floating),
                         );
                         return;
                       }
-                      final activeDays = selectedDays.length == 7
+                      final activeDays = !isPremium ? mantra.activeDays : (selectedDays.length == 7
                         ? 'all'
-                      : Mantra.allDayCodes.where(selectedDays.contains).join(',');
+                      : Mantra.allDayCodes.where(selectedDays.contains).join(','));
                       ref.read(japaProvider).updateMantraDetails(
                           mantra.copyWith(
                             name: name,
@@ -761,7 +780,7 @@ class SettingsScreen extends ConsumerWidget {
                             clearActualMantra: mantraCtrl.text.trim().isEmpty,
                             clearTargetDirection: dirCtrl.text.trim().isEmpty,
                             activeDays: activeDays,
-                            bestTime: bestTime
+                            bestTime: isPremium ? bestTime : mantra.bestTime,
                           )
                       );
                       Navigator.pop(ctx);
@@ -776,7 +795,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showAddMantraDialog(BuildContext context, WidgetRef ref) {
+  void _showAddMantraDialog(BuildContext context, WidgetRef ref, {bool isPremium = false}) {
     final nameCtrl = TextEditingController();
     final mantraCtrl = TextEditingController();
     final dirCtrl = TextEditingController();
@@ -829,6 +848,7 @@ class SettingsScreen extends ConsumerWidget {
                         labelStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                       ),
                     ),
+                    if(isPremium) ...[
                     const SizedBox(height: 18),
                     Text('Active Days', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
                     const SizedBox(height: 6),
@@ -865,6 +885,21 @@ class SettingsScreen extends ConsumerWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap
                         ),
                     )
+                  ] else ...[
+                    const SizedBox(height: 12),
+                      InkWell(
+                        onTap: () => PaywallScreen.show(context, featureTitle: 'Active Days & Best time'),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.lock_rounded, size: 14, color: AppColors.saffron),
+                            const SizedBox(width: 6),
+                            Text('Active Days & Best Time', style: TextStyle(fontSize: 12, color: AppColors.saffron, fontWeight: FontWeight.w600)),
+                            const Spacer(),
+                            const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: AppColors.saffron),
+                          ],
+                        ),
+                      )
+                    ]
                   ],
                 ),
               ),
@@ -879,21 +914,21 @@ class SettingsScreen extends ConsumerWidget {
                       );
                       return;
                     }
-                    if (selectedDays.isEmpty) {
+                    if (isPremium && selectedDays.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Select at least one day'), behavior: SnackBarBehavior.floating),
                       );
                       return;
                     }
-                    final activeDays = selectedDays.length == 7
+                    final activeDays = !isPremium ? 'all' : (selectedDays.length == 7
                       ? 'all'
-                      : Mantra.allDayCodes.where(selectedDays.contains).join(',');
+                      : Mantra.allDayCodes.where(selectedDays.contains).join(','));
                     ref.read(japaProvider).addMantra(
                       name,
                       actualMantra: mantraCtrl.text.trim().isEmpty ? null : mantraCtrl.text.trim(),
                       targetDirection: dirCtrl.text.trim().isEmpty ? null : dirCtrl.text.trim(),
                       activeDays: activeDays,
-                      bestTime: bestTime
+                      bestTime: isPremium ? bestTime : 'anytime',
                     );
                     Navigator.pop(ctx);
                   },

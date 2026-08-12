@@ -129,7 +129,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            '🔒 "$widget.featureTitle" is a Premium feature',
+                            '🔒 "${widget.featureTitle}" is a Premium feature',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,

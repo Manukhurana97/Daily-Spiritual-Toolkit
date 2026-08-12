@@ -112,7 +112,7 @@ class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
     double diff = targetDeg - _heading!;
     if (diff > 180) diff -= 360;
     if (diff <- 180) diff += 360;
-    if (diff.abs() <= 15) return null; //correctly facing
+    if (diff.abs() <= 10) return null; //correctly facing
     return diff > 0 ? "Turn right ⤴" : "Turn Left ⤵";
   }
 
@@ -181,6 +181,7 @@ class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
   double? get accuracy => _accuracy;
   bool get isLowAccuracy {
     if(_accuracy == null) return false;
+    if(_headingStableCount < 15) return false; // warm-up grace period
     if(_accuracy! < 0) return _heading == null;
     return _accuracy! < 25;
   }
@@ -198,7 +199,7 @@ class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
         // Detecting sensor degradation: heading jumps > 90 b/w events
         if(_prevRawHeading != null) {
           double delta = (raw - _prevRawHeading!).abs();
-          if (delta > 180) delta = 380 - delta;
+          if (delta > 180) delta = 360 - delta;
           if (delta > 90) {
             _headingStableCount = 0;
             _calibrationDismissed = false;
@@ -224,7 +225,7 @@ class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
         if (unreachable && !_calibrationDismissed && _headingStableCount < 60) {
           _needsCalibration = true;
         } else if (!unreachable && _needsCalibration) {
-
+          _needsCalibration = false;
         } else  {
           _needsCalibration = false;
         }

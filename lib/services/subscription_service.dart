@@ -27,6 +27,7 @@ enum PremiumFeature {
 class SubscriptionService extends ChangeNotifier {
   bool _isPremium = false;
   bool _isInitialized = false;
+  bool _revenueCatConfigured = false;
 
   static const _revenueCatApiKeyAndroid = String.fromEnvironment('REVENUECAT_ANDROID_KEY');
   static const _revenueCatApiKeyIos = String.fromEnvironment('REVENUECAT_IOS_KEY');
@@ -85,6 +86,7 @@ class SubscriptionService extends ChangeNotifier {
 
     final configuration = PurchasesConfiguration(apiKey);
     await Purchases.configure(configuration);
+    _revenueCatConfigured = true;
 
     try {
       final customerInfo = await Purchases.getCustomerInfo();
@@ -142,6 +144,7 @@ class SubscriptionService extends ChangeNotifier {
   }
 
   Future<({Package? monthly, Package? yearly})> getOfferings() async {
+    if (!_revenueCatConfigured) return (monthly: null, yearly: null);
     try {
       final offerings = await Purchases.getOfferings();
       return (
@@ -155,11 +158,8 @@ class SubscriptionService extends ChangeNotifier {
   }
 
   Future<bool> purchasePackage(Package package) async {
+    if (!_revenueCatConfigured) return false;
     try {
-      final offerings = await Purchases.getOfferings();
-      final package = offerings.current?.monthly;
-      if (package == null) return false;
-
       final result = await Purchases.purchasePackage(package);
       _isPremium = result.entitlements.all[_entitlementId]?.isActive ?? false;
       notifyListeners();
@@ -174,6 +174,10 @@ class SubscriptionService extends ChangeNotifier {
 
   // Restore previous purchases
   Future<bool> restorePurchase() async {
+    if (!_revenueCatConfigured) {
+      debugPrint('[SubscriptionService] RevenueCat not Configured - cannot restore');
+      return false;
+    }
     try {
       final customerInfo = await Purchases.restorePurchases();
       _isPremium = customerInfo.entitlements.all[_entitlementId]?.isActive ?? false;

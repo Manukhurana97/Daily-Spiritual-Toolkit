@@ -4,10 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/models/mantra.dart';
+import 'package:nitya_sadhana/providers/compass_provider.dart';
 import 'package:nitya_sadhana/providers/settings_provider.dart';
 import 'package:nitya_sadhana/providers/stats_provider.dart';
 import 'package:nitya_sadhana/services/ad_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
+import 'package:nitya_sadhana/services/subscription_service.dart';
 import 'package:nitya_sadhana/widgets/section_card.dart';
 import 'package:nitya_sadhana/widgets/streak_chart.dart';
 
@@ -15,6 +18,7 @@ import '../../core/theme/app_theme.dart';
 import '../../models/japa_stats.dart';
 import '../../providers/japa_provider.dart';
 import '../../services/audio_service.dart';
+import '../../services/subscription_service.dart';
 import '../../services/volume_button_service.dart';
 import '../../widgets/stat_card.dart';
 
@@ -90,6 +94,8 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
     final malaProgress = japa.currentMalaProgress;
     final progressFraction = malaProgress / malaSize;
     final directionHint = japa.activeMantra?.targetDirection;
+    final sub = ref.watch(subscriptionProvider);
+    final compass = ref.watch(compassProvider);
 
     // Sync target settings on first build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -112,7 +118,7 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
                 Row(
                   children: [
                     Expanded(
-                      child: _MantraSelector(japa: japa, isDark: isDark),
+                      child: _MantraSelector(japa: japa, isDark: isDark, isPremium: sub.isPremium),
                     ),
                     _SadhanaModeChip(),
                     _AudioToggle(audio: audio),
@@ -120,45 +126,51 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
                 ),
 
                 // Direction hint
-                if (directionHint != null && directionHint.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.gold.withValues(
-                          alpha: isDark ? 0.2 : 0.1,
+                if (sub.isPremium && directionHint != null && directionHint.isNotEmpty) ...[
+                  Builder(builder: (_) {
+                    final guidance = compass.directionGuidance(directionHint);
+                    final isFacing = compass.isFacingDirection(directionHint);
+                    final color = isFacing ? AppColors.teal : AppColors.gold;
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: color.withValues(alpha: isDark ? 0.2 : 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: color.withValues(alpha: 0.3)),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.explore_rounded,
-                            size: 16,
-                            color: AppColors.gold,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Face ${directionHint[0].toUpperCase()}${directionHint.substring(1)} for this mantra',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.gold,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              isFacing ? Icons.check_circle_rounded : Icons.explore_rounded,
+                              size: 16,
+                              color: color,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 6),
+                            Text(
+                              isFacing
+                                ? 'Face ${directionHint[0].toUpperCase()}${directionHint.substring(1)} for this mantra'
+                                : '${guidance ?? "Turn"} - Face ${directionHint[0].toUpperCase()}${directionHint.substring(1)}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: color,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  })
+                ],
 
                 // Counter Area with glow
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.42,
+                  height: MediaQuery.of(context).size.height * 0.38,
                   child: Center(
                     child: GestureDetector(
                       onTap: _onTap,
@@ -187,6 +199,23 @@ class _JapaScreenState extends ConsumerState<JapaScreen>
                     ),
                   ),
                 ),
+
+                // Mantra description
+                if (japa.activeMantra?.actualMantra != null && japa.activeMantra!.actualMantra!.isNotEmpty)
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      japa.activeMantra!.actualMantra!,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontStyle: FontStyle.italic,
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
 
                 // Actions
                 Padding(
@@ -338,22 +367,55 @@ class _AudioToggle extends StatelessWidget {
 class _MantraSelector extends StatelessWidget {
   final JapaNotifier japa;
   final bool isDark;
-  const _MantraSelector({required this.japa, required this.isDark});
+  final bool isPremium;
+  const _MantraSelector({required this.japa, required this.isDark, required this.isPremium});
 
   @override
   Widget build(BuildContext context) {
+    // Apply premium limit the filter by active day
+    final limited = isPremium
+      ? japa.mantras
+        : japa.mantras.take(FreeTierLimits.maxMantra).toList();
+    final List<Mantra> displayList;
+    if (isPremium) {
+      final hour = DateTime.now().hour;
+      final visible = limited.where((m) {
+        if (!m.isActiveToday) return false;
+        if(m.bestTime == 'morning' && hour >= 12) return false;
+        if(m.bestTime == 'evening' && hour < 12) return false;
+        return true;
+      }).toList();
+      // Fallback: if nothing active today, show all limited  mantra
+      displayList = visible.isEmpty ? limited : visible;
+    } else {
+      displayList = limited;
+    }
+    // Auto-selected first mantra if active is hidden
+    if (japa.activeMantra != null && !displayList.contains(japa.activeMantra)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (displayList.isNotEmpty) japa.selectMantra(displayList.first);
+      });
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 0, 4),
       child: SizedBox(
         height: 40,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemCount: japa.mantras.length,
+          itemCount: displayList.length,
           separatorBuilder: (_, i) => const SizedBox(width: 8),
           itemBuilder: (context, index) {
-            final mantra = japa.mantras[index];
+            final mantra = displayList[index];
             final isActive = mantra == japa.activeMantra;
+            final IconData? timeIcon = mantra.bestTime == 'morning'
+              ? Icons.wb_sunny_rounded
+              : mantra.bestTime == 'evening'
+                ? Icons.nights_stay_rounded
+                : null;
             return ChoiceChip(
+              avatar: timeIcon != null
+                ? Icon(timeIcon, size: 16, color: isActive ? AppColors.saffron : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary))
+                : null,
               label: Text(mantra.name),
               selected: isActive,
               onSelected: (_) => japa.selectMantra(mantra),

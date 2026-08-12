@@ -395,8 +395,8 @@ class _PanchangScreenState extends ConsumerState<PanchangScreen> with WidgetsBin
                                         value: 'purnimant',
                                         label: Text('Purnimant'),
                                       ),ButtonSegment(
-                                        value: 'anant',
-                                        label: Text('Anant'),
+                                        value: 'amant',
+                                        label: Text('Amant'),
                                       ),
                                     ], selected: {settings.masaSystem},
                                     onSelectionChanged: (v) =>

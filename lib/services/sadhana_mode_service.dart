@@ -34,7 +34,7 @@ class SadhanaModeNotification extends ChangeNotifier {
   Future<void> initialize() async {
     if (Platform.isAndroid) {
       try {
-        _hasAndroidDndPermission = await _dndChannel.invokeMethod<bool>('requestPermission') ?? false;
+        _hasAndroidDndPermission = await _dndChannel.invokeMethod<bool>('hasPermission') ?? false;
       } catch (e) {
         debugPrint('DND permission check error: $e');
       }
