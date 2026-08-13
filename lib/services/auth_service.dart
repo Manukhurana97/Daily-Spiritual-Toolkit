@@ -171,9 +171,11 @@ class AuthService extends ChangeNotifier {
     }  catch (_) {}
 
     // Reset RevenueCat to anonymous
-    try {
-      await Purchases.logOut();
-    } catch (_) {}
+    if(Purchases.isConfigured) {
+      try {
+        await Purchases.logOut();
+      } catch (_) {}
+    }
 
     _user = null;
     _error = null;
@@ -182,6 +184,10 @@ class AuthService extends ChangeNotifier {
 
   /// Link Firebase UID to RevenueCat for cross-device purchase sync
   Future<void> _linkToRevenueCat(String uid) async {
+    if(!Purchases.isConfigured) {
+      debugPrint('[AuthService] RevenueCat not configured, skipped login');
+      return;
+    }
     try {
       await Purchases.logIn(uid);
       debugPrint('[AuthService] Linked RevenueCat to user: $uid');
