@@ -180,10 +180,9 @@ class CompassNotifier extends ChangeNotifier with WidgetsBindingObserver {
 
   double? get accuracy => _accuracy;
   bool get isLowAccuracy {
-    if(_accuracy == null) return false;
     if(_headingStableCount < 15) return false; // warm-up grace period
-    if(_accuracy! < 0) return _heading == null;
-    return _accuracy! < 25;
+    if(_accuracy == null) return false;        // unreliable/unknown: plugin can't tell us
+    return _accuracy! > 25;                    // flags MEDIUM (30) and LOW (45)
   }
 
   bool get needCalibrationHind =>

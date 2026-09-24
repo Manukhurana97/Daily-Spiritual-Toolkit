@@ -161,7 +161,7 @@ class BackupService extends ChangeNotifier {
       await _firestore
           .collection('backup')
           .doc(uid)
-          .collection('snapshot')
+          .collection('snapshots')
           .doc(backupId)
           .set({
         'userId': uid,
@@ -293,7 +293,7 @@ class BackupService extends ChangeNotifier {
 
       // 2. Fetch backup from Firestore.
       final snapshot = await _firestore
-        .collection('backups')
+        .collection('backup')
         .doc(uid)
         .collection('snapshots')
         .doc(backupId)
@@ -308,7 +308,7 @@ class BackupService extends ChangeNotifier {
       final data = snapshot.data()!['data'] as Map<String, dynamic>;
 
       // 3. Clear all current data
-      final mantras = data['mantras'] as List<dynamic>? ?? [];
+      final mantras = (data['mantras'] ?? data['mantra']) as List<dynamic>? ?? [];
       for (final mantra in mantras) {
         await AppDatabase.importMantraRaw(
           Map<String, dynamic>.from(mantra as Map));

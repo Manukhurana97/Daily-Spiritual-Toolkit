@@ -2007,12 +2007,18 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
   Future<void> _showRestoreDialog(BackupService backupService) async {
     final backups = backupService.backupHistory;
     if (backups.isEmpty) return;
-    
+
+    // Pre-select the most recent backup so the action backup is usable immediately
+    BackupMeta? picked = backups.first;
     final selected = await showDialog<BackupMeta>(
-        context: context, 
+        context: context,
         builder: (ctx) {
           final isDark = Theme.of(ctx).brightness == Brightness.dark;
-          return AlertDialog(
+          return StatefulBuilder(
+            builder: (ctx, setLocal) => AlertDialog(
+              // content is a Column of up to _maxBackup row; without this it
+              // overflows and clips the rows out of view on shorter screens.
+              scrollable: true,
             title: const Text('Restore Backup'),
             content: SizedBox(
               width: double.maxFinite,
@@ -2039,18 +2045,25 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
                   const SizedBox(height: 12,),
                   ...backups.map((backup) {
                     final typeLabel = backup.backupType == 'manual' ? 'Manual' : 'Auto';
+                    final isSelected = identical(picked, backup);
                     return ListTile(
                       dense: true,
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.cloud_done_rounded),
+                      selected: isSelected,
+                      leading: Icon(
+                        isSelected
+                            ? Icons.check_circle_rounded
+                            : Icons.radio_button_checked_rounded,
+                        color: isSelected ? AppColors.saffron : null,
+                      ),
                       title: Text(
-                        DateFormat('MMM d, YYYY  h:mm a').format(backup.createdAt),
+                        DateFormat('MMM d, yyyy  h:mm a').format(backup.createdAt),
                       ),
                       subtitle: Text(
                         '$typeLabel - ${backup.formattedSize} '
                             '(${backup.mantraCount} mantras, ${backup.sessionCount} sessions)',
                       ),
-                      onTap: () => Navigator.pop(ctx, backup),
+                      onTap: () => setLocal(() => picked = backup),
                     );
                   }),
                 ],
@@ -2061,7 +2074,17 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
                   onPressed: () => Navigator.pop(ctx),
                   child: const Text('Cancel'),
               ),
+              ElevatedButton(
+                  onPressed:
+                  picked == null ? null : () => Navigator.pop(ctx, picked),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.saffron,
+                  foregroundColor: Colors.white
+                ),
+                child: const Text('Restore'),
+              )
             ],
+            )
           );
         }
     );
