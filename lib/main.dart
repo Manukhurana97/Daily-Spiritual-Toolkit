@@ -6,8 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nitya_sadhana/screens/settings/device_limit_screen.dart';
 import 'package:nitya_sadhana/services/ad_service.dart';
 import 'package:nitya_sadhana/services/auth_service.dart';
+import 'package:nitya_sadhana/services/backup_service.dart';
+import 'package:nitya_sadhana/services/device_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
 import 'package:nitya_sadhana/utils/app_logger.dart';
@@ -33,6 +36,9 @@ final appInitializedProvider = FutureProvider((ref) {
 
     // Auto-reschedule muhurta notifications if a new day has started
     await _refreshMuhurtaNotifications(ref);
+
+    // Auto-reschedule muhurta notifications if a new day has started
+    await _runPremiumStartupTasks(ref);
 
     return true;
   });
@@ -88,6 +94,33 @@ Future<void> _refreshMuhurtaNotifications(Ref ref) async {
       error: e,
       stackTrace: stackTrace,
     );
+  }
+}
+
+/// V1: Device authorization check + auto-backup for premium users.
+Future<void> _runPremiumStartupTasks(Ref ref) async {
+  try {
+    final sub = ref.read(subscriptionProvider);
+    final auth = ref.read(authServiceProvider);
+
+    if (!auth.isSignedIn) return;
+
+    // Wire device unregister into sign-out flow
+    final deviceService = ref.read(deviceServiceProvider);
+    auth.onBeforeSignOut = () => deviceService.unregisterThisDevice();
+
+    if(!sub.isPremium) return;
+
+    // Device authorization check
+    final status = await deviceService.checkDeviceAuthorization();
+    AppLogger.info('[main] Device auth status: $status');
+
+    // Auto-backup scheduling
+    final backupService = ref.read(backupServiceProvider);
+    await backupService.cleanupExpiredSafetyBackup();
+    await backupService.scheduledAutoBackup();
+  } catch (e, st) {
+    AppLogger.error('[main] Premium startup tasks failed', error: e, stackTrace: st);
   }
 }
 
@@ -239,7 +272,39 @@ class _AppLoader extends ConsumerWidget {
         );
       },
 
-      data: (_) => const NityaSadhanaApp(),
+      data: (_) => const _DeviceGate(),
     );
+  }
+}
+
+class _DeviceGate extends ConsumerStatefulWidget {
+  const _DeviceGate();
+
+  @override
+  ConsumerState<_DeviceGate> createState() => _DeviceGateState();
+}
+
+class _DeviceGateState extends ConsumerState<_DeviceGate> {
+  bool _shownLimit = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final deviceService = ref.watch(deviceServiceProvider);
+
+    // Show limit screen once after init if needed
+    if (deviceService.deviceLimitReached && !_shownLimit) {
+      _shownLimit = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _shownLimitScreen();
+      });
+    }
+
+    return const NityaSadhanaApp();
+  }
+
+  Future<void> _shownLimitScreen() async {
+    await DeviceLimitScreen.show(context);
+    // DeviceService.replaceDevice already clears the flag
+    setState(() => _shownLimit = false);
   }
 }

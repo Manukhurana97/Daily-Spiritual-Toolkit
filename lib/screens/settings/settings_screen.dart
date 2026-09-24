@@ -5,8 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:intl/intl.dart';
 import 'package:nitya_sadhana/screens/paywall/paywall_screen.dart';
 import 'package:nitya_sadhana/services/ad_service.dart';
+import 'package:nitya_sadhana/services/backup_service.dart';
+import 'package:nitya_sadhana/services/device_service.dart';
 import 'package:nitya_sadhana/services/sadhana_mode_service.dart';
 import 'package:nitya_sadhana/services/subscription_service.dart';
 
@@ -347,6 +350,21 @@ class SettingsScreen extends ConsumerWidget {
                 _ResetAllButton(onTap: () => _confirmResetAll(context, ref)),
               ],
             ),
+          ),
+
+          // Manage Device (Premium)
+          _PremiumSection(
+              isPremium: sub.isPremium,
+              featureTitle: 'Device Management',
+              isDark: isDark,
+              child: _ManageDevicesSection(isDark: isDark)
+          ),
+          // Cloud Backup (Premium)
+          _PremiumSection(
+              isPremium: sub.isPremium,
+              featureTitle: 'Cloud backup',
+              isDark: isDark,
+              child: _CloudBackupSection(isDark: isDark)
           ),
 
           // Account
@@ -1659,5 +1677,479 @@ class _BannerAdWidgetState extends ConsumerState<_BannerAdWidget> {
       height: banner.size.height.toDouble(),
       child: AdWidget(ad: banner),
     );
+  }
+}
+
+// Manage Devices Section
+class _ManageDevicesSection extends ConsumerWidget {
+  final bool isDark;
+  const _ManageDevicesSection({required this.isDark});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final deviceService = ref.watch(deviceServiceProvider);
+
+    return SectionCard(
+      title: 'Manage Devices',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Your plan allows ${deviceService.maxDevices} device ${deviceService.maxDevices > 1 ? 's' : ''}',
+              style: TextStyle(
+                fontSize: 13,
+                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 12),
+            if (deviceService.activeDevices.isEmpty)
+              Text(
+                'No devices registered',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                ),
+              )
+            else
+              ...deviceService.activeDevices.map((device) {
+                final isThisDevice = device.deviceId == deviceService.deviceId;
+                final registeredDate = device.registeredAt != null
+                  ? DateFormat('MMM d, yyyy').format(device.registeredAt!)
+                    : 'Unknown';
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkCard : AppColors.cream,
+                    borderRadius: BorderRadius.circular(12),
+                    border: isThisDevice
+                      ? Border.all(color: AppColors.teal.withValues(alpha: 0.5))
+                        : Border.all(color: isDark ? AppColors.darkDivider : AppColors.divider),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        device.platform == 'ios'
+                            ? Icons.phone_iphone_rounded
+                            : Icons.phone_android_rounded,
+                        size: 28,
+                        color: AppColors.saffron,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Flexible(
+                                      child: Text(
+                                        isThisDevice
+                                          ? 'This Device (${device.deviceName})'
+                                            : device.deviceName,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: isDark
+                                            ? AppColors.darkTextPrimary
+                                              : AppColors.textPrimary,
+                                        ),
+                                      ),
+                                  ),
+
+                                  if (isThisDevice) ...[
+                                    const SizedBox(width: 6),
+                                    Icon(Icons.check_circle_rounded,
+                                      size: 16, color: AppColors.teal),
+                                  ],
+                                ],
+                              ),
+
+                              const SizedBox(height: 2),
+                              Text(
+                                'Registered: $registeredDate',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: isDark
+                                    ? AppColors.darkTextSecondary
+                                      : AppColors.textSecondary,
+
+                                ),
+                              ),
+                            ],
+                          )
+                      )
+                    ],
+                  ),
+                );
+              })
+          ],
+        )
+    );
+  }
+}
+
+// Cloud Backup Section
+class _CloudBackupSection extends ConsumerStatefulWidget {
+  final bool isDark;
+  const _CloudBackupSection({required this.isDark});
+
+  @override
+  ConsumerState<_CloudBackupSection> createState() => _CloudBackupSectionState();
+}
+
+class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
+  bool _canUndo = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadState();
+  }
+
+  Future<void> _loadState() async {
+    final backupService = ref.read(backupServiceProvider);
+    await backupService.loadbackupHistory();
+    final canUndo = await backupService.canUndoRestore;
+    if (mounted) setState(() => _canUndo = canUndo);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final backupService = ref.watch(backupServiceProvider);
+    final settings = ref.watch(settingsProvider);
+    final auth = ref.watch(authServiceProvider);
+
+    if(!auth.isSignedIn) {
+      return SectionCard(
+        title: 'Cloud Backup',
+          child: Text(
+            'Sign in to enable cloud backup',
+            style: TextStyle(
+              fontSize: 13,
+              color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+            ),
+          ),
+      );
+    }
+
+    return SectionCard(
+      title: 'Cloud Backup',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Frequency selector
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Auto Backup',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                  ),
+                ),
+                DropdownButton<String>(
+                  value: settings.backupFrequency,
+                    underline: const SizedBox.shrink(),
+                    isDense: true,
+                    items: const [
+                      DropdownMenuItem(value: 'daily', child: Text('Daily')),
+                      DropdownMenuItem(value: 'weekly', child: Text('Weekly')),
+                      DropdownMenuItem(value: 'monthly', child: Text('Monthly')),
+                      DropdownMenuItem(value: 'manual', child: Text('Manual only')),
+                    ],
+                    onChanged: (value) {
+                      if(value != null) {
+                        settings.setBackupFrequency(value);
+                        backupService.setBackupFrequency(value);
+                      }
+                    }
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 4),
+
+            // Last backup info
+            if (backupService.lastBackupTime != null)
+              Text(
+                'Last Backup: ${DateFormat('MMM d, h:mm a').format(backupService.lastBackupTime!)}',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                ),
+              ),
+            const SizedBox(height: 12),
+
+            // Action buttons
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: backupService.isBackingUp
+                        ? null
+                        : () => _doBackup(backupService),
+                    icon: backupService.isBackingUp
+                        ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.cloud_upload_rounded, size: 18),
+                    label: Text(backupService.isBackingUp ? 'Backup up...' : 'Backup now'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.saffron,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: OutlinedButton.icon(
+                      onPressed: backupService.backupHistory.isEmpty
+                      ? null
+                          : () => _showRestoreDialog(backupService),
+                      icon: const Icon(Icons.cloud_download_rounded, size: 18),
+                      label: const Text('Restore'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )
+                      )
+                  ),
+                )
+              ],
+            ),
+
+            // Undo restore
+            if (_canUndo) ...[
+              const SizedBox(height: 10),
+              TextButton.icon(
+                  onPressed: backupService.isRestoring
+                    ? null
+                    : () => _doUndoRestore(backupService),
+                  icon: const Icon(Icons.undo_rounded, size: 16,),
+                  label: const Text('Undo Last Restore (available for 7 days)'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.teal,
+                  textStyle: const TextStyle(fontSize: 12),
+                ),
+              )
+            ],
+
+            // backup History
+            if (backupService.backupHistory.isNotEmpty) ...[
+              const SizedBox(height: 14),
+              Text(
+                'Backup History',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...backupService.backupHistory.map((backup) {
+                final typeLabel = backup.backupType == 'manual' ? 'Manual' : 'Auto';
+                return Padding(
+                    padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.cloud_done_rounded,
+                        size: 16,
+                        color: isDark
+                          ? AppColors.darkTextSecondary
+                        :  AppColors.textSecondary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: Text(
+                            '${DateFormat('MMM d, h:mm a').format(backup.createdAt)} ($typeLabel) - ${backup.formattedSize}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: isDark 
+                                ? AppColors.darkTextSecondary
+                                  : AppColors.textSecondary,
+                            ),
+                          ),
+                      ),
+                    ],
+                  ),
+                );
+              })
+            ]
+          ],
+        )
+    );
+  }
+  
+  Future<void> _doBackup(BackupService backupService) async {
+    final success = await backupService.createBackup(isManual: true);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(success ? 'Backup completed!' : 'Backup failed. Try again'),
+            behavior: SnackBarBehavior.floating,
+        )
+      );
+    }
+  }
+  
+  Future<void> _showRestoreDialog(BackupService backupService) async {
+    final backups = backupService.backupHistory;
+    if (backups.isEmpty) return;
+    
+    final selected = await showDialog<BackupMeta>(
+        context: context, 
+        builder: (ctx) {
+          final isDark = Theme.of(ctx).brightness == Brightness.dark;
+          return AlertDialog(
+            title: const Text('Restore Backup'),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'This will replace ALL current data with the selected backup',
+                    style: TextStyle(
+                      color: isDark
+                          ? AppColors.darkTextSecondary
+                          : AppColors.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Your current data will be saved locally as a safety backup. You can undo within 7 days',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.teal,
+                    ),
+                  ),
+                  const SizedBox(height: 12,),
+                  ...backups.map((backup) {
+                    final typeLabel = backup.backupType == 'manual' ? 'Manual' : 'Auto';
+                    return ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.cloud_done_rounded),
+                      title: Text(
+                        DateFormat('MMM d, YYYY  h:mm a').format(backup.createdAt),
+                      ),
+                      subtitle: Text(
+                        '$typeLabel - ${backup.formattedSize} '
+                            '(${backup.mantraCount} mantras, ${backup.sessionCount} sessions)',
+                      ),
+                      onTap: () => Navigator.pop(ctx, backup),
+                    );
+                  }),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Cancel'),
+              ),
+            ],
+          );
+        }
+    );
+
+    if (selected == null) return;
+
+    // Confirm
+    final confirm = await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Confirm Restore'),
+          content: Text(
+            'Restore backup from ${DateFormat('MMM d, h:mm a').format(selected.createdAt)}?\n\n'
+                'This will replace all current data. A local entry safety backup will be created first.',
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.saffron,
+                  foregroundColor: Colors.white,
+                ),
+              child: const Text('Restore'),
+            )
+          ],
+        )
+    );
+
+    if (confirm != true || !mounted) return;
+
+    final success = await backupService.restoreBackup(selected.backupId);
+    if (mounted) {
+      final canUndo = await backupService.canUndoRestore;
+      setState(() => _canUndo = canUndo);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(success
+            ? 'Restore completed! You can undo within 7 days.'
+            : 'Restore failed. Please try again'),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 4),
+        )
+      );
+
+      // Refresh provider after restore
+      if (success) {
+        ref.invalidate(japaProvider);
+      }
+    }
+  }
+
+  Future<void> _doUndoRestore(BackupService backupService) async {
+    final confirm = await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Undo Restore?'),
+          content: const Text(
+            'This will restore your data to what it was before the last restore operation.',
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel'),),
+            ElevatedButton(
+                onPressed: () => Navigator.pop(ctx, true), child: const Text('Undo')),
+          ],
+        )
+    );
+
+    if (confirm != true || !mounted) return;
+
+    final success = await backupService.undoRestore();
+    if (mounted) {
+      setState(() => _canUndo = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(success
+            ? 'Undo restore complete!'
+            : 'Undo failed. Safety backup may have expired.'),
+        ),
+      );
+      if (success) {
+        ref.invalidate(japaProvider);
+      }
+    }
   }
 }

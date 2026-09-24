@@ -332,6 +332,51 @@ class AppDatabase {
     );
     return rows.map(Sankalp.fromMap).toList();
   }
+
+  // Bulk Export (for cloud Backup)
+
+  static Future<List<Map<String, dynamic>>> exportMantras() async {
+    final db = await instance;
+    return db.query('mantras', orderBy: 'id ASC');
+  }
+
+  static Future<List<Map<String, dynamic>>> exportSessions() async {
+    final db = await instance;
+    return db.query('japa_sessions', orderBy: 'id ASC');
+  }
+
+  static Future<List<Map<String, dynamic>>> exportSankalps() async {
+    final db = await instance;
+    return db.query('sankalps', orderBy: 'id ASC');
+  }
+
+  // Bulk Import (from cloud Restore)
+  static Future<void> clearAllTables() async {
+    final db = await instance;
+    await db.transaction((txn) async {
+      await txn.delete('sankalps');
+      await txn.delete('japa_sessions');
+      await txn.delete('mantras');
+    });
+  }
+
+  static Future<void> importMantraRaw(Map<String, dynamic> row) async {
+    final db = await instance;
+    await db.insert('mantras', row);
+  }
+
+  static Future<void> importSessionRaw(Map<String, dynamic> row) async {
+    final db = await instance;
+    await db.insert('japa_sessions', row);
+  }
+
+  static Future<void> importSankalpRaw(Map<String, dynamic> row) async {
+    final db = await instance;
+    await db.insert('sankalps', row);
+  }
+
+
+
 }
 
 class DailyCount {

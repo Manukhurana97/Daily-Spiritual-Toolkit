@@ -15,6 +15,7 @@ class SettingsNotifier extends ChangeNotifier {
   static const _keyDailySize = 'daily_size';
   static const _keyNotifSound = 'notif_sound';
   static const _keyMasaSystem = 'masa_system';
+  static const _keyBackupFrequency = 'backup_frequency';
 
   SharedPreferences? _prefs;
   int? _defaultMantraId;
@@ -25,6 +26,7 @@ class SettingsNotifier extends ChangeNotifier {
   int _dailyGoal = 0;
   String _notifSound = 'default';
   String _masaSystem = 'purnimant';
+  String _backupFrequency = 'daily';
   bool _isLoading = true;
 
   int? get defaultMantraId => _defaultMantraId;
@@ -36,6 +38,7 @@ class SettingsNotifier extends ChangeNotifier {
   String get notifSound => _notifSound;
   String get masaSystem => _masaSystem;
   bool get isPurnimant => _masaSystem == 'purnimant';
+  String get backupFrequency => _backupFrequency;
   bool get isLoading => _isLoading;
 
   Future<void> initialize() async {
@@ -58,6 +61,7 @@ class SettingsNotifier extends ChangeNotifier {
     _dailyGoal = _prefs?.getInt(_keyDailySize) ?? 0;
     _notifSound = _prefs?.getString(_keyNotifSound) ?? 'default';
     _masaSystem = _prefs?.getString(_keyMasaSystem) ?? 'purnimant';
+    _backupFrequency = _prefs?.getString(_keyBackupFrequency) ?? 'daily';
     _isLoading = false;
     notifyListeners();
   }
@@ -116,6 +120,12 @@ class SettingsNotifier extends ChangeNotifier {
   Future<void> setMasaSystem(String system) async {
     _masaSystem = system;
     await _prefs?.setString(_keyMasaSystem, system);
+    notifyListeners();
+  }
+
+  Future<void> setBackupFrequency(String frequency) async {
+    _backupFrequency = frequency;
+    await _prefs?.setString(_keyBackupFrequency, frequency);
     notifyListeners();
   }
 }

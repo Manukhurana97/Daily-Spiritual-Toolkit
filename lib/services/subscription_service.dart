@@ -22,6 +22,8 @@ enum PremiumFeature {
   notifications,
   sadhanaMode,
   backkgroundSounnds,
+  deviceRestriction,
+  cloudBackup,
 }
 
 class SubscriptionService extends ChangeNotifier {
@@ -53,6 +55,8 @@ class SubscriptionService extends ChangeNotifier {
       case PremiumFeature.notifications:
       case PremiumFeature.sadhanaMode:
       case PremiumFeature.backkgroundSounnds:
+      case PremiumFeature.deviceRestriction:
+      case PremiumFeature.cloudBackup:
         return false;
     }
   }

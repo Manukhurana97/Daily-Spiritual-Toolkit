@@ -160,8 +160,19 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  /// Optional callback invoked before sign-out (e.g. to unregister device)
+  Future<void> Function()? onBeforeSignOut;
+
+
   // Sign out from all Providers;
   Future<void> signOut() async {
+    // Run pre-sign-out hook (e.g. unregister device)
+    if(onBeforeSignOut != null) {
+      try {
+        await onBeforeSignOut!();
+      } catch (_) {}
+    }
+
     try {
       await GoogleSignIn().signOut();
     } catch (_) {}
