@@ -65,7 +65,7 @@ const REVOKES = new Set(["EXPIRATION"]);
 //   CANCELLATION    -> auto-renew turned off; access continues until EXPIRATION
 //   BILLING_ISSUE   -> grace period; RevenueCat sends EXPIRATION if it truly ends
 //   TEST           -> dashboard "send test event"
-const IGNORED = new Set("CANCELLATION", "BILLING_ISSUE", "TEST", "TRANSFER");
+const IGNORED = new Set(["CANCELLATION", "BILLING_ISSUE", "TEST", "TRANSFER"]);
 
 exports.revenuecatWebhook = onRequest(
     {secrets: [WEBHOOK_SECRET], region: "asia-south1", cors: false},

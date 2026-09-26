@@ -1,29 +1,19 @@
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase projects:list
-✔ Preparing the list of your Firebase projects
-┌──────────────────────┬──────────────┬────────────────┬──────────────────────┐
-│ Project Display Name │ Project ID   │ Project Number │ Resource Location ID │
-├──────────────────────┼──────────────┼────────────────┼──────────────────────┤
-│ Nitya Sadhna         │ nitya-sadhna │ 374854607657   │ [Not specified]      │
-└──────────────────────┴──────────────┴────────────────┴──────────────────────┘
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase deploy --only firestore:rules
 
-1 project(s) total.
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase use --add
-✔ Which project do you want to add? nitya-sadhna
-✔ What alias do you want to use for this project? (e.g. staging) prod
+=== Deploying to 'nitya-sadhna'...
 
-Created alias prod for nitya-sadhna.
-Now using alias prod (nitya-sadhna)
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase functions:secrets:set REVENUECAT_WEBHOOK_SECRET
+i  deploying firestore
+i  firestore: ensuring required API firestore.googleapis.com is enabled...
+i  firestore: ensuring required API firestore.googleapis.com is enabled...
+i  firestore: reading indexes from firebase.indexes.json...
+i  cloud.firestore: checking firestore.rules for compilation errors...
+✔  cloud.firestore: rules file firestore.rules compiled successfully
+i  firestore: latest version of firestore.rules already up to date, skipping upload...
+✔  firestore: released rules firestore.rules to cloud.firestore
 
-Error: Your project nitya-sadhna must be on the Blaze (pay-as-you-go) plan to complete this command. Required API secretmanager.googleapis.com can't be enabled until the upgrade is complete. To upgrade, visit the following URL:
+✔  Deploy complete!
 
-https://console.firebase.google.com/project/nitya-sadhna/usage/details
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase functions:secrets:set REVENUECAT_WEBHOOK_SECRET
-✔ Enter a value for REVENUECAT_WEBHOOK_SECRET:
-✔  Created a new secret version projects/374854607657/secrets/REVENUECAT_WEBHOOK_SECRET/versions/1
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase deploy --only firebase:rules --project nitya-sadhna
-
-Error: Cannot understand what targets to deploy/serve. No targets in firebase.json match '--only firebase:rules'.
+Project Console: https://console.firebase.google.com/project/nitya-sadhna/overview
 manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase deploy --only functions
 
 === Deploying to 'nitya-sadhna'...
@@ -33,52 +23,169 @@ i  functions: preparing codebase default for deployment
 i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
 i  functions: ensuring required API cloudbuild.googleapis.com is enabled...
 i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled...
-⚠  functions: missing required API cloudfunctions.googleapis.com. Enabling now...
-⚠  functions: missing required API cloudbuild.googleapis.com. Enabling now...
-⚠  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now...
-⚠  functions: Runtime Node.js 20 was deprecated on 2026-04-30 and will be decommissioned on 2026-10-30, after which you will not be able to deploy without upgrading. Consider upgrading now to avoid disruption. See https://cloud.google.com/functions/docs/runtime-support for full details on the lifecycle policy
 i  functions: Loading and analyzing source code for codebase default to determine what to deploy
-Serving at port 8891
+Serving at port 8973
 
 i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled...
-⚠  extensions: missing required API firebaseextensions.googleapis.com. Enabling now...
 i  functions: preparing functions directory for uploading...
 i  functions: packaged /Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions (32.96 KB) for uploading
 i  functions: ensuring required API run.googleapis.com is enabled...
 i  functions: ensuring required API eventarc.googleapis.com is enabled...
 i  functions: ensuring required API pubsub.googleapis.com is enabled...
 i  functions: ensuring required API storage.googleapis.com is enabled...
-⚠  functions: missing required API eventarc.googleapis.com. Enabling now...
-✔  functions: required API pubsub.googleapis.com is enabled
-⚠  functions: missing required API run.googleapis.com. Enabling now...
-✔  functions: required API storage.googleapis.com is enabled
 i  functions: generating the service identity for pubsub.googleapis.com...
 i  functions: generating the service identity for eventarc.googleapis.com...
 i  functions: ensuring required API secretmanager.googleapis.com is enabled...
-✔  functions: required API secretmanager.googleapis.com is enabled
 ✔  functions: functions source uploaded successfully
 i  functions: ensuring 374854607657-compute@developer.gserviceaccount.com access to secret REVENUECAT_WEBHOOK_SECRET.
 ✔  secretmanager: Granted roles/secretmanager.secretAccessor on projects/nitya-sadhna/secrets/REVENUECAT_WEBHOOK_SECRET to 374854607657-compute@developer.gserviceaccount.com
 ✔  functions: ensured 374854607657-compute@developer.gserviceaccount.com access to REVENUECAT_WEBHOOK_SECRET.
-i  functions: creating Node.js 20 (2nd Gen) function revenuecatWebhook(asia-south1)...
-✔  functions[revenuecatWebhook(asia-south1)] Successful create operation.
-Function URL (revenuecatWebhook(asia-south1)): https://asia-south1-nitya-sadhna.cloudfunctions.net/revenuecatWebhook
-⚠  functions: No cleanup policy detected for repositories in asia-south1. This may result in a small monthly bill as container images accumulate over time.
-✔ How many days do you want to keep container images before they're deleted? 1
-i  functions: Configuring cleanup policy for repository in asia-south1. Images older than 1 days will be automatically deleted.
-i  functions: Configured cleanup policy for repository in asia-south1.
+i  functions: creating Node.js 22 (2nd Gen) function revenuecatWebhook(asia-south1)...
+Build failed with status: FAILURE and message: npm error code EUSAGE
+npm error
+npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+npm error
+npm error Invalid: lock file's firebase-admin@13.10.0 does not satisfy firebase-admin@14.5.0
+npm error Invalid: lock file's @google-cloud/firestore@7.11.6 does not satisfy @google-cloud/firestore@9.2.0
+npm error Invalid: lock file's @google-cloud/storage@7.22.0 does not satisfy @google-cloud/storage@8.2.0
+npm error Invalid: lock file's google-auth-library@9.15.1 does not satisfy google-auth-library@11.1.0
+npm error Invalid: lock file's jwks-rsa@3.2.2 does not satisfy jwks-rsa@4.1.0
+npm error Missing: @google-cloud/firestore-api@0.2.0 from lock file
+npm error Invalid: lock file's google-gax@4.6.1 does not satisfy google-gax@6.7.0
+npm error Missing: google-gax@5.0.8 from lock file
+npm error Invalid: lock file's @google-cloud/paginator@5.0.2 does not satisfy @google-cloud/paginator@7.1.0
+npm error Invalid: lock file's @google-cloud/projectify@4.0.0 does not satisfy @google-cloud/projectify@6.1.0
+npm error Invalid: lock file's @google-cloud/promisify@4.0.0 does not satisfy @google-cloud/promisify@6.1.0
+npm error Missing: google-auth-library@9.15.1 from lock file
+npm error Invalid: lock file's retry-request@7.0.2 does not satisfy retry-request@9.0.1
+npm error Invalid: lock file's teeny-request@9.0.0 does not satisfy teeny-request@11.0.1
+npm error Missing: uuid@9.0.1 from lock file
+npm error Missing: gaxios@7.3.1 from lock file
+npm error Invalid: lock file's gcp-metadata@6.1.1 does not satisfy gcp-metadata@9.0.4
+npm error Invalid: lock file's google-logging-utils@0.0.2 does not satisfy google-logging-utils@2.0.1
+npm error Missing: gaxios@7.3.1 from lock file
+npm error Invalid: lock file's @grpc/proto-loader@0.7.15 does not satisfy @grpc/proto-loader@0.8.1
+npm error Missing: node-fetch@3.3.2 from lock file
+npm error Invalid: lock file's proto3-json-serializer@2.0.2 does not satisfy proto3-json-serializer@4.0.2
+npm error Invalid: lock file's jose@4.15.9 does not satisfy jose@6.2.12
+npm error Invalid: lock file's lru-cache@6.0.0 does not satisfy lru-cache@11.5.3
+npm error Invalid: lock file's lru-memoizer@2.3.0 does not satisfy lru-memoizer@3.0.0
+npm error Invalid: lock file's http-proxy-agent@5.0.0 does not satisfy http-proxy-agent@7.0.2
+npm error Missing: node-fetch@3.3.2 from lock file
+npm error Missing: google-auth-library@10.5.0 from lock file
+npm error Missing: google-logging-utils@1.1.3 from lock file
+npm error Missing: node-fetch@3.3.2 from lock file
+npm error Missing: proto3-json-serializer@3.0.4 from lock file
+npm error Missing: retry-request@8.0.4 from lock file
+npm error Missing: rimraf@5.0.10 from lock file
+npm error Missing: glob@10.5.0 from lock file
+npm error Missing: foreground-child@3.3.1 from lock file
+npm error Missing: jackspeak@3.4.3 from lock file
+npm error Missing: minimatch@9.0.9 from lock file
+npm error Missing: minipass@7.1.3 from lock file
+npm error Missing: package-json-from-dist@1.0.1 from lock file
+npm error Missing: path-scurry@1.11.1 from lock file
+npm error Missing: cross-spawn@7.0.6 from lock file
+npm error Missing: signal-exit@4.1.0 from lock file
+npm error Missing: path-key@3.1.1 from lock file
+npm error Missing: shebang-command@2.0.0 from lock file
+npm error Missing: which@2.0.2 from lock file
+npm error Missing: @isaacs/cliui@8.0.2 from lock file
+npm error Missing: @pkgjs/parseargs@0.11.0 from lock file
+npm error Missing: string-width@5.1.2 from lock file
+npm error Missing: string-width-cjs@4.2.3 from lock file
+npm error Missing: strip-ansi@7.2.0 from lock file
+npm error Missing: strip-ansi-cjs@6.0.1 from lock file
+npm error Missing: wrap-ansi@8.1.0 from lock file
+npm error Missing: wrap-ansi-cjs@7.0.0 from lock file
+npm error Missing: brace-expansion@2.1.7 from lock file
+npm error Missing: balanced-match@1.0.2 from lock file
+npm error Missing: lru-cache@10.4.3 from lock file
+npm error Missing: shebang-regex@3.0.0 from lock file
+npm error Missing: isexe@2.0.0 from lock file
+npm error Missing: gaxios@7.3.1 from lock file
+npm error Missing: gcp-metadata@8.1.4 from lock file
+npm error Invalid: lock file's gtoken@7.1.0 does not satisfy gtoken@8.0.0
+npm error Missing: gaxios@7.3.1 from lock file
+npm error Missing: gaxios@7.1.3 from lock file
+npm error Missing: teeny-request@10.1.4 from lock file
+npm error Missing: gcp-metadata@6.1.1 from lock file
+npm error Missing: gtoken@7.1.0 from lock file
+npm error Missing: google-logging-utils@0.0.2 from lock file
+npm error Missing: eastasianwidth@0.2.0 from lock file
+npm error Missing: emoji-regex@9.2.2 from lock file
+npm error Missing: ansi-regex@6.3.0 from lock file
+npm error Missing: ansi-styles@6.2.3 from lock file
+npm error Missing: node-fetch@3.3.2 from lock file
+npm error Missing: node-fetch@3.3.2 from lock file
+npm error Missing: node-fetch@3.3.2 from lock file
+npm error
+npm error Clean install a project
+npm error
+npm error Usage:
+npm error npm ci
+npm error
+npm error Options:
+npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+npm error [--no-bin-links] [--no-fund] [--dry-run]
+npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+npm error
+npm error aliases: clean-install, ic, install-clean, isntall-clean
+npm error
+npm error Run "npm help ci" for more info
+npm error A complete log of this run can be found in: /www-data-home/.npm/_logs/2026-09-26T13_26_59_883Z-debug-0.log. For more details see the logs at https://console.cloud.google.com/cloud-build/builds;region=asia-south1/9d67917e-75ff-4a70-8d70-7c0444735de2?project=374854607657.
+⚠  functions: Deploys failed. Skipping deletes.
 
-✔  Deploy complete!
-
-Project Console: https://console.firebase.google.com/project/nitya-sadhna/overview
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % cd functions/
-manu@Manus-MacBook-Air functions % firebase functions:delete revenuecatWebhook --region asia-south1
-✔ You are about to delete the following Cloud Functions:
+Functions deploy had errors with the following functions:
         revenuecatWebhook(asia-south1)
-  Are you sure? Yes
-i  functions: deleting Node.js 20 (2nd Gen) function revenuecatWebhook(asia-south1)...
-✔  functions[revenuecatWebhook(asia-south1)] Successful delete operation.
-manu@Manus-MacBook-Air functions % firebase deploy --only functions
+
+Error: There was an error deploying functions
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % cd functions/ npm install && cd .. && firebase deploy --only functions
+cd: too many arguments
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % cd functions && npm install && cd .. && firebase deploy --only functions
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: undefined,
+npm warn EBADENGINE   required: { node: '22' },
+npm warn EBADENGINE   current: { node: 'v20.20.2', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'firebase-admin@14.5.0',
+npm warn EBADENGINE   required: { node: '>=22' },
+npm warn EBADENGINE   current: { node: 'v20.20.2', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'google-auth-library@11.1.0',
+npm warn EBADENGINE   required: { node: '>=22' },
+npm warn EBADENGINE   current: { node: 'v20.20.2', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'gcp-metadata@9.0.4',
+npm warn EBADENGINE   required: { node: '>=22' },
+npm warn EBADENGINE   current: { node: 'v20.20.2', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'google-logging-utils@2.0.1',
+npm warn EBADENGINE   required: { node: '>=22' },
+npm warn EBADENGINE   current: { node: 'v20.20.2', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn deprecated uuid@9.0.1: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 5 packages, removed 28 packages, changed 20 packages, and audited 153 packages in 7s
+
+35 packages are looking for funding
+  run `npm fund` for details
+
+2 moderate severity vulnerabilities
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
 
 === Deploying to 'nitya-sadhna'...
 
@@ -87,29 +194,23 @@ i  functions: preparing codebase default for deployment
 i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
 i  functions: ensuring required API cloudbuild.googleapis.com is enabled...
 i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled...
-⚠  functions: Runtime Node.js 20 was deprecated on 2026-04-30 and will be decommissioned on 2026-10-30, after which you will not be able to deploy without upgrading. Consider upgrading now to avoid disruption. See https://cloud.google.com/functions/docs/runtime-support for full details on the lifecycle policy
 i  functions: Loading and analyzing source code for codebase default to determine what to deploy
-Serving at port 8336
+Serving at port 8878
 
-i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled...
-i  functions: preparing functions directory for uploading...
-i  functions: packaged /Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions (32.96 KB) for uploading
-i  functions: ensuring required API run.googleapis.com is enabled...
-i  functions: ensuring required API eventarc.googleapis.com is enabled...
-i  functions: ensuring required API pubsub.googleapis.com is enabled...
-i  functions: ensuring required API storage.googleapis.com is enabled...
-i  functions: generating the service identity for pubsub.googleapis.com...
-i  functions: generating the service identity for eventarc.googleapis.com...
-i  functions: ensuring required API secretmanager.googleapis.com is enabled...
-✔  functions: functions source uploaded successfully
-i  functions: ensuring 374854607657-compute@developer.gserviceaccount.com access to secret REVENUECAT_WEBHOOK_SECRET.
-✔  secretmanager: Granted roles/secretmanager.secretAccessor on projects/nitya-sadhna/secrets/REVENUECAT_WEBHOOK_SECRET to 374854607657-compute@developer.gserviceaccount.com
-✔  functions: ensured 374854607657-compute@developer.gserviceaccount.com access to REVENUECAT_WEBHOOK_SECRET.
-i  functions: creating Node.js 20 (2nd Gen) function revenuecatWebhook(asia-south1)...
-✔  functions[revenuecatWebhook(asia-south1)] Successful create operation.
-Function URL (revenuecatWebhook(asia-south1)): https://asia-south1-nitya-sadhna.cloudfunctions.net/revenuecatWebhook
+TypeError: admin.firestore is not a function
+    at Object.<anonymous> (/Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions/index.js:22:18)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at loadModule (/Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions/node_modules/firebase-functions/lib/runtime/loader.js:19:10)
+    at Object.loadStack (/Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions/node_modules/firebase-functions/lib/runtime/loader.js:118:20)
+    at /Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions/node_modules/firebase-functions/lib/bin/firebase-functions.js:76:48
 
-✔  Deploy complete!
 
-Project Console: https://console.firebase.google.com/project/nitya-sadhna/overview
-manu@Manus-MacBook-Air functions %
+Error: Functions codebase could not be analyzed successfully. It may have a syntax or runtime error
+
+Having trouble? Try firebase [command] --help
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit %

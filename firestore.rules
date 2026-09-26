@@ -9,7 +9,7 @@ service cloud.firestore {
     function isOwner(uid)   { return signedIn() && request.auth.uid == uid; }
     // Fields the CLIENT is never allowed to set. The Cloud Function uses the
     // Admin SDK, which bypasses rules entirely, so it can still write them.
-    function serverOnly()   { return ['maxDevices', 'subscriptionTire']; }
+    function serverOnly()   { return ['maxDevices', 'subscriptionTier']; }
 
     // ---- user profile: device registry -----------------------------------
     match /users/{uid} {
