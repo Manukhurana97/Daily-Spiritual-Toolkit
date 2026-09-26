@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
@@ -44,12 +45,15 @@ class BackupMeta {
         backupId: map['backupId'] as String? ?? '',
         createdAt: (map['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
         backupType: map['backupType'] as String? ?? 'manual',
-        appVersion: map['appVersion'] as String? ?? '?',
-        dataVersion: (map['dataVersion'] as int?) ?? 1,
+        // Create backip writes these 2 with a leading underscore
+        appVersion: map['_appVersion'] as String? ?? '?',
+        dataVersion: (map['_dataVersion'] as int?) ?? 1,
         sizeBytes: (map['sizeBytes'] as int?) ?? 0,
-        mantraCount: (map['mantraCount'] as List?)?.length ?? 0,
-        sessionCount: (map['sessionCount'] as List?)?.length ?? 0,
-        sankalpCount: (map['sankalps'] as List?)?.length ?? 0,
+        // The count live inside the 'data' payload; there are no
+        // 'mantraCount' / 'sessionCount' top-level fields, so these were always 0.
+        mantraCount: ((data?['mantra'] ?? data?['mantra']) as List?)?.length ?? 0,
+        sessionCount: (data?['japaSessions'] as List?)?.length ?? 0,
+        sankalpCount: (data?['sankalps'] as List?)?.length ?? 0,
     );
   }
 
@@ -63,8 +67,13 @@ class BackupMeta {
 class BackupService extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  /// Firebase completes a write Future only on SERVER acknowledgement. With
+  /// offline presistence on (the mobile default) an unreachable backend leaves
+  /// the Future pending forever, which hangs the UI spinner. Every network call
+  /// below s bounded by this.
   static const _appVersion = '1.0.0';
   static const _dataVersion = 1;
+  static const _netTimeout = Duration(seconds: 30);
   static const _maxBackup = 5;
   static const _keyBackupFrequency = 'backup_frequency';
   static const _keyLastBackupTime = 'last_backup_time';
@@ -146,7 +155,7 @@ class BackupService extends ChangeNotifier {
       final settings = await _exportSettings();
 
       final backupData = {
-        'mantra': mantras,
+        'mantras': mantras,
         'japaSessions': sessions,
         'sankalps': sankalps,
         'settings': settings,
@@ -159,7 +168,7 @@ class BackupService extends ChangeNotifier {
       // 3. Upload to FireBase
       final backupId = 'backup_${DateTime.now().toIso8601String().replaceAll(':', '-')}';
       await _firestore
-          .collection('backup')
+          .collection('backups')
           .doc(uid)
           .collection('snapshots')
           .doc(backupId)
@@ -168,11 +177,11 @@ class BackupService extends ChangeNotifier {
         'backupId': backupId,
         'createdAt': FieldValue.serverTimestamp(),
         'backupType': isManual ? 'manual': 'auto',
-        '_appVersion': _appVersion,
-        '_dataVersion': _dataVersion,
+        'appVersion': _appVersion,
+        'dataVersion': _dataVersion,
         'sizeBytes': sizeBytes,
         'data': backupData
-      });
+      }).timeout(_netTimeout);
 
       // 4. Save last backup time
       final prefs = await SharedPreferences.getInstance();
@@ -183,20 +192,24 @@ class BackupService extends ChangeNotifier {
       await _cleanupOldBackups(uid);
 
       // 6. Refresh history
-      await loadbackupHistory();
+      await loadBackupHistory();
 
       AppLogger.info(
         '[BackupService] Backup created: $backupId (${(sizeBytes / 1024).toStringAsFixed(1)} KB)'
       );
 
-      _isbackingUp = false;
-      notifyListeners();
       return true;
+    } on TimeoutException catch(e, st) {
+      AppLogger.error('[BackupService] createBackup timed out', error: e, stackTrace: st);
+      return false;
     } catch (e, st) {
-      AppLogger.error('[BackupService] createBackup error', error: e, stackTrace: st);
+      AppLogger.error(
+          '[BackupService] createBackup error', error: e, stackTrace: st);
+      return false;
+    } finally {
+      // Must run even on timeout, or the spinner never stops
       _isbackingUp = false;
       notifyListeners();
-      return false;
     }
   }
 
@@ -250,18 +263,47 @@ class BackupService extends ChangeNotifier {
   // BACKUP HISTORY
 
   /// Load backup history from Firestore.
-  Future<void> loadbackupHistory() async {
+  /// Ture when this install has no local data at all - time "new phone"
+  /// signal used to offer a restore right after sign-in see V1-B
+  static Future<bool> isLocalDataEmpty() async {
+    final mantras = await AppDatabase.exportMantras();
+    final sessions = await AppDatabase.exportSessions();
+    final sankalps = await AppDatabase.exportSankalps();
+    return mantras.isEmpty && sessions.isEmpty && sankalps.isEmpty;
+  }
+
+  static const _keyRestoreOffered = 'restore_offer_shown';
+
+  /// This new-devices restore prompt is offered at most once per install.
+  Future<bool> hasOfferedRestore() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyRestoreOffered) ?? false;
+  }
+
+  Future<bool> markRestoredOffered() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(_keyRestoreOffered, true);
+  }
+
+  /// Most recent cloud snapshot, or null. Refreshes history as a side effect.
+  Future<BackupMeta?> latestbackup() async {
+    await loadBackupHistory();
+    return _backupHistory.isEmpty ? null : backupHistory.first;
+  }
+
+  Future<void> loadBackupHistory() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
     try {
       final snapshots = await _firestore
-          .collection('backup')
+          .collection('backups')
           .doc(user.uid)
           .collection('snapshots')
           .orderBy('createdAt', descending: true)
           .limit(_maxBackup)
-          .get();
+          .get()
+          .timeout(_netTimeout);
 
       _backupHistory =
           snapshots.docs.map((doc) => BackupMeta.fromMap(doc.data())).toList();
@@ -293,21 +335,37 @@ class BackupService extends ChangeNotifier {
 
       // 2. Fetch backup from Firestore.
       final snapshot = await _firestore
-        .collection('backup')
+        .collection('backups')
         .doc(uid)
         .collection('snapshots')
         .doc(backupId)
-        .get();
+        .get().timeout(_netTimeout);
 
       if (!snapshot.exists) {
-        _isRestoring = false;
-        notifyListeners();
+        AppLogger.error('[backupService] restoreL snapshot $backupId not found');
         return false;
       }
 
-      final data = snapshot.data()!['data'] as Map<String, dynamic>;
+      // Validate before destroying anything.
+      final raw = snapshot.data()!;
+      final version = ((raw['dataVersion'] ?? raw['_dataVersion']) as int?) ?? 1;
+      if (version > _dataVersion) {
+        AppLogger.error('[BackupService] restore aborted: backup dataVersion'
+        '$version is newer than this app supports ($_dataVersion)');
+        return false;
+      }
+      final data = raw['data'] as Map<String, dynamic>?;
+      if (data == null) {
+        AppLogger.error('[backupService] restore aborted: snapshot has no data payload');
+        return false;
+      }
 
-      // 3. Clear all current data
+      // 3. Clear all current data. Without this the imports are plain
+      // Inserts and collide with existing rows:
+      // DatabaseException(UNIQUE constraint failed: mantra.id ... 1555)
+      // The dialog promises "replace ALL current data", so clear first.
+      await AppDatabase.clearAllTables();
+
       final mantras = (data['mantras'] ?? data['mantra']) as List<dynamic>? ?? [];
       for (final mantra in mantras) {
         await AppDatabase.importMantraRaw(
@@ -338,16 +396,15 @@ class BackupService extends ChangeNotifier {
 
       AppLogger.info('[BackupService] Restore completed from: $backupId');
 
-      _isRestoring = false;
-      notifyListeners();
       return true;
     } catch (e, st) {
       AppLogger.error('[BackupService] restoreBackup error',
         error: e, stackTrace: st);
 
+      return false;
+    } finally {
       _isRestoring = false;
       notifyListeners();
-      return false;
     }
   }
 
@@ -375,8 +432,6 @@ class BackupService extends ChangeNotifier {
     try {
       final file = File(backupPath);
       if (!file.existsSync()) {
-        _isRestoring = false;
-        notifyListeners();
         return false;
       }
 
@@ -388,13 +443,13 @@ class BackupService extends ChangeNotifier {
 
       final mantras = data['mantras'] as List<dynamic>? ?? [];
       for (final mantra in mantras) {
-        await AppDatabase.importMantraRaw(
+        await AppDatabase.importSessionRaw(
           Map<String, dynamic>.from(mantra as Map));
       }
 
       final sessions = data['japaSessions'] as List<dynamic>? ?? [];
       for (final session in sessions) {
-        await AppDatabase.importMantraRaw(
+        await AppDatabase.importSessionRaw(
           Map<String, dynamic>.from(session as Map));
       }
 
@@ -415,15 +470,15 @@ class BackupService extends ChangeNotifier {
       await prefs.remove(_keySafetyBackupPath);
 
       AppLogger.info('[BackupService] Undo restore completed');
-
-      _isRestoring = false;
-      notifyListeners();
+      
       return true;
     } catch (e, st) {
-      AppLogger.error('[BackupService undoRestore error]', error: e, stackTrace: st);
+      AppLogger.error(
+          '[BackupService undoRestore error]', error: e, stackTrace: st);
+      return false;
+    } finally {
       _isRestoring = false;
       notifyListeners();
-      return false;
     }
   }
 
@@ -526,16 +581,16 @@ class BackupService extends ChangeNotifier {
   Future<void> _cleanupOldBackups(String uid) async {
     try {
       final snapshots = await _firestore
-        .collection('backup')
+        .collection('backups')
         .doc(uid)
         .collection('snapshots')
         .orderBy('createdAt', descending: true)
-        .get();
+        .get().timeout(_netTimeout);
 
       if (snapshots.docs.length > _maxBackup) {
         final toDelete = snapshots.docs.sublist(_maxBackup);
         for (final doc in toDelete) {
-          await doc.reference.delete();
+          await doc.reference.delete().timeout(_netTimeout);
         }
         AppLogger.info(
           '[BackupService] Cleaned up ${toDelete.length} old backups');

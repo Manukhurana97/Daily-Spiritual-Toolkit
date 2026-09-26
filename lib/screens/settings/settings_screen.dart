@@ -1650,15 +1650,17 @@ class _BannerAdWidget extends ConsumerStatefulWidget {
 }
 
 class _BannerAdWidgetState extends ConsumerState<_BannerAdWidget> {
+  late final _adService = ref.read(adProviderService);
+
   @override
   void initState() {
     super.initState();
-    ref.read(adProviderService).loadBanner();
+    _adService.loadBanner();
   }
 
   @override
   void dispose() {
-    ref.read(adProviderService).disposeBanner();
+    _adService.disposeBanner();
     super.dispose();
   }
 
@@ -1810,7 +1812,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
 
   Future<void> _loadState() async {
     final backupService = ref.read(backupServiceProvider);
-    await backupService.loadbackupHistory();
+    await backupService.loadBackupHistory();
     final canUndo = await backupService.canUndoRestore;
     if (mounted) setState(() => _canUndo = canUndo);
   }
@@ -2053,7 +2055,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
                       leading: Icon(
                         isSelected
                             ? Icons.check_circle_rounded
-                            : Icons.radio_button_checked_rounded,
+                            : Icons.radio_button_unchecked_rounded,
                         color: isSelected ? AppColors.saffron : null,
                       ),
                       title: Text(

@@ -362,17 +362,20 @@ class AppDatabase {
 
   static Future<void> importMantraRaw(Map<String, dynamic> row) async {
     final db = await instance;
-    await db.insert('mantras', row);
+    await db.insert('mantras', row,
+      conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   static Future<void> importSessionRaw(Map<String, dynamic> row) async {
     final db = await instance;
-    await db.insert('japa_sessions', row);
+    await db.insert('japa_sessions', row,
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   static Future<void> importSankalpRaw(Map<String, dynamic> row) async {
     final db = await instance;
-    await db.insert('sankalps', row);
+    await db.insert('sankalps', row,
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
 
