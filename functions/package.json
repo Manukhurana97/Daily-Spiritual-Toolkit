@@ -2,10 +2,12 @@
   "name": "nitya-sadhana-functions",
   "description": "RevenueCat webhook -> Firestore subscription tier / device allowance",
   "main": "index.js",
-  "engines": {"node": "20"},
+  "engines": {
+    "node": "20"
+  },
   "dependencies": {
-    "firebase-admin": "^12.6.0",
-    "firebase-function": "^7.4.0"
+    "firebase-admin": "^13.10.0",
+    "firebase-functions": "^7.4.0"
   },
   "private": true
 }

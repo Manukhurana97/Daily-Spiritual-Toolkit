@@ -1,6 +1,115 @@
-manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % cd functions && npm install && cd .. && firebase functions:secrets:set REVENUECAT_WEBHOOK_SECRET && firebase deploy --only functions
-npm error code ETARGET
-npm error notarget No matching version found for firebase-function@^7.4.0.
-npm error notarget In most cases you or one of your dependencies are requesting
-npm error notarget a package version that doesn't exist.
-npm error A complete log of this run can be found in: /Users/manu/.npm/_logs/2026-09-26T10_23_18_928Z-debug-0.log
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase projects:list
+✔ Preparing the list of your Firebase projects
+┌──────────────────────┬──────────────┬────────────────┬──────────────────────┐
+│ Project Display Name │ Project ID   │ Project Number │ Resource Location ID │
+├──────────────────────┼──────────────┼────────────────┼──────────────────────┤
+│ Nitya Sadhna         │ nitya-sadhna │ 374854607657   │ [Not specified]      │
+└──────────────────────┴──────────────┴────────────────┴──────────────────────┘
+
+1 project(s) total.
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase use --add
+✔ Which project do you want to add? nitya-sadhna
+✔ What alias do you want to use for this project? (e.g. staging) prod
+
+Created alias prod for nitya-sadhna.
+Now using alias prod (nitya-sadhna)
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase functions:secrets:set REVENUECAT_WEBHOOK_SECRET
+
+Error: Your project nitya-sadhna must be on the Blaze (pay-as-you-go) plan to complete this command. Required API secretmanager.googleapis.com can't be enabled until the upgrade is complete. To upgrade, visit the following URL:
+
+https://console.firebase.google.com/project/nitya-sadhna/usage/details
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase functions:secrets:set REVENUECAT_WEBHOOK_SECRET
+✔ Enter a value for REVENUECAT_WEBHOOK_SECRET:
+✔  Created a new secret version projects/374854607657/secrets/REVENUECAT_WEBHOOK_SECRET/versions/1
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase deploy --only firebase:rules --project nitya-sadhna
+
+Error: Cannot understand what targets to deploy/serve. No targets in firebase.json match '--only firebase:rules'.
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % firebase deploy --only functions
+
+=== Deploying to 'nitya-sadhna'...
+
+i  deploying functions
+i  functions: preparing codebase default for deployment
+i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
+i  functions: ensuring required API cloudbuild.googleapis.com is enabled...
+i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled...
+⚠  functions: missing required API cloudfunctions.googleapis.com. Enabling now...
+⚠  functions: missing required API cloudbuild.googleapis.com. Enabling now...
+⚠  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now...
+⚠  functions: Runtime Node.js 20 was deprecated on 2026-04-30 and will be decommissioned on 2026-10-30, after which you will not be able to deploy without upgrading. Consider upgrading now to avoid disruption. See https://cloud.google.com/functions/docs/runtime-support for full details on the lifecycle policy
+i  functions: Loading and analyzing source code for codebase default to determine what to deploy
+Serving at port 8891
+
+i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled...
+⚠  extensions: missing required API firebaseextensions.googleapis.com. Enabling now...
+i  functions: preparing functions directory for uploading...
+i  functions: packaged /Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions (32.96 KB) for uploading
+i  functions: ensuring required API run.googleapis.com is enabled...
+i  functions: ensuring required API eventarc.googleapis.com is enabled...
+i  functions: ensuring required API pubsub.googleapis.com is enabled...
+i  functions: ensuring required API storage.googleapis.com is enabled...
+⚠  functions: missing required API eventarc.googleapis.com. Enabling now...
+✔  functions: required API pubsub.googleapis.com is enabled
+⚠  functions: missing required API run.googleapis.com. Enabling now...
+✔  functions: required API storage.googleapis.com is enabled
+i  functions: generating the service identity for pubsub.googleapis.com...
+i  functions: generating the service identity for eventarc.googleapis.com...
+i  functions: ensuring required API secretmanager.googleapis.com is enabled...
+✔  functions: required API secretmanager.googleapis.com is enabled
+✔  functions: functions source uploaded successfully
+i  functions: ensuring 374854607657-compute@developer.gserviceaccount.com access to secret REVENUECAT_WEBHOOK_SECRET.
+✔  secretmanager: Granted roles/secretmanager.secretAccessor on projects/nitya-sadhna/secrets/REVENUECAT_WEBHOOK_SECRET to 374854607657-compute@developer.gserviceaccount.com
+✔  functions: ensured 374854607657-compute@developer.gserviceaccount.com access to REVENUECAT_WEBHOOK_SECRET.
+i  functions: creating Node.js 20 (2nd Gen) function revenuecatWebhook(asia-south1)...
+✔  functions[revenuecatWebhook(asia-south1)] Successful create operation.
+Function URL (revenuecatWebhook(asia-south1)): https://asia-south1-nitya-sadhna.cloudfunctions.net/revenuecatWebhook
+⚠  functions: No cleanup policy detected for repositories in asia-south1. This may result in a small monthly bill as container images accumulate over time.
+✔ How many days do you want to keep container images before they're deleted? 1
+i  functions: Configuring cleanup policy for repository in asia-south1. Images older than 1 days will be automatically deleted.
+i  functions: Configured cleanup policy for repository in asia-south1.
+
+✔  Deploy complete!
+
+Project Console: https://console.firebase.google.com/project/nitya-sadhna/overview
+manu@Manus-MacBook-Air Daily-Spiritual-Toolkit % cd functions/
+manu@Manus-MacBook-Air functions % firebase functions:delete revenuecatWebhook --region asia-south1
+✔ You are about to delete the following Cloud Functions:
+        revenuecatWebhook(asia-south1)
+  Are you sure? Yes
+i  functions: deleting Node.js 20 (2nd Gen) function revenuecatWebhook(asia-south1)...
+✔  functions[revenuecatWebhook(asia-south1)] Successful delete operation.
+manu@Manus-MacBook-Air functions % firebase deploy --only functions
+
+=== Deploying to 'nitya-sadhna'...
+
+i  deploying functions
+i  functions: preparing codebase default for deployment
+i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
+i  functions: ensuring required API cloudbuild.googleapis.com is enabled...
+i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled...
+⚠  functions: Runtime Node.js 20 was deprecated on 2026-04-30 and will be decommissioned on 2026-10-30, after which you will not be able to deploy without upgrading. Consider upgrading now to avoid disruption. See https://cloud.google.com/functions/docs/runtime-support for full details on the lifecycle policy
+i  functions: Loading and analyzing source code for codebase default to determine what to deploy
+Serving at port 8336
+
+i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled...
+i  functions: preparing functions directory for uploading...
+i  functions: packaged /Users/manu/Desktop/code/Projects/Daily-Spiritual-Toolkit/functions (32.96 KB) for uploading
+i  functions: ensuring required API run.googleapis.com is enabled...
+i  functions: ensuring required API eventarc.googleapis.com is enabled...
+i  functions: ensuring required API pubsub.googleapis.com is enabled...
+i  functions: ensuring required API storage.googleapis.com is enabled...
+i  functions: generating the service identity for pubsub.googleapis.com...
+i  functions: generating the service identity for eventarc.googleapis.com...
+i  functions: ensuring required API secretmanager.googleapis.com is enabled...
+✔  functions: functions source uploaded successfully
+i  functions: ensuring 374854607657-compute@developer.gserviceaccount.com access to secret REVENUECAT_WEBHOOK_SECRET.
+✔  secretmanager: Granted roles/secretmanager.secretAccessor on projects/nitya-sadhna/secrets/REVENUECAT_WEBHOOK_SECRET to 374854607657-compute@developer.gserviceaccount.com
+✔  functions: ensured 374854607657-compute@developer.gserviceaccount.com access to REVENUECAT_WEBHOOK_SECRET.
+i  functions: creating Node.js 20 (2nd Gen) function revenuecatWebhook(asia-south1)...
+✔  functions[revenuecatWebhook(asia-south1)] Successful create operation.
+Function URL (revenuecatWebhook(asia-south1)): https://asia-south1-nitya-sadhna.cloudfunctions.net/revenuecatWebhook
+
+✔  Deploy complete!
+
+Project Console: https://console.firebase.google.com/project/nitya-sadhna/overview
+manu@Manus-MacBook-Air functions %

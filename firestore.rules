@@ -1,58 +1,58 @@
-rules_version - '2';
+rules_version = '2';
 
-// Nitya sadhana - V1 rules (device restriction + cloud backup).
-// Deploy: firebase deploy -- only firestore:rules
+// Nitya Sadhana - V1 rules (device restriction + cloud backup).
+// Deploy:  firebase deploy -- only firestore:rules
 service cloud.firestore {
-    match /databases/{database}/documents {
+  match /databases/{database}/documents {
 
-        function signedIn()  { return request.auth != null; }
-        function isOwned(uid) { return signedIn() && request.auth.uid == uid; }
-        // Fields the CLIENT is never allowed to set. The cloud Function uses the
-        // Admin SDK, which bypasses rules entirely, so it can still write them.
-        function serverOnly() { return ['maxDevices', 'subscriptionTire']; }
+    function signedIn()     { return request.auth != null; }
+    function isOwner(uid)   { return signedIn() && request.auth.uid == uid; }
+    // Fields the CLIENT is never allowed to set. The Cloud Function uses the
+    // Admin SDK, which bypasses rules entirely, so it can still write them.
+    function serverOnly()   { return ['maxDevices', 'subscriptionTire']; }
 
-        // ---- user profile: device registry -----------------------------------
-        match /users/{uid} {
-            allow read: if isOwner(uid);
+    // ---- user profile: device registry -----------------------------------
+    match /users/{uid} {
+      allow read: if isOwner(uid);
 
-            // Bootstrap: the app creates i ts own doc on first premium launch and is
-            // allowed to send maxDevices = 1 there (device_services._createUserDocument).
-            allow create: if isOwner(uid)
-                          && request.resource.data.maxDevices == 1
-                          && request.resource.data.activeDevices is list
-                          && request.resource.data.activeDevices.size() <= 1;
+      // Bootstrap: the app creates its own doc on first premium launch and is
+      // allowed to seed maxDevices = 1 there (device_service._createUserDocument).
+      allow create: if isOwner(uid)
+                    && request.resource.data.maxDevices == 1
+                    && request.resource.data.activeDevices is list
+                    && request.resource.data.activeDevices.size() <= 1;
 
-            // Afterwords the client may only touch activeDevices. Tier and device
-            // allowence are server-controlled (RevenueCat webhook)
-            allow update: if isOwner(uid)
-                          && !request.resource.data.diff(resource.data)
-                                .affectedKeys().hasAny(serverOnly())
-                          && !request.resource.data.activeDevices is list
-                          && !request.resource.data.activeDevices.size() <= resource.data.maxDevices;
+      // Afterwords the client may only touch activeDevices. Tier and device
+      // allowance are server-controlled (RevenueCat webhook)
+      allow update: if isOwner(uid)
+                    && !request.resource.data.diff(resource.data)
+                            .affectedKeys().hasAny(serverOnly())
+                    && request.resource.data.activeDevices is list
+                    && request.resource.data.activeDevices.size() <= resource.data.maxDevices;
 
-            as delete: if false;
-        }
-
-        // ---- cloud backups --------------------------------------------------
-        match /backups/{uid}/snapshots/{backupId} {
-            allow read, delete: if isOwner(uid);
-
-            // 5 MB cap per snapshot (V1-B). sizeBytes is written by the client, so
-            // also bound the document itself via the payload check below.
-            allow create: if isOwner(uid)
-                          && request.resource.data.userId == uid
-                          && request.resource.data.sizeBytes is int
-                          && request.resource.data.sizeBytes < 5000000
-                          && request.resource.data.data is map;
-
-            allow update: if isOwner(uid)
-                          && request.resource.data.sizeBytes is int
-                          && request.resource.data.sizeBytes < 5000000
-        }
-
-        // Anything not matched above is denied
-        match /{document=**} {
-            allow, read, write: if false;
-        }
+      allow delete: if false;
     }
+
+    // ---- cloud backups --------------------------------------------------
+    match /backups/{uid}/snapshots/{backupId} {
+        allow read, delete: if isOwner(uid);
+
+        // 5 MB cap per snapshot (V1-B). sizeBytes is written by the client, so
+        // also bound the document itself via the payload check below.
+        allow create: if isOwner(uid)
+                      && request.resource.data.userId == uid
+                      && request.resource.data.sizeBytes is int
+                      && request.resource.data.sizeBytes < 5000000
+                      && request.resource.data.data is map;
+
+        allow update: if isOwner(uid)
+                      && request.resource.data.sizeBytes is int
+                      && request.resource.data.sizeBytes < 5000000;
+    }
+
+    // Anything not matched above is denied.
+    match /{document=**} {
+      allow  read, write: if false;
+    }
+  }
 }
