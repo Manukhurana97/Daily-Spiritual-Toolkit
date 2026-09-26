@@ -1,7 +1,8 @@
-1. Deploy Rule:                   firebase deploy --only firestore:rules
-2. Deploy Function:               firebase deploy --only functions
-3. Deploy Function and rule:      firebase deploy --only firestore,firestore:rules
-4. List All Functions:            firebase functions:list
-5. Function Logs:                 firebase functions:log --only <Function>
-6. Delete a function:             firebase functions:delete <Function> --region <Region>         |     firebase functions:delete revenuecatWebhook --region asia-south1
-6. Set Secrets:                   functions:secrets:set REVENUECAT_WEBHOOK_SECRET
+1. Deploy Rule:                             firebase deploy --only firestore:rules
+2. Deploy Function:                         firebase deploy --only functions
+3. Deploy Function and rule:                firebase deploy --only firestore,firestore:rules
+3.1 package install and deploy function:    cd functions && npm install && cd .. && firebase deploy --only functions
+4. List All Functions:                      firebase functions:list
+5. Function Logs:                           firebase functions:log --only <Function>
+6. Delete a function:                       firebase functions:delete <Function> --region <Region>         |     firebase functions:delete revenuecatWebhook --region asia-south1
+6. Set Secrets:                             functions:secrets:set REVENUECAT_WEBHOOK_SECRET

@@ -15,11 +15,13 @@
 const {onRequest} = require("firebase-functions/v2/https");
 const {defineSecret} = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
-const admin = require("firebase-admin");
+
+const {initializeApp} = require("firebase-admin/app");
+const {getFirestore, FieldValue} = require("firebase-admin/firestore");
 const crypto = require("crypto");
 
-admin.initializeApp();
-const db = admin.firestore();
+initializeApp();
+const db = getFirestore();
 
 // Value you paste into RevenueCat's "Authorization header value" field.
 const WEBHOOK_SECRET = defineSecret("REVENUECAT_WEBHOOK_SECRET");
@@ -118,7 +120,7 @@ exports.revenuecatWebhook = onRequest(
                 await ref.set({
                     subscriptionTier: best.tier,
                     maxDevices: best.devices,
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: FieldValue.serverTimestamp(),
                 }, {merge: true});
                 logger.info(`${type}: ${uid} -> ${best.tier} (${best.maxDevices})`);
                 return res.status(200).send("ok");
@@ -129,7 +131,7 @@ exports.revenuecatWebhook = onRequest(
                 // as-is so the user keeps their device slot and their backups.
                 await ref.set({
                     subscriptionTier: "free",
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: FieldValue.serverTimestamp(),
                 }, {merge: true});
                 logger.info(`${type}: ${uid} -> free (device + backups retained)`);
                 return res.status(200).send("ok");
